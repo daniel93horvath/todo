@@ -1,0 +1,325 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "name": "Teszt 2",
+      "framework": [
+        "2",
+        "3"
+      ],
+      "date_range": {
+        "from": "2025-03-01",
+        "to": "2025-03-08"
+      },
+      "date": "2025-03-01",
+      "type": "2",
+      "description": "leírás"
+    },
+    {
+      "id": 2,
+      "name": "Teszt 3",
+      "framework": [
+        "2",
+        "3"
+      ],
+      "date_range": {
+        "from": "2025-03-01",
+        "to": "2025-03-08"
+      },
+      "date": "2025-03-01",
+      "type": "2",
+      "description": "leírás"
+    },
+    {
+      "id": 4,
+      "name": "Teszt 4",
+      "framework": [
+        "2",
+        "3"
+      ],
+      "date_range": {
+        "from": "2025-03-01",
+        "to": "2025-03-08"
+      },
+      "date": "2025-03-01",
+      "type": "2",
+      "description": "leírás"
+    },
+    {
+      "id": 5,
+      "name": "Teszt 5",
+      "framework": [
+        "2",
+        "3"
+      ],
+      "date_range": {
+        "from": "2025-03-01",
+        "to": "2025-03-08"
+      },
+      "date": "2025-03-01",
+      "type": "2",
+      "description": "leírás"
+    },
+    {
+      "id": 6,
+      "name": "Teszt 6",
+      "framework": [
+        "2",
+        "3"
+      ],
+      "date_range": {
+        "from": "2025-03-01",
+        "to": "2025-03-08"
+      },
+      "date": "2025-03-01",
+      "type": "2",
+      "description": "leírás"
+    },
+    {
+      "id": 7,
+      "name": "Teszt 7",
+      "framework": [
+        "2",
+        "3"
+      ],
+      "date_range": {
+        "from": "2025-03-01",
+        "to": "2025-03-08"
+      },
+      "date": "2025-03-01",
+      "type": "2",
+      "description": "leírás"
+    },
+    {
+      "id": 8,
+      "name": "Teszt 8",
+      "framework": [
+        "2",
+        "3"
+      ],
+      "date_range": {
+        "from": "2025-03-01",
+        "to": "2025-03-08"
+      },
+      "date": "2025-03-01",
+      "type": "2",
+      "description": "leírás"
+    },
+    {
+      "name": "Bell Church",
+      "framework": [
+        "3"
+      ],
+      "date_range": {
+        "from": "2025-02-01",
+        "to": "2025-02-02"
+      },
+      "date": "2025-02-01",
+      "type": "2",
+      "description": "Cupidatat quia beata",
+      "id": 9
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Kiss Péter",
+      "email": "peter.kiss@example.com",
+      "role": "admin",
+      "status": "active",
+      "phone": "+36 30 123 4567",
+      "location": "Budapest, Magyarország",
+      "createdAt": "2024-12-10T09:30:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Nagy Anna",
+      "email": "anna.nagy@example.com",
+      "role": "user",
+      "status": "inactive",
+      "phone": "+36 20 234 5678",
+      "location": "Debrecen, Magyarország",
+      "createdAt": "2024-11-05T14:15:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Tóth Gábor",
+      "email": "gabor.toth@example.com",
+      "role": "editor",
+      "status": "active",
+      "phone": "+36 70 345 6789",
+      "location": "Szeged, Magyarország",
+      "createdAt": "2024-10-20T08:45:00Z"
+    },
+    {
+      "id": 4,
+      "name": "Szabó Eszter",
+      "email": "eszter.szabo@example.com",
+      "role": "user",
+      "status": "pending",
+      "phone": "+36 30 456 7890",
+      "location": "Pécs, Magyarország",
+      "createdAt": "2024-12-01T11:00:00Z"
+    },
+    {
+      "id": 5,
+      "name": "Farkas Zoltán",
+      "email": "zoltan.farkas@example.com",
+      "role": "admin",
+      "status": "active",
+      "phone": "+36 20 567 8901",
+      "location": "Győr, Magyarország",
+      "createdAt": "2024-09-25T16:30:00Z"
+    },
+    {
+      "id": 6,
+      "name": "Varga Júlia",
+      "email": "julia.varga@example.com",
+      "role": "user",
+      "status": "inactive",
+      "phone": "+36 70 678 9012",
+      "location": "Miskolc, Magyarország",
+      "createdAt": "2024-08-15T10:00:00Z"
+    },
+    {
+      "id": 7,
+      "name": "Balogh Bence",
+      "email": "bence.balogh@example.com",
+      "role": "editor",
+      "status": "active",
+      "phone": "+36 30 789 0123",
+      "location": "Kecskemét, Magyarország",
+      "createdAt": "2024-07-10T09:00:00Z"
+    },
+    {
+      "id": 8,
+      "name": "Kovács Dóra",
+      "email": "dora.kovacs@example.com",
+      "role": "user",
+      "status": "pending",
+      "phone": "+36 20 890 1234",
+      "location": "Székesfehérvár, Magyarország",
+      "createdAt": "2024-06-30T13:45:00Z"
+    },
+    {
+      "id": 9,
+      "name": "Molnár László",
+      "email": "laszlo.molnar@example.com",
+      "role": "editor",
+      "status": "active",
+      "phone": "+36 70 901 2345",
+      "location": "Eger, Magyarország",
+      "createdAt": "2024-05-22T12:20:00Z"
+    },
+    {
+      "id": 10,
+      "name": "Fehér Zsófia",
+      "email": "zsofia.feher@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 30 012 3456",
+      "location": "Veszprém, Magyarország",
+      "createdAt": "2024-04-18T17:10:00Z"
+    },
+    {
+      "id": 11,
+      "name": "Kovács Dániel",
+      "email": "daniel.kovacs@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 20 123 4567",
+      "location": "Budapest, Magyarország",
+      "createdAt": "2024-05-01T08:30:00Z"
+    },
+    {
+      "id": 12,
+      "name": "Tóth Lilla",
+      "email": "lilla.toth@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 70 987 6543",
+      "location": "Szeged, Magyarország",
+      "createdAt": "2024-05-03T10:15:00Z"
+    },
+    {
+      "id": 13,
+      "name": "Nagy Balázs",
+      "email": "balazs.nagy@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 30 222 3344",
+      "location": "Debrecen, Magyarország",
+      "createdAt": "2024-05-06T14:45:00Z"
+    },
+    {
+      "id": 14,
+      "name": "Szabó Petra",
+      "email": "petra.szabo@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 70 555 6677",
+      "location": "Pécs, Magyarország",
+      "createdAt": "2024-05-10T09:20:00Z"
+    },
+    {
+      "id": 15,
+      "name": "Varga Máté",
+      "email": "mate.varga@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 20 888 9999",
+      "location": "Győr, Magyarország",
+      "createdAt": "2024-05-12T13:00:00Z"
+    },
+    {
+      "id": 16,
+      "name": "Kiss Eszter",
+      "email": "eszter.kiss@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 30 444 5566",
+      "location": "Székesfehérvár, Magyarország",
+      "createdAt": "2024-05-15T11:10:00Z"
+    },
+    {
+      "id": 17,
+      "name": "Molnár Gergely",
+      "email": "gergely.molnar@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 70 333 1122",
+      "location": "Eger, Magyarország",
+      "createdAt": "2024-05-17T16:30:00Z"
+    },
+    {
+      "id": 18,
+      "name": "Lakatos Júlia",
+      "email": "julia.lakatos@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 20 666 7788",
+      "location": "Kecskemét, Magyarország",
+      "createdAt": "2024-05-20T07:55:00Z"
+    },
+    {
+      "id": 19,
+      "name": "Farkas Bence",
+      "email": "bence.farkas@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 30 111 2233",
+      "location": "Zalaegerszeg, Magyarország",
+      "createdAt": "2024-05-22T15:45:00Z"
+    },
+    {
+      "id": 20,
+      "name": "Horváth Anna",
+      "email": "anna.horvath@example.com",
+      "role": "user",
+      "status": "active",
+      "phone": "+36 70 999 8877",
+      "location": "Tatabánya, Magyarország",
+      "createdAt": "2024-05-25T12:25:00Z"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "prostore"
+		},
+		{
+			"path": "todo"
+		}
+	]
+    "settings": {
+        "search.exclude": {
+            "**/prostore/**": true
+        }
+    }
+}
