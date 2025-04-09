@@ -1,8 +1,4 @@
-//import Link from "next/link";
-//import DeleteAllTodos from "./DeleteAllTodos";
-//import ChangeTheme from "./ChangeTheme";
-import Image from "next/image";
-import { PiggyBankIcon, UserCircleIcon } from "lucide-react";
+import { PiggyBankIcon, UserCircle2Icon } from "lucide-react";
 import { formatNumber } from "@/lib/helpers/number";
 import Link from "next/link";
 import ChangeTheme from "./components/ChangeTheme";
@@ -14,6 +10,7 @@ import DropDownCategoryDrawer from "./components/Categories/mobile/DropDownCateg
 import LoginPopover from "./components/LoginPopover";
 import UserProfilePopover from "./components/Categories/UserProfilePopover";
 import OpLogo from "@/components/branding/opLogo";
+import LoginDrawer from "./components/Categories/mobile/LoginDrawer";
 
 const Header = async () => {
 	const { data: categories = [] } = await fetchGet<Category[]>("/get-onlinepenztarca-categories", {
@@ -28,18 +25,24 @@ const Header = async () => {
 						<Link href="/" title="Főoldal">
 							<OpLogo colorVariant="light" size={210} />
 						</Link>
-						<SearchInput />
-						{process.env.NEXT_PUBLIC_APP_USER_LOGGED === "true" ? (
-							<UserProfilePopover />
-						) : (
-							<LoginPopover />
-						)}
+						<div className="w-3xl">
+							<SearchInput />
+						</div>
+						<div className="flex gap-5">
+							{process.env.NEXT_PUBLIC_APP_USER_LOGGED === "true" ? (
+								<UserProfilePopover />
+							) : (
+								<LoginPopover />
+							)}
 
-						<div className="flex items-center gap-2">
-							<PiggyBankIcon className="text-white w-8 h-8" />
-							<div className="flex-col text-white">
-								<div className="text-xs text-center">Spórolás számláló</div>
-								<div className="font-bold text-center">{formatNumber(1243092500)}</div>
+							<div className="flex items-center gap-2">
+								<PiggyBankIcon className="text-white w-8 h-8" />
+								<div className="flex-col text-white">
+									<div className="text-xs text-center">Spórolás számláló</div>
+									<div className="font-bold text-center">
+										{formatNumber(1243092500)}
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -58,13 +61,15 @@ const Header = async () => {
 
 			{/* Mobil header */}
 			<header className="block md:hidden p-2 pb-0 bg-secondary">
-				<Link href="/" title="Főoldal">
-					<OpLogo colorVariant="light" size={150} className="block mx-auto my-[0.5]" />
-				</Link>
-				<nav className="flex items-center justify-between w-full gap-3 p-2">
-					<DropDownCategoryDrawer categories={categories} />
+				<nav className="flex-col p-1 pb-2 space-y-2">
+					<div className="flex items-center justify-between w-full gap-3">
+						<DropDownCategoryDrawer categories={categories} />
+						<Link href="/" title="Főoldal">
+							<OpLogo colorVariant="light" size={150} className="block mx-auto my-[0.5]" />
+						</Link>
+						<LoginDrawer />
+					</div>
 					<SearchInput />
-					<UserCircleIcon className="text-accent w-8 h-8" />
 				</nav>
 			</header>
 		</div>

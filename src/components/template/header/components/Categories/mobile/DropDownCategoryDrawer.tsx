@@ -18,12 +18,12 @@ const DropDownCategoryDrawer = ({ categories }: { categories: Category[] }) => {
 			<DrawerTrigger>
 				<MenuIcon className="text-accent" />
 			</DrawerTrigger>
-			<DrawerContent>
+			<DrawerContent className="p-2">
 				<DrawerHeader>
-					<DrawerTitle>Kategóriák</DrawerTitle>
+					<DrawerTitle className="text-secondary">Kategóriák</DrawerTitle>
 					<DrawerDescription>Böngéssz kategóriáink között</DrawerDescription>
 				</DrawerHeader>
-				<div className="overflow-y-auto">
+				<div className="overflow-y-auto p-2">
 					<DropDownCategory categories={categories} />
 				</div>
 			</DrawerContent>
