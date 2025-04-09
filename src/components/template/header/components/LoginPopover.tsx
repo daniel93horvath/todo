@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ChevronDownIcon, UserCircle2Icon } from "lucide-react";
+import { ChevronDownIcon, User2Icon } from "lucide-react";
 
 import React from "react";
 import LoginContent from "./LoginContent";
@@ -10,7 +10,7 @@ const LoginPopover = () => {
 		<Popover>
 			<PopoverTrigger asChild>
 				<Button className="rounded-full border-0 font-bold">
-					<UserCircle2Icon />
+					<User2Icon className="!w-5 !h-5 text-secondary bg-white rounded-full" />
 					Bejelentkezés
 					<ChevronDownIcon />
 				</Button>

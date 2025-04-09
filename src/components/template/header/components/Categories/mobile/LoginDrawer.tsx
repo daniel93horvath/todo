@@ -10,7 +10,7 @@ import React from "react";
 import { UserCircle2 } from "lucide-react";
 import LoginContent from "../../LoginContent";
 
-const LoginDrawer = () => {
+const LoginDrawer = ({ children }: { children?: React.ReactNode }) => {
 	return (
 		<Drawer>
 			<DrawerTrigger>
@@ -23,6 +23,7 @@ const LoginDrawer = () => {
 				</DrawerHeader>
 				<div className="overflow-y-auto p-2">
 					<LoginContent />
+					{children}
 				</div>
 			</DrawerContent>
 		</Drawer>

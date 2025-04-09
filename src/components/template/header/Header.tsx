@@ -11,6 +11,7 @@ import LoginPopover from "./components/LoginPopover";
 import UserProfilePopover from "./components/Categories/UserProfilePopover";
 import OpLogo from "@/components/branding/opLogo";
 import LoginDrawer from "./components/Categories/mobile/LoginDrawer";
+import { Button } from "@/components/ui/button";
 
 const Header = async () => {
 	const { data: categories = [] } = await fetchGet<Category[]>("/get-onlinepenztarca-categories", {
@@ -67,7 +68,25 @@ const Header = async () => {
 						<Link href="/" title="Főoldal">
 							<OpLogo colorVariant="light" size={150} className="block mx-auto my-[0.5]" />
 						</Link>
-						<LoginDrawer />
+						<LoginDrawer>
+							<div className="p-2 mt-2 gap-3 flex">
+								<Button variant="outline" asChild>
+									<Link href="https://www.onlinepenztarca.hu/villamajanlatok">
+										Villámajánlatok
+									</Link>
+								</Button>
+								<Button variant="outline" asChild>
+									<Link href="https://www.onlinepenztarca.hu/mi-az-onlinepenztarca">
+										Információ
+									</Link>
+								</Button>
+								<Button variant="outline" asChild>
+									<Link href="https://www.onlinepenztarca.hu/onlinetombola">
+										onlineTombola
+									</Link>
+								</Button>
+							</div>
+						</LoginDrawer>
 					</div>
 					<SearchInput />
 				</nav>
