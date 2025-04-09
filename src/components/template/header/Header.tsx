@@ -12,6 +12,7 @@ import UserProfilePopover from "./components/Categories/UserProfilePopover";
 import OpLogo from "@/components/branding/opLogo";
 import LoginDrawer from "./components/Categories/mobile/LoginDrawer";
 import { Button } from "@/components/ui/button";
+import { ClientHeader } from "./ClientHeader";
 
 const Header = async () => {
 	const { data: categories = [] } = await fetchGet<Category[]>("/get-onlinepenztarca-categories", {
@@ -19,12 +20,12 @@ const Header = async () => {
 		cacheOptions: { revalidate: 3600 },
 	});
 	return (
-		<div>
+		<ClientHeader>
 			<header className="hidden md:block p-2 pb-0 bg-secondary">
 				<nav className="flex flex-col max-w-[1800] mx-auto ">
 					<div className="flex items-center justify-between gap-3 p-2">
 						<Link href="/" title="Főoldal">
-							<OpLogo colorVariant="light" size={210} />
+							<OpLogo colorVariant="light" />
 						</Link>
 						<div className="w-3xl">
 							<SearchInput />
@@ -69,7 +70,7 @@ const Header = async () => {
 							<OpLogo colorVariant="light" size={150} className="block mx-auto my-[0.5]" />
 						</Link>
 						<LoginDrawer>
-							<div className="p-2 mt-2 gap-3 flex">
+							<div className="p-2 mt-2 gap-3 flex overflow-auto">
 								<Button variant="outline" asChild>
 									<Link href="https://www.onlinepenztarca.hu/villamajanlatok">
 										Villámajánlatok
@@ -91,7 +92,7 @@ const Header = async () => {
 					<SearchInput />
 				</nav>
 			</header>
-		</div>
+		</ClientHeader>
 	);
 };
 

@@ -37,7 +37,7 @@ interface OpLogoProps extends React.SVGProps<SVGSVGElement> {
  * Paraméterezhető OpLogo komponens
  */
 const OpLogo: React.FC<OpLogoProps> = ({
-	size = 29.5,
+	size = 200,
 	width,
 	height,
 	colorVariant,
