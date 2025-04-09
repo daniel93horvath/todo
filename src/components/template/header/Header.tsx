@@ -1,4 +1,4 @@
-import { PiggyBankIcon, UserCircle2Icon } from "lucide-react";
+import { PiggyBankIcon } from "lucide-react";
 import { formatNumber } from "@/lib/helpers/number";
 import Link from "next/link";
 import ChangeTheme from "./components/ChangeTheme";

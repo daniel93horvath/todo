@@ -7,7 +7,7 @@ import {
 	DrawerTrigger,
 } from "@/components/ui/drawer";
 import React from "react";
-import { MenuIcon, UserCircle2 } from "lucide-react";
+import { UserCircle2 } from "lucide-react";
 import LoginContent from "../../LoginContent";
 
 const LoginDrawer = () => {
