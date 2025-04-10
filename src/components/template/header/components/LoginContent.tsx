@@ -1,12 +1,28 @@
+"use client";
 import { OpInput } from "@/components/custom/input/opInput";
 import { OpInputPassword } from "@/components/custom/input/opInputPassword";
 import { Button } from "@/components/ui/button";
+//import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+//import { useForm } from "react-hook-form";
+//import { UserLogin, userLoginSchema } from "../schema";
 
 const LoginContent = () => {
+	/*const form = useForm({
+		resolver: zodResolver(userLoginSchema),
+		defaultValues: {
+			email: "",
+			password: "",
+		},
+	});
+
+	const onSubmit = (values: UserLogin) => {
+		console.log("onSubmit");
+	};*/
+
 	return (
 		<div>
 			<div className="p-3 space-y-4">

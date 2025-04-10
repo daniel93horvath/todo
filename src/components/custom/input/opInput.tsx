@@ -33,7 +33,7 @@ export function OpInput({
 		<div className="relative w-full">
 			<Input
 				id={id}
-				placeholder=""
+				placeholder=" "
 				type={type}
 				className={cn("op-input-element peer pt-5", className)}
 				{...props}

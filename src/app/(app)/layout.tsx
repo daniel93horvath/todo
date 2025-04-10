@@ -9,7 +9,7 @@ export default function RootLayout({
 	return (
 		<div className="flex flex-col">
 			<Header />
-			<main className="flex-1 wrapper flex h-screen flex-col container mx-auto pt-5 wrapper min-h-screen">
+			<main className="flex-1 wrapper mt-25 md:mt-35 flex h-screen flex-col container mx-auto pt-5 wrapper min-h-screen">
 				{children}
 			</main>
 			<Footer />

@@ -10,8 +10,8 @@ import { useTransition } from "react";
 import { Badge } from "@/components/ui/badge";
 import { usePathname, useSearchParams } from "next/navigation";
 import { options } from "../util";
-import { formatDate } from "date-fns";
 import { toast } from "sonner";
+import { safeFormatDate } from "@/lib/helpers/date";
 
 const TodoItem = ({ todo }: { todo: Todo }) => {
 	const [pending, startTransition] = useTransition();
@@ -33,7 +33,7 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
 		<div className="border rounded-md p-4 space-y-5">
 			<div>
 				<h5>{todo.name} </h5>
-				<p>teszt: {formatDate("2024-01-05:22:22:10", "yyyy-MM-dd h:i:s")}</p>
+				<p>teszt: {safeFormatDate("2024-01-0522:22:10", "yyyy-MM-dd h:i:s")}</p>
 				<p className="text-sm text-muted-foreground">Egyszeri dátum: {todo.date}</p>
 				<p className="text-sm text-muted-foreground">
 					Dátum tartomány: {todo.date_range.from} - {todo.date_range.to}

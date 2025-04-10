@@ -14,6 +14,7 @@ const UsersPage = async ({ searchParams }: { searchParams: Promise<{ page?: stri
 	return (
 		<div>
 			<h3>Users page</h3>
+
 			<SearchUsers />
 			<Suspense key={searchKey} fallback={<UsersTableSkeleton />}>
 				<UsersDataTable queryParams={queryParams} />
