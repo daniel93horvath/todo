@@ -12,7 +12,7 @@ import UserProfilePopover from "./components/Categories/UserProfilePopover";
 import OpLogo from "@/components/branding/opLogo";
 import LoginDrawer from "./components/Categories/mobile/LoginDrawer";
 import { Button } from "@/components/ui/button";
-import { ClientHeader } from "./ClientHeader";
+import { ClientHeaderScrollFeature } from "./ClientHeaderScrollFeature";
 
 const Header = async () => {
 	const { data: categories = [] } = await fetchGet<Category[]>("/get-onlinepenztarca-categories", {
@@ -20,7 +20,7 @@ const Header = async () => {
 		cacheOptions: { revalidate: 3600 },
 	});
 	return (
-		<ClientHeader>
+		<ClientHeaderScrollFeature>
 			<header className="hidden md:block p-2 pb-0 bg-secondary">
 				<nav className="flex flex-col max-w-[1800] mx-auto ">
 					<div className="flex items-center justify-between gap-3 p-2">
@@ -92,7 +92,7 @@ const Header = async () => {
 					<SearchInput />
 				</nav>
 			</header>
-		</ClientHeader>
+		</ClientHeaderScrollFeature>
 	);
 };
 
