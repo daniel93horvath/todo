@@ -3,7 +3,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon, XCircleIcon } from "lucide-react";
-import { parseDate, formatDate, dateToYYYYMMDD } from "@/components/custom/date/date";
+import { parseDate, formatDate, dateToYYYYMMDD } from "@/components/ui/custom/date/date";
 import { hu } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 

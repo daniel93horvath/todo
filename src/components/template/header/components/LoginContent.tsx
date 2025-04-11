@@ -1,6 +1,6 @@
 "use client";
-import { OpInput } from "@/components/custom/input/opInput";
-import { OpInputPassword } from "@/components/custom/input/opInputPassword";
+import { OpInput } from "@/components/ui/custom/input/opInput";
+import { OpInputPassword } from "@/components/ui/custom/input/opInputPassword";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRightIcon } from "lucide-react";

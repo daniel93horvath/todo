@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
 				protocol: "https",
 				hostname: "www.onlinepenztarca.hu",
 			},
+			{
+				protocol: "https",
+				hostname: "tapetaposzter.hu",
+			},
 		],
 	},
 };

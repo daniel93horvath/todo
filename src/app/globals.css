@@ -67,11 +67,11 @@
 	--secondary-foreground: white; /* Fehér - másodlagos gombokon, header-en, footer-en */
 
 	/* További stílusok */
-	--muted: #eaeaea; /* #f7f7f7 árnyalat - visszafogott háttér */
-	--muted-foreground: oklch(0.612 0.008 286.277); /* világosabb #696969 - visszafogott szöveg */
+	--muted: #eaeaea;
+	--muted-foreground: #8b8b8f;
 
-	--accent: #ededed;
-	--accent-foreground: oklch(0.34 0 none); /* Fehér - kiemelés szövegszín */
+	--accent: #eaeaea;
+	--accent-foreground: #696969; /* Fehér - kiemelés szövegszín */
 
 	--destructive: oklch(0.577 0.245 27.325); /* Megtartva a piros */
 

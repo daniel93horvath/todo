@@ -1,6 +1,6 @@
 "use client";
 
-import { OpInput } from "@/components/custom/input/opInput";
+import { OpInput } from "@/components/ui/custom/input/opInput";
 import { useDebounce } from "@/lib/helpers/hooks/useDebounce";
 import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
 import { SearchIcon } from "lucide-react";

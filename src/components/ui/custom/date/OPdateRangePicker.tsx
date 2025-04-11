@@ -1,12 +1,14 @@
+"use client";
 import React from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon, XCircleIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
-import { parseDate, formatDateRange, dateRangeToString } from "@/components/custom/date/date";
+import { parseDate, formatDateRange, dateRangeToString } from "@/components/ui/custom/date/date";
 import { hu } from "date-fns/locale";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/lib/helpers/hooks/useMediaQuery"; // Importáljuk a meglévő hook-ot
 
 /**
  * Dátumtartomány-választó komponens tulajdonságai
@@ -125,7 +127,7 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 
 		return undefined;
 	};
-
+	const isMobile = useMediaQuery("(max-width: 768px)");
 	// A value biztonságos konvertálása DateRange típusra
 	const safeValue = parseDateRange(value);
 
@@ -183,7 +185,7 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 					selected={safeValue}
 					onSelect={handleDateChange}
 					initialFocus
-					numberOfMonths={months}
+					numberOfMonths={isMobile ? 1 : months}
 					disabled={disabled}
 					fromDate={parseDate(minDate)}
 					toDate={parseDate(maxDate)}

@@ -33,7 +33,7 @@ const TodoItem = ({ todo }: { todo: Todo }) => {
 		<div className="border rounded-md p-4 space-y-5">
 			<div>
 				<h5>{todo.name} </h5>
-				<p>teszt: {safeFormatDate("2024-01-0522:22:10", "yyyy-MM-dd h:i:s")}</p>
+				<p>teszt: {safeFormatDate("2024-01-05T22:22:10", "yyyy-MM-dd h:i:s")}</p>
 				<p className="text-sm text-muted-foreground">Egyszeri dátum: {todo.date}</p>
 				<p className="text-sm text-muted-foreground">
 					Dátum tartomány: {todo.date_range.from} - {todo.date_range.to}

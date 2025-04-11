@@ -132,7 +132,7 @@ const SubCategoryColumns = memo(({ category }: { category: Category }) => {
 
 					{/* Harmadik szintű kategóriák */}
 					{subcategory.children && subcategory.children.length > 0 && (
-						<ul className="[&>li]:hover:bg-accent [&>li]:transition-colors [&>li]:rounded-xs">
+						<ul className="[&>li]:hover:bg-muted [&>li]:transition-colors [&>li]:rounded-xs">
 							{subcategory.children
 								.slice(0, subcategory.child_limit || subcategory.children.length)
 								.map((thirdLevel) => (
