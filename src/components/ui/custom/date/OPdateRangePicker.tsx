@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog"; // új importok mobilhoz
 import { CalendarIcon, XCircleIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 import { parseDate, formatDateRange, dateRangeToString } from "@/components/ui/custom/date/date";
@@ -29,11 +30,13 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 	placeholder = "Válasszon dátumtartományt",
 	months = 2,
 	disabled,
+	minDate,
+	maxDate,
 	className = "",
 	returnAsString = false,
 	isError = false,
 }) => {
-	// Állapot a popover nyitott/zárt állapotához
+	// Állapot a dialog/popover nyitott/zárt állapotához
 	const [open, setOpen] = useState(false);
 
 	// Dátumtartomány parseolása
@@ -51,6 +54,7 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 		return value as DateRange;
 	};
 
+	// Ellenőrzés, hogy mobilról vagy asztali eszközről érkezik-e a kérés
 	const isMobile = useMediaQuery("(max-width: 768px)");
 
 	// A value biztonságos konvertálása DateRange típusra
@@ -67,7 +71,7 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 			onChange(newRange);
 		}
 
-		// Ha kiválasztották a teljes tartományt, zárjuk be a popover-t
+		// Ha kiválasztották a teljes tartományt, zárjuk be a dialog/popover-t
 		if (newRange?.from && newRange?.to) {
 			setTimeout(() => setOpen(false), 100);
 		}
@@ -83,54 +87,114 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 	// Gomb feliratának meghatározása
 	const buttonText = safeValue?.from ? formatDateRange(safeValue) : <span>{placeholder}</span>;
 
-	return (
-		<Popover open={open} onOpenChange={setOpen}>
-			<PopoverTrigger asChild>
-				<Button
-					type="button"
-					variant="outline"
-					className={cn(
-						"h-13 justify-start text-left font-normal",
-						"op-input-element",
-						!safeValue?.from ? "text-muted-foreground" : "",
-						isError && "border-destructive border-1",
-						className
-					)}
-					aria-expanded={open}
-				>
-					<span className="truncate">{buttonText}</span>
-					<div className="ml-auto flex gap-1 opacity-50">
-						{(safeValue?.from || safeValue?.to) && (
-							<span
-								role="button"
-								tabIndex={0}
-								onClick={handleClear}
-								onTouchEnd={(e) => {
-									e.preventDefault();
-									handleClear(e as unknown as React.MouseEvent);
-								}}
-								className="flex items-center justify-center rounded-full hover:text-destructive cursor-pointer"
-								aria-label="Törlés"
-							>
-								<XCircleIcon className="h-4 w-4" />
-							</span>
+	// Mobilon Dialog, asztali nézetben Popover használata
+	if (isMobile) {
+		return (
+			<Dialog open={open} onOpenChange={setOpen}>
+				<DialogTrigger asChild>
+					<Button
+						type="button"
+						variant="outline"
+						className={cn(
+							"h-13 justify-start text-left font-normal",
+							"op-input-element",
+							!safeValue?.from ? "text-muted-foreground" : "",
+							isError && "border-destructive border-1",
+							className
 						)}
-						<CalendarIcon className="h-4 w-4" />
-					</div>
-				</Button>
-			</PopoverTrigger>
-			<PopoverContent className="w-auto p-0" align="start">
-				<Calendar
-					mode="range"
-					selected={safeValue}
-					onSelect={handleDateChange}
-					initialFocus
-					numberOfMonths={isMobile ? 1 : months}
-					disabled={disabled}
-					locale={hu}
-					weekStartsOn={1}
-				/>
-			</PopoverContent>
-		</Popover>
-	);
+						aria-expanded={open}
+					>
+						<span className="truncate">{buttonText}</span>
+						<div className="ml-auto flex gap-1 opacity-50">
+							{(safeValue?.from || safeValue?.to) && (
+								<span
+									role="button"
+									tabIndex={0}
+									onClick={handleClear}
+									onTouchEnd={(e) => {
+										e.preventDefault();
+										handleClear(e as unknown as React.MouseEvent);
+									}}
+									className="flex items-center justify-center rounded-full hover:text-destructive cursor-pointer"
+									aria-label="Törlés"
+								>
+									<XCircleIcon className="h-4 w-4" />
+								</span>
+							)}
+							<CalendarIcon className="h-4 w-4" />
+						</div>
+					</Button>
+				</DialogTrigger>
+				<DialogContent className="w-fit p-4">
+					<DialogTitle className="max-w-11/12">Dátumtartomány megadása</DialogTitle>
+					<Calendar
+						mode="range"
+						className="p-1"
+						selected={safeValue}
+						onSelect={handleDateChange}
+						initialFocus
+						numberOfMonths={1} // Mobilon érdemes 1 hónapot megjeleníteni
+						disabled={disabled}
+						fromDate={parseDate(minDate)}
+						toDate={parseDate(maxDate)}
+						locale={hu}
+						weekStartsOn={1}
+					/>
+				</DialogContent>
+			</Dialog>
+		);
+	} else {
+		return (
+			<Popover open={open} onOpenChange={setOpen}>
+				<PopoverTrigger asChild>
+					<Button
+						type="button"
+						variant="outline"
+						className={cn(
+							"h-13 justify-start text-left font-normal",
+							"op-input-element",
+							!safeValue?.from ? "text-muted-foreground" : "",
+							isError && "border-destructive border-1",
+							className
+						)}
+						aria-expanded={open}
+					>
+						<span className="truncate">{buttonText}</span>
+						<div className="ml-auto flex gap-1 opacity-50">
+							{(safeValue?.from || safeValue?.to) && (
+								<span
+									role="button"
+									tabIndex={0}
+									onClick={handleClear}
+									onTouchEnd={(e) => {
+										e.preventDefault();
+										handleClear(e as unknown as React.MouseEvent);
+									}}
+									className="flex items-center justify-center rounded-full hover:text-destructive cursor-pointer"
+									aria-label="Törlés"
+								>
+									<XCircleIcon className="h-4 w-4" />
+								</span>
+							)}
+							<CalendarIcon className="h-4 w-4" />
+						</div>
+					</Button>
+				</PopoverTrigger>
+				<PopoverContent className="w-auto p-0" align="start">
+					<Calendar
+						mode="range"
+						selected={safeValue}
+						onSelect={handleDateChange}
+						initialFocus
+						numberOfMonths={months}
+						disabled={disabled}
+						fromDate={parseDate(minDate)}
+						toDate={parseDate(maxDate)}
+						locale={hu}
+						weekStartsOn={1}
+					/>
+				</PopoverContent>
+			</Popover>
+		);
+	}
 };

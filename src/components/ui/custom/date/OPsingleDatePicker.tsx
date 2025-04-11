@@ -2,14 +2,13 @@ import React from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog"; // Új import a dialoghoz
 import { CalendarIcon, XCircleIcon } from "lucide-react";
 import { parseDate, formatDate, dateToYYYYMMDD } from "@/components/ui/custom/date/date";
 import { hu } from "date-fns/locale";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/lib/helpers/hooks/useMediaQuery";
 
-/**
- * Dátumválasztó komponens tulajdonságai
- */
 interface SingleDatePickerProps {
 	/**
 	 * A kiválasztott dátum értéke, Date objektumként vagy YYYY-MM-DD formátumú stringként
@@ -71,25 +70,6 @@ interface SingleDatePickerProps {
 	isError?: boolean;
 }
 
-/**
- * Egyszerű dátumválasztó komponens, amely egy gombra kattintva egy popoverben jeleníti meg a naptárat.
- * Támogatja mind a Date objektumként, mind a YYYY-MM-DD formátumú stringként való használatot.
- *
- * @example
- * // Alap használat
- * <OPsingleDatePicker
- *   value={selectedDate}
- *   onChange={(date) => setSelectedDate(date)}
- * />
- *
- * @example
- * // String formátumú dátum használata URL paraméterekhez
- * <OPsingleDatePicker
- *   value={dateParam}
- *   onChange={(date) => setDateParam(date as string)}
- *   returnAsString={true}
- * />
- */
 export const OPsingleDatePicker: React.FC<SingleDatePickerProps> = ({
 	value,
 	onChange,
@@ -104,6 +84,9 @@ export const OPsingleDatePicker: React.FC<SingleDatePickerProps> = ({
 }) => {
 	// A value biztonságos konvertálása Date típusra
 	const safeValue = parseDate(value);
+
+	// Ellenőrzés, hogy mobilról (max-width: 768px) vagy asztali eszközről érkezik-e a kérés
+	const isMobile = useMediaQuery("(max-width: 768px)");
 
 	// Dátum változás kezelése
 	const handleDateChange = (newDate?: Date) => {
@@ -122,6 +105,62 @@ export const OPsingleDatePicker: React.FC<SingleDatePickerProps> = ({
 
 	// Gomb feliratának meghatározása
 	const buttonText = safeValue ? formatDate(safeValue) : <span>{placeholder}</span>;
+
+	// Mobil esetén Dialog, asztali nézetben Popover
+	if (isMobile) {
+		return (
+			<Dialog>
+				<DialogTrigger asChild>
+					<Button
+						variant="outline"
+						className={cn(
+							"justify-start text-left font-normal",
+							"op-input-element",
+							!safeValue && "text-muted-foreground",
+							isError && "border-destructive border-1",
+							className
+						)}
+					>
+						<span className="truncate">{buttonText}</span>
+						<div className="ml-auto flex gap-1 opacity-50">
+							{safeValue && (
+								<span
+									role="button"
+									tabIndex={0}
+									onClick={(e) => {
+										e.preventDefault();
+										e.stopPropagation();
+										onChange?.("");
+									}}
+									className="flex items-center justify-center rounded-full hover:text-destructive cursor-pointer"
+									aria-label="Törlés"
+								>
+									<XCircleIcon className="h-4 w-4" />
+								</span>
+							)}
+							<CalendarIcon className="h-4 w-4" />
+						</div>
+					</Button>
+				</DialogTrigger>
+				<DialogContent className="w-fit p-4">
+					<DialogTitle className="max-w-11/12">Dátum kiválasztása</DialogTitle>
+					<Calendar
+						className="p-1"
+						mode="single"
+						selected={safeValue}
+						onSelect={handleDateChange}
+						initialFocus
+						numberOfMonths={months}
+						disabled={disabled}
+						fromDate={parseDate(minDate)}
+						toDate={parseDate(maxDate)}
+						locale={hu}
+						weekStartsOn={1}
+					/>
+				</DialogContent>
+			</Dialog>
+		);
+	}
 
 	return (
 		<Popover>

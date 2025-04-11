@@ -187,7 +187,8 @@ export default function TodoForm() {
 											placeholder="Dátum tartomány"
 											months={2}
 											returnAsString
-											maxDate={new Date(2025, 2, 26)}
+											maxDate={new Date(2025, 6, 26)}
+											minDate={new Date(2024, 6, 26)}
 											isError={!!form.formState.errors.date_range}
 										/>
 									</FormControl>
