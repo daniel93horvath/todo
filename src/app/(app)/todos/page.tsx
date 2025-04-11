@@ -6,6 +6,7 @@ import TodoForm from "./components/TodoFormDialog";
 import TodoItem from "./components/TodoItem";
 import Filter from "./components/Filter";
 import { createURLSearchParams } from "@/lib/helpers/url";
+import { OpInput } from "@/components/ui/custom/input/opInput";
 
 // Loader létrehozása ugyanezzel a konfigurációval
 
@@ -22,6 +23,9 @@ const TodosPage = async ({
 	return (
 		<div className="p-2 container mx-auto space-y-4 mt-15">
 			<h1>Todo lista</h1>
+			<div className="my-8 max-w-sm">
+				<OpInput label="Felhasználó név keresése" type="text" />
+			</div>
 			<Filter />
 			<div className="text-right">
 				<TodoForm />

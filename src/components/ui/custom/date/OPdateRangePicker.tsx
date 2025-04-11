@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -8,98 +8,20 @@ import { DateRange } from "react-day-picker";
 import { parseDate, formatDateRange, dateRangeToString } from "@/components/ui/custom/date/date";
 import { hu } from "date-fns/locale";
 import { cn } from "@/lib/utils";
-import { useMediaQuery } from "@/lib/helpers/hooks/useMediaQuery"; // Importáljuk a meglévő hook-ot
+import { useMediaQuery } from "@/lib/helpers/hooks/useMediaQuery";
 
-/**
- * Dátumtartomány-választó komponens tulajdonságai
- */
 interface DateRangePickerProps {
-	/**
-	 * A kiválasztott dátumtartomány értéke
-	 * Lehet DateRange típus vagy objektum from/to tulajdonságokkal (Date vagy YYYY-MM-DD string formátumban)
-	 */
 	value?: DateRange | { from?: string | Date; to?: string | Date };
-
-	/**
-	 * A dátumtartomány változásakor hívódó callback függvény
-	 * @param range A kiválasztott új dátumtartomány (DateRange objektum vagy string páros a returnAsString értékétől függően)
-	 */
 	onChange?: (range?: DateRange | { from: string; to: string }) => void;
-
-	/**
-	 * A megjelenített placeholder szöveg, ha nincs dátumtartomány kiválasztva
-	 * @default "Válasszon dátumtartományt"
-	 */
 	placeholder?: string;
-
-	/**
-	 * A naptárban megjelenített hónapok száma
-	 * @default 2
-	 */
 	months?: number;
-
-	/**
-	 * Letiltja a teljes dátumválasztót vagy egyes dátumokat
-	 * Boolean esetén a teljes komponenst, függvény esetén a megadott dátumokat tiltja le
-	 */
 	disabled?: boolean | ((date: Date) => boolean);
-
-	/**
-	 * Minimum választható dátum
-	 * Date objektumként vagy YYYY-MM-DD formátumú stringként is megadható
-	 */
 	minDate?: Date | string;
-
-	/**
-	 * Maximum választható dátum
-	 * Date objektumként vagy YYYY-MM-DD formátumú stringként is megadható
-	 */
 	maxDate?: Date | string;
-
-	/**
-	 * A komponenshez adott további CSS osztályok
-	 */
 	className?: string;
-
-	/**
-	 * Ha true, akkor a dátumválasztáskor a kiválasztott értékek YYYY-MM-DD formátumú stringként kerülnek visszaadásra
-	 * Hasznos URL paraméterek vagy API kérések esetén
-	 * @default false
-	 */
 	returnAsString?: boolean;
-
-	/**
-	 * Ha true, akkor hiba van és piros keretet kap
-	 * @default false
-	 */
 	isError?: boolean;
 }
-
-/**
- * Dátumtartomány-választó komponens, amely egy gombra kattintva egy popoverben jeleníti meg a naptárat.
- * Támogatja mind a DateRange objektumként, mind a {from, to} struktúrájú objektumként való használatot,
- * ahol a dátumok lehetnek Date objektumok vagy YYYY-MM-DD formátumú stringek.
- *
- * @example
- * // Alap használat Date objektumokkal
- * <OPdateRangePicker
- *   value={selectedRange}
- *   onChange={(range) => setSelectedRange(range)}
- * />
- *
- * @example
- * // String formátumú dátumok használata URL paraméterekhez
- * <OPdateRangePicker
- *   value={{ from: fromParam, to: toParam }}
- *   onChange={(range) => {
- *     if (range && 'from' in range) {
- *       setFromParam(range.from);
- *       setToParam(range.to);
- *     }
- *   }}
- *   returnAsString={true}
- * />
- */
 
 export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 	value,
@@ -110,9 +32,12 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 	minDate,
 	maxDate,
 	className = "",
-	returnAsString = false, // alapértelmezetten nem konvertálunk. Ha true, akkor a dátumválasztás value stringként kerül tárolásra. PL submitnál az url-be. YYYY-MM-DD
+	returnAsString = false,
 	isError = false,
 }) => {
+	// Állapot a popover nyitott/zárt állapotához
+	const [open, setOpen] = useState(false);
+
 	// Dátumtartomány parseolása
 	const parseDateRange = (value?: DateRangePickerProps["value"]): DateRange | undefined => {
 		if (!value) return undefined;
@@ -125,9 +50,11 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 			};
 		}
 
-		return undefined;
+		return value as DateRange;
 	};
+
 	const isMobile = useMediaQuery("(max-width: 768px)");
+
 	// A value biztonságos konvertálása DateRange típusra
 	const safeValue = parseDateRange(value);
 
@@ -141,14 +68,28 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 		} else {
 			onChange(newRange);
 		}
+
+		// Ha kiválasztották a teljes tartományt, zárjuk be a popover-t
+		if (newRange?.from && newRange?.to) {
+			setTimeout(() => setOpen(false), 100);
+		}
+	};
+
+	// Törlés kezelése
+	const handleClear = (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+		onChange?.(returnAsString ? { from: "", to: "" } : undefined);
 	};
 
 	// Gomb feliratának meghatározása
 	const buttonText = safeValue?.from ? formatDateRange(safeValue) : <span>{placeholder}</span>;
+
 	return (
-		<Popover>
+		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
 				<Button
+					type="button"
 					variant="outline"
 					className={cn(
 						"h-13 justify-start text-left font-normal",
@@ -157,6 +98,7 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 						isError && "border-destructive border-1",
 						className
 					)}
+					aria-expanded={open}
 				>
 					<span className="truncate">{buttonText}</span>
 					<div className="ml-auto flex gap-1 opacity-50">
@@ -164,10 +106,10 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 							<span
 								role="button"
 								tabIndex={0}
-								onClick={(e) => {
+								onClick={handleClear}
+								onTouchEnd={(e) => {
 									e.preventDefault();
-									e.stopPropagation();
-									onChange?.({ from: "", to: "" });
+									handleClear(e as unknown as React.MouseEvent);
 								}}
 								className="flex items-center justify-center rounded-full hover:text-destructive cursor-pointer"
 								aria-label="Törlés"
@@ -179,7 +121,7 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 					</div>
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className="w-auto p-0">
+			<PopoverContent className="w-auto p-0" align="start">
 				<Calendar
 					mode="range"
 					selected={safeValue}

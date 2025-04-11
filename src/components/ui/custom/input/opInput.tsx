@@ -30,7 +30,7 @@ export function OpInput({
 	);
 
 	return (
-		<div className="relative w-full">
+		<div className="relative w-full h-fit">
 			<Input
 				id={id}
 				placeholder=" "
