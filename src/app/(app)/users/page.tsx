@@ -1,7 +1,7 @@
 import { fetchGetPaginated } from "@/lib/api/fetch";
 import UsersTable from "./components/UsersTable";
 import { User } from "./schema";
-import OPpagination from "@/components/custom/opPagination";
+import OPpagination from "@/components/ui/custom/opPagination";
 import { createURLSearchParams } from "@/lib/helpers/url";
 import SearchUsers from "./components/SearchUsers";
 import { Suspense } from "react";
