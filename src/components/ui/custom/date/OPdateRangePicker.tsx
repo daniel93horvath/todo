@@ -29,8 +29,6 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 	placeholder = "Válasszon dátumtartományt",
 	months = 2,
 	disabled,
-	minDate,
-	maxDate,
 	className = "",
 	returnAsString = false,
 	isError = false,
@@ -129,8 +127,6 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 					initialFocus
 					numberOfMonths={isMobile ? 1 : months}
 					disabled={disabled}
-					fromDate={parseDate(minDate)}
-					toDate={parseDate(maxDate)}
 					locale={hu}
 					weekStartsOn={1}
 				/>
