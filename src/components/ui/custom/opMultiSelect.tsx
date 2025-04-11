@@ -15,6 +15,8 @@ import {
 	CommandList,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog"; // Új import a dialoghoz
+import { useMediaQuery } from "@/lib/helpers/hooks/useMediaQuery";
 
 export type Option = {
 	value: string;
@@ -43,6 +45,7 @@ export function MultiSelect({
 	disabled,
 }: MultiSelectProps) {
 	const [open, setOpen] = React.useState(false);
+
 	function handleSelect(value: string) {
 		const updatedSelected = selected.includes(value)
 			? selected.filter((item) => item !== value)
@@ -50,23 +53,21 @@ export function MultiSelect({
 		onChange(updatedSelected);
 	}
 
+	const isMobile = useMediaQuery("(max-width: 768px)");
+
 	function handleRemove(e: React.MouseEvent, value: string) {
-		e.stopPropagation(); // Megállítja az esemény buborékolását
-		e.preventDefault(); // Megakadályozza az alapértelmezett viselkedést is
+		e.stopPropagation();
+		e.preventDefault();
 		onChange(selected.filter((item) => item !== value));
 	}
 
-	// Külön függvény csak a Badge komponensnek
+	// Külön függvény a Badge komponens rendereléséhez
 	function renderBadge(value: string) {
 		const option = options.find((option) => option.value === value);
 		if (!option) return null;
 
 		return (
-			<Badge
-				key={value}
-				className="max-w-full flex items-center gap-1 pr-1"
-				title={option.label} // Tooltip megjelenítése a teljes szöveghez
-			>
+			<Badge key={value} className="max-w-full flex items-center gap-1 pr-1" title={option.label}>
 				<span className="truncate max-w-[calc(100%-20px)]">{option.label}</span>
 				<div
 					onClick={(e) => handleRemove(e, value)}
@@ -75,6 +76,67 @@ export function MultiSelect({
 					<XCircleIcon className="h-4 w-4" />
 				</div>
 			</Badge>
+		);
+	}
+
+	// Mobil eszközökön Dialog, asztali nézetben Popover használata
+	if (isMobile) {
+		return (
+			<Dialog open={open} onOpenChange={setOpen}>
+				<DialogTrigger asChild>
+					<Button
+						variant="outline"
+						role="combobox"
+						aria-expanded={open}
+						className={cn(
+							"w-full justify-between p-2 overflow-hidden",
+							"op-input-element",
+							selected.length > 1 ? "!h-auto" : "",
+							isError ? "border-destructive border-1" : "",
+							className
+						)}
+					>
+						<div className="flex flex-wrap gap-1 w-full overflow-hidden">
+							{selected.length > 0 ? (
+								selected.map(renderBadge)
+							) : (
+								<span className="text-muted-foreground">{placeholder}</span>
+							)}
+						</div>
+						<ChevronDown className="h-4 w-4 shrink-0 opacity-50 ml-2" />
+					</Button>
+				</DialogTrigger>
+				<DialogContent className="p-4">
+					<DialogTitle className="max-w-11/12">{placeholder}</DialogTitle>
+
+					<Command>
+						<CommandInput placeholder="Keresés..." className="h-9" />
+						<CommandList>
+							<CommandEmpty>{emptyText}</CommandEmpty>
+							<CommandGroup className="p-3">
+								{options.map((option) => (
+									<CommandItem
+										key={option.value}
+										value={option.value}
+										disabled={disabled}
+										onSelect={() => handleSelect(option.value)}
+									>
+										{option.label}
+										<Check
+											className={cn(
+												"ml-auto h-4 w-4",
+												selected.includes(option.value)
+													? "opacity-100"
+													: "opacity-0"
+											)}
+										/>
+									</CommandItem>
+								))}
+							</CommandGroup>
+						</CommandList>
+					</Command>
+				</DialogContent>
+			</Dialog>
 		);
 	}
 
@@ -108,7 +170,7 @@ export function MultiSelect({
 					<CommandInput placeholder="Keresés..." className="h-9" />
 					<CommandList>
 						<CommandEmpty>{emptyText}</CommandEmpty>
-						<CommandGroup>
+						<CommandGroup className="p-3">
 							{options.map((option) => (
 								<CommandItem
 									key={option.value}

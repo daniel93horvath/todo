@@ -135,7 +135,7 @@ export const OPsingleDatePicker: React.FC<SingleDatePickerProps> = ({
 									className="flex items-center justify-center rounded-full hover:text-destructive cursor-pointer"
 									aria-label="Törlés"
 								>
-									<XCircleIcon className="h-4 w-4" />
+									<XCircleIcon className="h-5 w-5" />
 								</span>
 							)}
 							<CalendarIcon className="h-4 w-4" />
@@ -143,14 +143,14 @@ export const OPsingleDatePicker: React.FC<SingleDatePickerProps> = ({
 					</Button>
 				</DialogTrigger>
 				<DialogContent className="w-fit p-4">
-					<DialogTitle className="max-w-11/12">Dátum kiválasztása</DialogTitle>
+					<DialogTitle className="max-w-11/12">{placeholder}</DialogTitle>
 					<Calendar
 						className="p-1"
 						mode="single"
 						selected={safeValue}
 						onSelect={handleDateChange}
 						initialFocus
-						numberOfMonths={months}
+						numberOfMonths={isMobile ? 1 : months} // Mobilon érdemes 1 hónapot megjeleníteni
 						disabled={disabled}
 						fromDate={parseDate(minDate)}
 						toDate={parseDate(maxDate)}

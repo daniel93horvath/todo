@@ -118,7 +118,7 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 									className="flex items-center justify-center rounded-full hover:text-destructive cursor-pointer"
 									aria-label="Törlés"
 								>
-									<XCircleIcon className="h-4 w-4" />
+									<XCircleIcon className="h-5 w-5" />
 								</span>
 							)}
 							<CalendarIcon className="h-4 w-4" />
@@ -126,14 +126,14 @@ export const OPdateRangePicker: React.FC<DateRangePickerProps> = ({
 					</Button>
 				</DialogTrigger>
 				<DialogContent className="w-fit p-4">
-					<DialogTitle className="max-w-11/12">Dátumtartomány megadása</DialogTitle>
+					<DialogTitle className="max-w-11/12">{placeholder}</DialogTitle>
 					<Calendar
 						mode="range"
 						className="p-1"
 						selected={safeValue}
 						onSelect={handleDateChange}
 						initialFocus
-						numberOfMonths={1} // Mobilon érdemes 1 hónapot megjeleníteni
+						numberOfMonths={isMobile ? 1 : months} // Mobilon érdemes 1 hónapot megjeleníteni
 						disabled={disabled}
 						fromDate={parseDate(minDate)}
 						toDate={parseDate(maxDate)}
