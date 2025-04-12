@@ -72,9 +72,7 @@ const Header = async () => {
 						<LoginDrawer>
 							<div className="p-2 mt-2 gap-3 flex overflow-auto">
 								<Button variant="outline" asChild>
-									<Link href="https://www.onlinepenztarca.hu/villamajanlatok">
-										Villámajánlatok
-									</Link>
+									<Link href="/villamajanlatok">Villámajánlatok</Link>
 								</Button>
 								<Button variant="outline" asChild>
 									<Link href="https://www.onlinepenztarca.hu/mi-az-onlinepenztarca">

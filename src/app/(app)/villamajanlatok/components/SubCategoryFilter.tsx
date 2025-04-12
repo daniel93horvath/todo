@@ -17,7 +17,7 @@ const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFrom
 							htmlFor={String(subCategory.id)}
 							className="leading-5 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 						>
-							{subCategory.name}{" "}
+							{subCategory.name}
 							<span className="text-xs text-muted-foreground">({subCategory.total})</span>
 						</label>
 					</div>

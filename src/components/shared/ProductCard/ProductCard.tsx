@@ -19,13 +19,13 @@ export default function ProductCard({ product }: { product: Product }) {
 			<div className="flex flex-col absolute top-2 left-2 z-10 gap-2">
 				<Badge
 					variant="outline"
-					className="text-xs bg-accent max-w-[200px] truncate block hover:opacity-40"
+					className="text-xs bg-accent sm:max-w-50 truncate block hover:opacity-40"
 				>
 					{product.partner.nev}
 				</Badge>
 			</div>
-			<CardContent className="p-4 flex sm:flex-col justify-between gap-4">
-				<div className="relative w-full h-40">
+			<CardContent className="p-4 mt-3 sm:mt-0 flex sm:flex-col justify-between gap-4">
+				<div className="relative min-w-35 sm:w-full h-40">
 					<Image
 						src={product.image}
 						alt={product.name}
