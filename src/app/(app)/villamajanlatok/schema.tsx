@@ -2,6 +2,15 @@
  * Partner entitás típusdefiníciója
  * Az onlinepenztarca.hu API-tól érkező partner adatok modellje
  */
+
+export type subCategoriesFromProducts = {
+	id: number;
+	image: string;
+	name: string;
+	total: number;
+	url: string;
+};
+
 export type Partner = {
 	// Azonosítók
 	id: number;
