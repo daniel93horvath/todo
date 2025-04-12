@@ -52,7 +52,7 @@ const Header = async () => {
 					<div className="text-secondary-foreground font-bold text-sm">
 						<div className="flex gap-10 [&>a]:hover:text-primary items-center">
 							<CategoryMenuDesktop initialCategories={categories} />
-							<Link href="#">Villámajánlatok</Link>
+							<Link href="/villamajanlatok">Villámajánlatok</Link>
 							<Link href="#">onlineTombola</Link>
 							<Link href="#">Információ</Link>
 							<ChangeTheme />

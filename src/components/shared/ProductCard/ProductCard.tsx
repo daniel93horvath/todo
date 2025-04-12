@@ -1,41 +1,68 @@
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import * as React from "react";
+import { Card, CardTitle, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import OpIcon from "@/components/branding/opIcon";
 import Image from "next/image";
+import { ShoppingCart } from "lucide-react";
+import { Product } from "@/app/product/schema";
+import { formatNumber } from "@/lib/helpers/number";
 
-type Product = {
-	id: number;
-	name: string;
-};
+export default function ProductCard({ product }: { product: Product }) {
+	// Szerver oldali véletlenszerű leárazás generálás
+	// Ez minden rendereléskor újra lefut, de szerver oldali komponenseknél ez nem probléma
+	const hasDiscount = Math.random() < 0.4;
+	const originalPrice = hasDiscount ? Math.round(product.price * 1.4) : null;
 
-const ProductCard = ({ product }: { product: Product }) => {
 	return (
-		<Card className="max-w-[280px]">
-			<CardHeader>
-				<CardTitle>Card Title</CardTitle>
-				<CardDescription>Card Description</CardDescription>
-			</CardHeader>
-			<CardContent className="flex-col justify-center">
-				<Image
-					src="https://tapetaposzter.hu/shop_ordered/49683/shop_pic/C5-2417S17.jpg"
-					width={200}
-					height={200}
-					alt={product.name || "Termék kép"}
-					className="rounded-sm"
-				/>
-				<p className="text-sm">{product.name}</p>
-				<div></div>
+		<Card className="w-full py-0 max-w-xs overflow-hidden border rounded-sm shadow-none relative">
+			<div className="flex flex-col absolute top-2 left-2 z-10 gap-2">
+				<Badge
+					variant="outline"
+					className="text-xs bg-accent max-w-[200px] truncate block hover:opacity-40"
+				>
+					{product.partner.nev}
+				</Badge>
+			</div>
+			<CardContent className="p-4 flex flex-col justify-between gap-4">
+				<div className="relative w-full h-40">
+					<Image
+						src={product.image}
+						fill
+						alt={product.name}
+						className="object-contain object-top w-full h-full"
+					/>
+				</div>
+				<CardTitle className="text-sm h-10 line-clamp-2 text-muted-foreground ">
+					{product.name}
+				</CardTitle>
+				<div className="flex flex-col gap-2">
+					<div className="flex gap-3">
+						<Badge className="bg-lime-500 text-white rounded-[4px] h-7 flex items-center">
+							Készleten
+						</Badge>
+						<Badge className="bg-secondary text-accent rounded-[4px] h-7 flex items-center">
+							<OpIcon className="mb-[0.8px]" />
+							-1.500 Ft
+						</Badge>
+					</div>
+
+					<div className="flex items-center space-x-2">
+						<p className="text-lg font-extrabold text-secondary">
+							{formatNumber(product.price)} Ft
+						</p>
+						{hasDiscount && (
+							<p className="text-sm line-through text-muted-foreground">
+								{originalPrice !== null && `${formatNumber(originalPrice)} Ft`}
+							</p>
+						)}
+					</div>
+					<Button className="w-full">
+						<ShoppingCart />
+						Kosárba
+					</Button>
+				</div>
 			</CardContent>
-			<CardFooter>
-				<p>Card Footer</p>
-			</CardFooter>
 		</Card>
 	);
-};
-
-export default ProductCard;
+}

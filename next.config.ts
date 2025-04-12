@@ -6,15 +6,11 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "onlinepenztarca.hu",
+				hostname: "**",
 			},
 			{
-				protocol: "https",
-				hostname: "www.onlinepenztarca.hu",
-			},
-			{
-				protocol: "https",
-				hostname: "tapetaposzter.hu",
+				protocol: "http",
+				hostname: "**",
 			},
 		],
 	},
