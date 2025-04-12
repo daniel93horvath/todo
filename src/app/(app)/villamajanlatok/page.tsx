@@ -1,7 +1,7 @@
 import ProductCard from "@/components/shared/ProductCard/ProductCard";
 import { fetchGet } from "@/lib/api/fetch";
 import { Product } from "@/app/product/schema";
-import FilterSidebar from "./FilterSidebar";
+import FilterSidebar from "./components/FilterSidebar";
 import { subCategoriesFromProducts } from "./schema";
 
 const FlashDealsPage = async () => {
@@ -23,7 +23,7 @@ const FlashDealsPage = async () => {
 			<div className="my-6">Rövid leírás a Villámajánlatokról!</div>
 
 			<div className="grid md:grid-cols-[300px_1fr] gap-4">
-				<FilterSidebar subCategories={data?.subCategoriesFromProducts} />
+				<FilterSidebar subCategories={data?.subCategoriesFromProducts || []} />
 				<main>
 					<div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
 						{products.map((product) => (

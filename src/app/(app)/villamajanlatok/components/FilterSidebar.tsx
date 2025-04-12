@@ -1,15 +1,14 @@
 import React from "react";
-import { subCategoriesFromProducts } from "./schema";
+import { subCategoriesFromProducts } from "../schema";
+import SubCategoryFilter from "./SubCategoryFilter";
+import { Separator } from "@/components/ui/separator";
 
 const FilterSidebar = ({ subCategories }: { subCategories: subCategoriesFromProducts[] }) => {
 	return (
 		<aside className="hidden md:block bg-card p-4 rounded-md border">
-			<div>
-				<h5>Kategóriák</h5>
-				{subCategories.map((subCategory, index: number) => (
-					<div key={index}>{subCategory.name}</div>
-				))}
-			</div>
+			<SubCategoryFilter subCategories={subCategories} />
+			<br />
+			<Separator />
 		</aside>
 	);
 };

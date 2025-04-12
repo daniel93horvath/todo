@@ -39,7 +39,7 @@ export default function ProductCard({ product }: { product: Product }) {
 					<CardTitle className="text-sm h-10 line-clamp-2 text-muted-foreground ">
 						{product.name}
 					</CardTitle>
-					<div className="flex gap-3">
+					<div className="flex flex-wrap gap-3">
 						<Badge className="bg-lime-500 text-white rounded-[4px] h-7">Készleten</Badge>
 						<Badge className="bg-secondary text-accent rounded-[4px] h-7">
 							<OpIcon className="mb-[0.8px]" />
@@ -47,7 +47,7 @@ export default function ProductCard({ product }: { product: Product }) {
 						</Badge>
 					</div>
 
-					<div className="flex items-center space-x-2">
+					<div className="flex flex-wrap items-center space-x-2">
 						<p className="text-lg font-extrabold text-secondary">
 							{formatNumber(product.price)} Ft
 						</p>
