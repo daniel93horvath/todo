@@ -4,18 +4,18 @@ import { Product } from "@/app/product/schema";
 import FilterSidebar from "./components/FilterSidebar";
 import { Prices, Stocks, subCategoriesFromProducts } from "./schema";
 
-const FlashDealsPage = async () => {
+const Page = async ({ params }: { params: { url: string } }) => {
+	const categoryUrl = await params;
 	const { data } = await fetchGet<{
 		products: Product[];
 		total: number;
 		subCategoriesFromProducts: subCategoriesFromProducts[];
 		prices: Prices;
 		stocks: Stocks;
-	}>("/categories/dinamic/hutok-es-fagyasztok", {
+	}>(`/categories/dinamic/${categoryUrl.url}`, {
 		baseUrl: "https://www.onlinepenztarca.hu",
 		cacheOptions: { revalidate: 3600 },
 	});
-	console.log(data);
 	// Alapértelmezett üres tömb, ha nincs data vagy products
 	if (!data) {
 		return <div className="mx-auto w-full md:px-5">Nincs terméktalálat</div>;
@@ -44,4 +44,4 @@ const FlashDealsPage = async () => {
 	);
 };
 
-export default FlashDealsPage;
+export default Page;

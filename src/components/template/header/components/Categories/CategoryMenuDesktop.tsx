@@ -117,7 +117,7 @@ const SubCategoryColumns = memo(({ category }: { category: Category }) => {
 		<ul className="columns-3 gap-5 w-full space-y-4 p-2">
 			{(category.children || []).map((subcategory) => (
 				<li key={subcategory.id} className="space-y-2 ">
-					<Link href={`/kategoria/${subcategory.url}`} className="flex gap-2 text-sm m-0">
+					<Link href={`/kategoriak/${subcategory.url}`} className="flex gap-2 text-sm m-0">
 						{subcategory.icon && (
 							<Image
 								src={`https://dani.opteszt.hu/images/categories/icons/${subcategory.icon}`}
@@ -138,7 +138,7 @@ const SubCategoryColumns = memo(({ category }: { category: Category }) => {
 								.map((thirdLevel) => (
 									<li key={thirdLevel.id}>
 										<Link
-											href={`/kategoria/${thirdLevel.url}`}
+											href={`/kategoriak/${thirdLevel.url}`}
 											className="text-[14px] text-muted-foreground font-normal"
 										>
 											{thirdLevel.name}

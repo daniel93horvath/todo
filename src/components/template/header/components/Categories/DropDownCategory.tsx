@@ -33,7 +33,7 @@ export const DropDownCategory = memo(
 										className="w-4 h-4"
 									/>
 								)}
-								<Link href={`/${category.url}`}>{category.name}</Link>
+								<Link href={`/kategoriak/${category.url}`}>{category.name}</Link>
 							</span>
 							{(category.children?.length || 0) > 0 && (
 								<ChevronRightIcon className="h-4 w-4" />

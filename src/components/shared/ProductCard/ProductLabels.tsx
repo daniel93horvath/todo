@@ -29,7 +29,7 @@ const STOCK_STATUS: Record<StockStatusKey, StockStatus> = {
 	ON_ORDER: {
 		className: "bg-gray-500 text-white",
 		title: "Rendelésre",
-		tooltip: "onlinePénztárcádból fizethető összeg",
+		tooltip: "Ez a termék megrendelhető",
 	},
 };
 
@@ -67,6 +67,7 @@ const ProductStockBadge = ({ className, stock }: { stock: number; className?: st
 };
 
 const ProductSaveMoneyBadge = ({ price }: { price: number }) => {
+	if (price < 10000) return;
 	return (
 		<TooltipWrapper content="onlinePénztárcádból fizethető összeg">
 			<ProductBaseBadge className="bg-secondary text-accent">
