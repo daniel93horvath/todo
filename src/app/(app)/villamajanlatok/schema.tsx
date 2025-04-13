@@ -68,3 +68,18 @@ export type Partner = {
 	havi_egyedi_oldal_latogato?: number;
 	vevo_ertkelesek_jellemzo_erteke?: number;
 };
+
+export type Prices = {
+	min: number;
+	max: number;
+	ranges: {
+		min: number;
+		max: number;
+		total: number;
+	}[];
+};
+
+export type Stocks = {
+	full: number;
+	none: number;
+};

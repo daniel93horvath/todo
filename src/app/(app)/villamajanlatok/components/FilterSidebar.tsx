@@ -1,18 +1,38 @@
 import React from "react";
-import { subCategoriesFromProducts } from "../schema";
+import { Prices, Stocks, subCategoriesFromProducts } from "../schema";
 import SubCategoryFilter from "./SubCategoryFilter";
 import { Separator } from "@/components/ui/separator";
 import PriceFilter from "./PriceFilter";
+import StocksFilter from "./StocksFilter";
 
-const FilterSidebar = ({ subCategories }: { subCategories: subCategoriesFromProducts[] }) => {
+const FilterSidebar = ({
+	subCategories,
+	prices,
+	stocks,
+}: {
+	subCategories: subCategoriesFromProducts[];
+	prices: Prices;
+	stocks: Stocks;
+}) => {
 	return (
-		<aside className="hidden md:block bg-card p-4 rounded-md space-y-3 border">
+		// <div className="hidden md:block space-y-5">
+		// 	<div className="bg-card rounded-lg p-4 border">
+		// 		<SubCategoryFilter subCategories={subCategories} />
+		// 	</div>
+		// 	<div className="bg-card rounded-lg p-4 border">
+		// 		<PriceFilter prices={prices} />
+		// 	</div>
+		// </div>
+		<aside className="hidden md:block bg-card p-4 rounded-md border">
 			<SubCategoryFilter subCategories={subCategories} />
 			<br />
 			<Separator />
-			<PriceFilter />
+			<br />
+			<PriceFilter prices={prices} />
 			<br />
 			<Separator />
+			<br />
+			<StocksFilter stocks={stocks} />
 		</aside>
 	);
 };
