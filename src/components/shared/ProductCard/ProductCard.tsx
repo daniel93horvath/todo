@@ -2,11 +2,11 @@ import * as React from "react";
 import { Card, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import OpIcon from "@/components/branding/opIcon";
 import Image from "next/image";
 import { ShoppingCart } from "lucide-react";
 import { Product } from "@/app/product/schema";
 import { formatNumber } from "@/lib/helpers/number";
+import ProductLabels from "./ProductLabels";
 
 export default function ProductCard({ product }: { product: Product }) {
 	// Szerver oldali véletlenszerű leárazás generálás
@@ -40,13 +40,7 @@ export default function ProductCard({ product }: { product: Product }) {
 						{product.name}
 					</CardTitle>
 					<div className="flex flex-wrap gap-2 sm:gap-3">
-						<Badge className="bg-lime-500 text-white rounded-[4px] px-[3px] h-6 sm:h-7">
-							Készleten
-						</Badge>
-						<Badge className="bg-secondary text-accent rounded-[4px] px-[3px] h-6 sm:h-7">
-							<OpIcon className="mb-[0.8px]" />
-							{formatNumber(Math.floor(product.price / 10000) * 500)} Ft
-						</Badge>
+						<ProductLabels product={product} />
 					</div>
 
 					<div className="flex flex-wrap items-center space-x-2">

@@ -11,12 +11,11 @@ const FlashDealsPage = async () => {
 		subCategoriesFromProducts: subCategoriesFromProducts[];
 	}>("/categories/dinamic/hutok-es-fagyasztok", {
 		baseUrl: "https://www.onlinepenztarca.hu",
-		cacheOptions: { revalidate: 0 },
+		cacheOptions: { revalidate: 3600 },
 	});
 
 	// Alapértelmezett üres tömb, ha nincs data vagy products
 	const products = data?.products || [];
-	console.log(data);
 	return (
 		<div className="mx-auto w-full md:px-5">
 			<h1>Villámajánlatok</h1>
