@@ -25,23 +25,25 @@ export default function ProductCard({ product }: { product: Product }) {
 				</Badge>
 			</div>
 			<CardContent className="p-4 mt-3 sm:mt-0 flex sm:flex-col justify-between gap-4">
-				<div className="relative min-w-35 sm:w-full h-40">
+				<div className="relative min-w-32 sm:w-full h-40">
 					<Image
 						src={product.image}
 						alt={product.name}
 						fill
 						sizes="(max-width: 768px) 100vw, 50vw"
-						className="object-contain object-bottom mt-2 sm:mt-0 sm:object-top w-full h-full"
+						className="object-contain object-center mt-2 sm:mt-0 sm:object-top w-full h-full"
 					/>
 				</div>
 
 				<div className="flex flex-col gap-2">
-					<CardTitle className="text-sm h-10 line-clamp-2 text-muted-foreground ">
+					<CardTitle className="text-sm h-10 line-clamp-2 text-muted-foreground break-all overflow-wrap-anywhere">
 						{product.name}
 					</CardTitle>
-					<div className="flex flex-wrap gap-3">
-						<Badge className="bg-lime-500 text-white rounded-[4px] h-7">Készleten</Badge>
-						<Badge className="bg-secondary text-accent rounded-[4px] h-7">
+					<div className="flex flex-wrap gap-2 sm:gap-3">
+						<Badge className="bg-lime-500 text-white rounded-[4px] px-[3px] h-6 sm:h-7">
+							Készleten
+						</Badge>
+						<Badge className="bg-secondary text-accent rounded-[4px] px-[3px] h-6 sm:h-7">
 							<OpIcon className="mb-[0.8px]" />
 							{formatNumber(Math.floor(product.price / 10000) * 500)} Ft
 						</Badge>
