@@ -4,7 +4,7 @@ import { Product } from "@/app/product/schema";
 import FilterSidebar from "./components/FilterSidebar";
 import { Prices, Stocks, subCategoriesFromProducts } from "./schema";
 
-const Page = async ({ params }: { params: { url: string } }) => {
+const Page = async ({ params }: { params: Promise<{ url: string }> }) => {
 	const categoryUrl = await params;
 	const { data } = await fetchGet<{
 		products: Product[];
