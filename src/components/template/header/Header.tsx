@@ -55,6 +55,7 @@ const Header = async () => {
 							<Link href="/villamajanlatok">Villámajánlatok</Link>
 							<Link href="#">onlineTombola</Link>
 							<Link href="#">Információ</Link>
+							<Link href="#">{new Date().toLocaleString("hu-HU")}</Link>
 							<ChangeTheme />
 						</div>
 					</div>

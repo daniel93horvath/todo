@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Category } from "./schema";
 import Image from "next/image";
-import Link from "next/link";
 import { DropDownCategory } from "./DropDownCategory";
 
 export function CategoryMenuDesktop({ initialCategories }: { initialCategories: Category[] }) {
@@ -117,7 +116,7 @@ const SubCategoryColumns = memo(({ category }: { category: Category }) => {
 		<ul className="columns-3 gap-5 w-full space-y-4 p-2">
 			{(category.children || []).map((subcategory) => (
 				<li key={subcategory.id} className="space-y-2 ">
-					<Link href={`/kategoriak/${subcategory.url}`} className="flex gap-2 text-sm m-0">
+					<a href={`/kategoriak/${subcategory.url}`} className="flex gap-2 text-sm m-0">
 						{subcategory.icon && (
 							<Image
 								src={`https://dani.opteszt.hu/images/categories/icons/${subcategory.icon}`}
@@ -128,7 +127,7 @@ const SubCategoryColumns = memo(({ category }: { category: Category }) => {
 							/>
 						)}
 						{subcategory.name}
-					</Link>
+					</a>
 
 					{/* Harmadik szintű kategóriák */}
 					{subcategory.children && subcategory.children.length > 0 && (
@@ -137,12 +136,12 @@ const SubCategoryColumns = memo(({ category }: { category: Category }) => {
 								.slice(0, subcategory.child_limit || subcategory.children.length)
 								.map((thirdLevel) => (
 									<li key={thirdLevel.id}>
-										<Link
+										<a
 											href={`/kategoriak/${thirdLevel.url}`}
 											className="text-[14px] text-muted-foreground font-normal"
 										>
 											{thirdLevel.name}
-										</Link>
+										</a>
 									</li>
 								))}
 						</ul>

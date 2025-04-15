@@ -4,7 +4,6 @@ import { memo } from "react";
 
 import { DropDownCategoryProps } from "./schema";
 import { ChevronRightIcon } from "lucide-react";
-import Link from "next/link";
 
 export const DropDownCategory = memo(
 	({ categories, activeCategory, onCategoryHover, isMobile = false }: DropDownCategoryProps) => {
@@ -33,7 +32,7 @@ export const DropDownCategory = memo(
 										className="w-4 h-4"
 									/>
 								)}
-								<Link href={`/kategoriak/${category.url}`}>{category.name}</Link>
+								<a href={`/kategoriak/${category.url}`}>{category.name}</a>
 							</span>
 							{(category.children?.length || 0) > 0 && (
 								<ChevronRightIcon className="h-4 w-4" />

@@ -4,6 +4,7 @@ import { subCategoriesFromProducts } from "../schema";
 import FilterLabel from "./FilterLabel";
 
 const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFromProducts[] }) => {
+	if (subCategories.length < 1) return;
 	return (
 		<div className="space-y-3">
 			<h5>Kategóriák</h5>
