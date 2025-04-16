@@ -1,5 +1,4 @@
 import { Partner } from "../(app)/kategoriak/[url]/schema";
-
 export type Product = {
 	// Azonosítók
 	product_id: string;

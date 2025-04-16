@@ -15,7 +15,6 @@ const TodosPage = async ({
 }) => {
 	const params = await searchParams;
 	const queryParams = createURLSearchParams(params);
-	console.log(queryParams.toString());
 	const { data: todos = [] } = await fetchGet<Todo[]>(`/todos?${queryParams.toString()}`);
 
 	return (

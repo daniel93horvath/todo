@@ -13,7 +13,6 @@ export default function ProductCard({ product }: { product: Product }) {
 	// Ez minden rendereléskor újra lefut, de szerver oldali komponenseknél ez nem probléma
 	const hasDiscount = Math.random() < 0.4;
 	const originalPrice = hasDiscount ? Math.round(product.price * 1.4) : null;
-
 	return (
 		<Card className="w-full py-0 sm:max-w-xs overflow-hidden border rounded-sm shadow-none relative">
 			<div className="flex flex-col absolute top-2 left-2 z-10 gap-2">

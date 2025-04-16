@@ -1,46 +1,47 @@
 import ProductCard from "@/components/shared/ProductCard/ProductCard";
 import { fetchGet } from "@/lib/api/fetch";
 import { Product } from "@/app/product/schema";
-import FilterSidebar from "./components/FilterSidebar";
-import { Prices, Stocks, subCategoriesFromProducts } from "./schema";
+import { Suspense } from "react";
 
-const Page = async ({ params }: { params: Promise<{ url: string }> }) => {
+const Page = async ({
+	params,
+	searchParams,
+}: {
+	params: Promise<{ url: string }>;
+	searchParams: Promise<{ [key: string]: string | string[] }>;
+}) => {
 	const categoryUrl = await params;
+	const urlParams = await searchParams;
+
+	//console.log(createURLSearchParams(urlParams).toString());
+	const hasProductFilter = "product-filter" in urlParams;
+	const endpoint = hasProductFilter
+		? "/product-list/filter?pagecategory=hutok-es-fagyasztok&category[]=hutogep-alkatresztartozek"
+		: `/categories/dinamic/${categoryUrl.url}`;
+
 	const { data } = await fetchGet<{
 		products: Product[];
 		total: number;
-		subCategoriesFromProducts: subCategoriesFromProducts[];
-		prices: Prices;
-		stocks: Stocks;
-	}>(`/categories/dinamic/${categoryUrl.url}`, {
+	}>(endpoint, {
 		baseUrl: "https://www.onlinepenztarca.hu",
 		cacheOptions: { revalidate: 3600 },
 	});
+
 	// Alapértelmezett üres tömb, ha nincs data vagy products
 	if (!data) {
 		return <div className="mx-auto w-full md:px-5">Nincs terméktalálat</div>;
 	}
 	const products = data.products || [];
 	return (
-		<div className="mx-auto w-full md:px-5">
-			<h1>Villámajánlatok</h1>
-			<div className="my-6">Rövid leírás a Villámajánlatokról!</div>
-
-			<div className="grid md:grid-cols-[300px_1fr] gap-4">
-				<FilterSidebar
-					subCategories={data.subCategoriesFromProducts || []}
-					prices={data.prices}
-					stocks={data.stocks}
-				/>
-				<main>
-					<div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-						{products.map((product) => (
-							<ProductCard key={product.elastic_id} product={product} />
-						))}
-					</div>
-				</main>
+		<main>
+			<div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+				{products.map((product) => (
+					<Suspense key={product.elastic_id} fallback="Töltés">
+						<ProductCard key={product.elastic_id} product={product} />
+					</Suspense>
+				))}
 			</div>
-		</div>
+		</main>
 	);
 };
 
