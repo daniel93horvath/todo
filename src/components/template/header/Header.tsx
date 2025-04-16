@@ -15,9 +15,9 @@ import { Button } from "@/components/ui/button";
 import { ClientHeaderScrollFeature } from "./ClientHeaderScrollFeature";
 
 const Header = async () => {
-	const { data: categories = [] } = await fetchGet<Category[]>("/get-onlinepenztarca-categories", {
+	const { data: categories = [] } = await fetchGet<Category[]>("/api/v3/categories", {
 		baseUrl: "https://www.onlinepenztarca.hu",
-		cacheOptions: { revalidate: 3600 },
+		cacheOptions: { revalidate: 0 },
 	});
 	return (
 		<ClientHeaderScrollFeature>

@@ -1,29 +1,41 @@
+"use client";
 import { Checkbox } from "@/components/ui/checkbox";
 import React from "react";
 import { subCategoriesFromProducts } from "../schema";
 import FilterLabel from "./FilterLabel";
-import Link from "next/link";
+import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
+import { usePathname, useRouter } from "next/navigation";
 
 const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFromProducts[] }) => {
-	if (subCategories.length < 1) return;
+	const queryParams = useQueryParams();
+	const router = useRouter();
+	const pathname = usePathname();
 
+	const handleChecked = (isChecked: boolean, url: string) => {
+		const updatedUrl = isChecked
+			? queryParams.appendQueryParams({ "category[]": url })
+			: queryParams.removeQueryParamItem("category[]", url);
+
+		router.replace(decodeURI(`${pathname}?${updatedUrl.toString()}`));
+	};
 	return (
-		<div className="space-y-3">
-			<h5>Kategóriák</h5>
-			{subCategories.map((subCategory, index: number) => (
-				<div key={index}>
-					<Link
-						href={`/kategoriak/hutok-es-fagyasztok?category[]=${subCategory.url}`}
-						className="flex items-center space-x-2"
-					>
-						<Checkbox className="w-5 h-5 border shadow-none" id={String(subCategory.id)} />
+		subCategories.length > 1 && (
+			<div className="space-y-3">
+				<h5>Kategóriák</h5>
+				{subCategories.map((subCategory, index: number) => (
+					<div key={index} className="flex items-center space-x-2">
+						<Checkbox
+							className="w-5 h-5 border shadow-none"
+							id={String(subCategory.id)}
+							onCheckedChange={(value: boolean) => handleChecked(value, subCategory.url)}
+						/>
 						<FilterLabel htmlFor={String(subCategory.id)} productNumber={subCategory.total}>
 							{subCategory.name}
 						</FilterLabel>
-					</Link>
-				</div>
-			))}
-		</div>
+					</div>
+				))}
+			</div>
+		)
 	);
 };
 
