@@ -17,7 +17,7 @@ import { ClientHeaderScrollFeature } from "./ClientHeaderScrollFeature";
 const Header = async () => {
 	const { data: categories = [] } = await fetchGet<Category[]>("/api/v3/categories", {
 		baseUrl: "https://www.onlinepenztarca.hu",
-		cacheOptions: { revalidate: 0 },
+		cacheOptions: { revalidate: 3600 },
 	});
 	return (
 		<ClientHeaderScrollFeature>
