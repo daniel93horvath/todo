@@ -19,7 +19,7 @@ const Layout = async ({
 		subCategoriesFromProducts: subCategoriesFromProducts[];
 		prices: Prices;
 		stocks: Stocks;
-	}>(`/categories/dinamic/${urlParams.url}`, {
+	}>(`/api/v3/categories/${urlParams.url}/products`, {
 		baseUrl: "https://www.onlinepenztarca.hu",
 		cacheOptions: { revalidate: 3600 },
 	});
