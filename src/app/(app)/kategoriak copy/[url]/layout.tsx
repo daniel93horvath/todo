@@ -24,7 +24,9 @@ const Layout = async ({
 		cacheOptions: { revalidate: 3600 },
 	});
 	// Alapértelmezett üres tömb, ha nincs data vagy products
-	if (!data) return;
+	if (!data) {
+		return <div className="mx-auto w-full md:px-5">Nincs terméktalálat</div>;
+	}
 	return (
 		<div className="mx-auto w-full md:px-5">
 			<h1>Villámajánlatok</h1>

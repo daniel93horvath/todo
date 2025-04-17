@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Prices } from "../schema";
 import { formatNumber } from "@/lib/helpers/number";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -25,10 +25,6 @@ const PriceFilter = ({ prices }: { prices: Prices }) => {
 	const debouncedMinPrice = useDebounce<string>(minPrice, 500);
 	const debouncedMaxPrice = useDebounce<string>(maxPrice, 500);
 
-	// A komponens első renderelésének elkerülése érdekében
-	const didMountMin = useRef(false);
-	const didMountMax = useRef(false);
-
 	// Csak számokat engedünk meg
 	const sanitizeInput = (value: string) => value.replace(/[^0-9]/g, "");
 
@@ -46,12 +42,8 @@ const PriceFilter = ({ prices }: { prices: Prices }) => {
 		}
 	};
 
-	// URL frissítése a debounced min értékkel
+	// URL frissítése a debounced értékekkel
 	useEffect(() => {
-		if (!didMountMin.current) {
-			didMountMin.current = true;
-			return;
-		}
 		const updatedUrl = updateQueryParam.updateQueryParams({
 			"price_range[]": "",
 			min_price: debouncedMinPrice,
@@ -60,12 +52,7 @@ const PriceFilter = ({ prices }: { prices: Prices }) => {
 		// eslint-disable-next-line
 	}, [debouncedMinPrice]);
 
-	// URL frissítése a debounced max értékkel
 	useEffect(() => {
-		if (!didMountMax.current) {
-			didMountMax.current = true;
-			return;
-		}
 		const updatedUrl = updateQueryParam.updateQueryParams({
 			"price_range[]": "",
 			max_price: debouncedMaxPrice,
