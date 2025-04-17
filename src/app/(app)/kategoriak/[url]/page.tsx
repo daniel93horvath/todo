@@ -31,8 +31,6 @@ const Page = async ({
 		cacheOptions: { revalidate: 3600 },
 	});
 
-	console.log(data);
-
 	// Alapértelmezett üres tömb, ha nincs data vagy products
 	if (!data) {
 		return <div className="mx-auto w-full md:px-5">Nincs terméktalálat</div>;

@@ -7,17 +7,21 @@ import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
 import { usePathname, useRouter } from "next/navigation";
 
 const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFromProducts[] }) => {
-	const queryParams = useQueryParams();
+	const checkedCategories = useQueryParams().searchParams.getAll("category[]");
 	const router = useRouter();
 	const pathname = usePathname();
+	const updateQueryParam = useQueryParams();
 
 	const handleChecked = (isChecked: boolean, url: string) => {
-		const updatedUrl = isChecked
-			? queryParams.appendQueryParams({ "category[]": url })
-			: queryParams.removeQueryParamItem("category[]", url);
-
-		router.replace(decodeURI(`${pathname}?${updatedUrl.toString()}`));
+		if (isChecked) {
+			const updatedUrl = updateQueryParam.appendQueryParams({ "category[]": url });
+			router.replace(decodeURI(`${pathname}?${updatedUrl.toString()}`));
+		} else {
+			const updatedUrl = updateQueryParam.removeQueryParamItem("category[]", url);
+			router.replace(decodeURI(`${pathname}?${updatedUrl.toString()}`));
+		}
 	};
+
 	return (
 		subCategories.length > 1 && (
 			<div className="space-y-3">
@@ -27,6 +31,7 @@ const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFrom
 						<Checkbox
 							className="w-5 h-5 border shadow-none"
 							id={String(subCategory.id)}
+							checked={checkedCategories.includes(subCategory.url)}
 							onCheckedChange={(value: boolean) => handleChecked(value, subCategory.url)}
 						/>
 						<FilterLabel htmlFor={String(subCategory.id)} productNumber={subCategory.total}>
@@ -40,3 +45,5 @@ const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFrom
 };
 
 export default SubCategoryFilter;
+
+//EZJÓ!
