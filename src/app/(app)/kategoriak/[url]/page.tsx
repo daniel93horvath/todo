@@ -32,7 +32,7 @@ async function ProductList({ url }: { url: string }) {
 		total: number;
 	}>(url, {
 		baseUrl: "https://www.onlinepenztarca.hu",
-		cacheOptions: { revalidate: 0 },
+		cacheOptions: { revalidate: 3600 },
 	});
 
 	if (!data || data.products.length < 1) {
