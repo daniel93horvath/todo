@@ -1,4 +1,3 @@
-//src/app/(app)/kategoriak/[url]/schema.tsx
 import { Product } from "@/app/product/schema";
 
 export type subCategoriesFromProducts = {

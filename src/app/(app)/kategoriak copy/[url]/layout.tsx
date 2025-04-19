@@ -11,9 +11,6 @@ const Layout = async ({
 	params: Promise<{ url: string }>;
 }) => {
 	const urlParams = await params;
-
-	console.log("children layout");
-
 	const { data } = await fetchGet<{
 		total: number;
 		subCategoriesFromProducts: subCategoriesFromProducts[];
@@ -44,3 +41,5 @@ const Layout = async ({
 };
 
 export default Layout;
+
+//ez jó!

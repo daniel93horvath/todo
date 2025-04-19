@@ -8,7 +8,7 @@ import { Product } from "@/app/product/schema";
 import { formatNumber } from "@/lib/helpers/number";
 import ProductLabels from "./ProductLabels";
 
-export default function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product }: { product: Product }) {
 	// Szerver oldali véletlenszerű leárazás generálás
 	// Ez minden rendereléskor újra lefut, de szerver oldali komponenseknél ez nem probléma
 	const hasDiscount = Math.random() < 0.4;
@@ -31,6 +31,7 @@ export default function ProductCard({ product }: { product: Product }) {
 						fill
 						sizes="(max-width: 768px) 100vw, 50vw"
 						className="object-contain object-center mt-2 sm:mt-0 sm:object-top w-full h-full"
+						priority={false}
 					/>
 				</div>
 
@@ -61,3 +62,4 @@ export default function ProductCard({ product }: { product: Product }) {
 		</Card>
 	);
 }
+export default React.memo(ProductCard);

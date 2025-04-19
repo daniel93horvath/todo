@@ -1,4 +1,3 @@
-//src/app/(app)/kategoriak/[url]/components/SubCategoryFilter.tsx
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { subCategoriesFromProducts } from "../schema";
