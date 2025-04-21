@@ -1,4 +1,3 @@
-//src/app/(app)/kategoriak/[url]/schema.tsx
 import { Product } from "@/app/product/schema";
 
 export type subCategoriesFromProducts = {
@@ -81,11 +80,38 @@ export type Stocks = {
 	full: number;
 	none: number;
 };
-
+export interface Category {
+	id: number;
+	name: string;
+	level: number;
+	parent: number | null;
+	child_limit: number | null;
+	children: Category[];
+	created_at: string;
+	updated_at: string;
+	description: string | null;
+	end: string | null;
+	icon: string | null;
+	image: string | null;
+	op_category_depth: "main" | "sub" | string; // ha csak ez a 2 érték lehetséges, lehet szűkíteni
+	op_category_id: number;
+	position: number;
+	start: string | null;
+	status: number;
+	total: number;
+	url: string;
+	visible: number;
+}
+export type Filters = {
+	name: string;
+	url: string;
+};
 export type ProductsWithCategories = {
 	prices: Prices;
 	products: Product[];
 	stocks: Stocks;
 	subCategoriesFromProducts: subCategoriesFromProducts[];
 	total: number;
+	filters: Filters[];
+	category: Category;
 };

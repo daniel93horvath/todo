@@ -1,43 +1,53 @@
-import { createURLSearchParams } from "@/lib/helpers/url";
 import { fetchGet } from "@/lib/api/fetch";
-import { StandardApiResponse } from "@/lib/api/schema";
+import { createURLSearchParams } from "@/lib/helpers/url";
 import { ProductsWithCategories } from "./schema";
-import { dehydrate } from "@tanstack/query-core";
-import ProductsSection from "./components/ProductsSection";
-import getQueryClient from "@/lib/react-query/getQueryClient";
-import HydrateClient from "@/lib/react-query/HydrateClient";
-import { Suspense } from "react";
+import ProductList from "./components/ClientProductList";
+import FilterSidebar from "./components/FilterSidebar";
+import { dehydrate, QueryClient } from "@tanstack/query-core";
+import { HydrationBoundary } from "@tanstack/react-query";
+import FilterLabelContainer from "./components/FilterLabelContainer";
 
-export default async function Page({
+const Page = async ({
 	params,
 	searchParams,
 }: {
-	// Definiáld a típusokat közvetlenül itt
 	params: Promise<{ url: string }>;
 	searchParams: Promise<{ [key: string]: string | string[] }>;
-}) {
-	const { url } = await params;
-	const search = createURLSearchParams(await searchParams).toString();
-	const apiUrl = `/api/v3/categories/${url}/products?${search}`;
+}) => {
+	const categoryUrl = await params;
+	const urlParams = await searchParams;
+	const urlSearchParams = createURLSearchParams(urlParams);
+	const url = `/api/v3/categories/${categoryUrl.url}/products?${urlSearchParams}`;
 
-	const queryClient = getQueryClient();
+	const queryClient = new QueryClient();
+	const queryKey = ["products", url];
 
-	await queryClient.prefetchQuery<StandardApiResponse<ProductsWithCategories>>({
-		queryKey: ["categoryProducts", url, search],
-		queryFn: () =>
-			fetchGet<ProductsWithCategories>(apiUrl, {
+	await queryClient.prefetchQuery({
+		queryKey: queryKey,
+		queryFn: async () => {
+			const { data = [] } = await fetchGet<ProductsWithCategories>(url, {
 				baseUrl: "https://www.onlinepenztarca.hu",
-				cacheOptions: { revalidate: 0 },
-			}),
+			});
+			return data;
+		},
+		staleTime: 5 * 60 * 1000,
 	});
-
+	// Adat kinyerése a cache-ből a prefetch után
+	const prefetchedData = queryClient.getQueryData<ProductsWithCategories>(queryKey);
 	const dehydratedState = dehydrate(queryClient);
-
 	return (
-		<HydrateClient state={dehydratedState}>
-			<Suspense fallback={null}>
-				<ProductsSection categorySlug={url} initialSearch={search} />
-			</Suspense>
-		</HydrateClient>
+		<main>
+			<h1>{prefetchedData?.category.name}</h1> <br />
+			<br />
+			<HydrationBoundary state={dehydratedState}>
+				<FilterLabelContainer />
+				<div className="grid md:grid-cols-[300px_1fr] gap-4">
+					<FilterSidebar />
+					<ProductList />
+				</div>
+			</HydrationBoundary>
+		</main>
 	);
-}
+};
+
+export default Page;

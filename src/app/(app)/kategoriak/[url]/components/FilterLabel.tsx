@@ -1,25 +1,26 @@
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import React from "react";
+"use client";
+import { Filters } from "../schema";
+import { Badge } from "@/components/ui/badge";
+import { XCircleIcon } from "lucide-react";
+import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
+import { usePathname } from "next/navigation";
 
-interface FilterLabelProps extends React.ComponentPropsWithoutRef<typeof Label> {
-	children: React.ReactNode;
-	productNumber?: number;
-}
-
-export default function FilterLabel({ children, className, productNumber, ...props }: FilterLabelProps) {
+const FilterLabel = ({ filter }: { filter: Filters }) => {
+	const useQuery = useQueryParams();
+	const pathName = usePathname();
+	const handleClick = () => {
+		const urlItem = filter.url.split("="); //pl: category[]=hutok-es-fagyasztok
+		const updatedUrl = useQuery.removeQueryParamItem(urlItem[0], urlItem[1]);
+		window.history.replaceState(null, "", decodeURI(`${pathName}?${updatedUrl.toString()}`));
+	};
 	return (
-		<Label
-			className={cn(
-				"block font-normal leading-5 peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-				className
-			)}
-			{...props}
-		>
-			{children}
-			{productNumber !== undefined && (
-				<span className="ms-1 text-xs text-muted-foreground">({productNumber})</span>
-			)}
-		</Label>
+		<Badge className="flex items-center h-fit">
+			{filter.name}
+			<div onClick={handleClick}>
+				<XCircleIcon strokeWidth={1.5} className="!w-4 !h-4 cursor-pointer" />
+			</div>
+		</Badge>
 	);
-}
+};
+
+export default FilterLabel;

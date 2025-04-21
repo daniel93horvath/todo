@@ -4,16 +4,16 @@ import { Prices } from "../schema";
 import { formatNumber } from "@/lib/helpers/number";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { OpInput } from "@/components/ui/custom/input/opInput";
-import FilterLabel from "./FilterLabel";
+import FilterLabel from "./FilterSidebarLabel";
 import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation"; // Import useRouter
 import { useDebounce } from "@/lib/helpers/hooks/useDebounce";
 
 const PriceFilter = ({ prices }: { prices: Prices }) => {
 	const updateQueryParam = useQueryParams();
-	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
+	const router = useRouter(); // useRouter hook inicializálása
 
 	// Kezdeti értékek beállítása az URL-ből
 	const initialPriceRange = searchParams.get("price_range[]");
@@ -21,23 +21,14 @@ const PriceFilter = ({ prices }: { prices: Prices }) => {
 	const initialMaxPrice = searchParams.get("max_price");
 
 	const [selectedRange, setSelectedRange] = useState<string | null>(initialPriceRange);
-	const [displayMinPrice, setDisplayMinPrice] = useState<string>(
-		initialMinPrice ? formatNumber(Number(initialMinPrice)) : ""
-	);
-	const [displayMaxPrice, setDisplayMaxPrice] = useState<string>(
-		initialMaxPrice ? formatNumber(Number(initialMaxPrice)) : ""
-	);
-
 	const [minPrice, setMinPrice] = useState<string>(initialMinPrice || "");
 	const [maxPrice, setMaxPrice] = useState<string>(initialMaxPrice || "");
 
-	// Debounce értékek 500ms késleltetéssel
 	const debouncedMinPrice = useDebounce<string>(minPrice, 500);
 	const debouncedMaxPrice = useDebounce<string>(maxPrice, 500);
 
-	// A komponens első renderelésének elkerülése érdekében
-	const didMountMin = useRef(false);
-	const didMountMax = useRef(false);
+	// Ref annak követésére, hogy ez az első renderelés-e
+	const isInitialMount = useRef(true);
 
 	// Csak számokat engedünk meg
 	const sanitizeInput = (value: string) => value.replace(/[^0-9]/g, "");
@@ -45,69 +36,63 @@ const PriceFilter = ({ prices }: { prices: Prices }) => {
 	// Általános függvény a minimum és maximum érték kezelésére
 	const handlePriceInputChange = (type: "min" | "max") => (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = sanitizeInput(e.target.value);
+		setSelectedRange(null); // Input használatakor töröljük a range kiválasztást
 
-		if (value) setSelectedRange(null); // Ha bármelyik inputot használják, töröljük a kiválasztott range-et
 		if (type === "min") {
-			setDisplayMinPrice(value ? formatNumber(Number(value)) : "");
 			setMinPrice(value);
 		} else {
-			setDisplayMaxPrice(value ? formatNumber(Number(value)) : "");
 			setMaxPrice(value);
 		}
 	};
 
-	// URL frissítése a debounced min értékkel
+	// Egyesített useEffect a debounced min/max ár URL frissítésére
 	useEffect(() => {
-		if (!didMountMin.current) {
-			didMountMin.current = true;
+		// Ne fusson le az első rendereléskor
+		if (isInitialMount.current) {
+			isInitialMount.current = false;
 			return;
 		}
-		const updatedUrl = updateQueryParam.updateQueryParams({
-			"price_range[]": "",
-			min_price: debouncedMinPrice,
-		});
-		router.replace(decodeURI(`${pathname}?${updatedUrl.toString()}`));
-		// eslint-disable-next-line
-	}, [debouncedMinPrice]);
 
-	// URL frissítése a debounced max értékkel
-	useEffect(() => {
-		if (!didMountMax.current) {
-			didMountMax.current = true;
-			return;
+		// Csak akkor frissítsünk URL-t az input értékekkel, ha nincs range kiválasztva
+		if (selectedRange === null) {
+			const updatedUrl = updateQueryParam.updateQueryParams({
+				"price_range[]": "", // Range törlése
+				min_price: debouncedMinPrice || "", // Üres string, ha nincs érték
+				max_price: debouncedMaxPrice || "", // Üres string, ha nincs érték
+			});
+			// router.replace használata a window.history helyett
+			window.history.replaceState(null, "", decodeURI(`${pathname}?${updatedUrl.toString()}`));
 		}
-		const updatedUrl = updateQueryParam.updateQueryParams({
-			"price_range[]": "",
-			max_price: debouncedMaxPrice,
-		});
-		router.replace(decodeURI(`${pathname}?${updatedUrl.toString()}`));
-		// eslint-disable-next-line
-	}, [debouncedMaxPrice]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [debouncedMinPrice, debouncedMaxPrice, pathname, router, selectedRange]); // Függőség: debounced értékek és selectedRange
 
 	// Radio gomb változás kezelése
 	const handleRadioChange = (value: string) => {
-		const updatedUrl = updateQueryParam.updateQueryParams({
-			min_price: "",
-			max_price: "",
-			"price_range[]": value,
-		});
-
-		setSelectedRange(value);
+		// Ha ugyanazt választja ki, töröljük a kiválasztást
+		const newSelectedRange = selectedRange === value ? null : value;
+		setSelectedRange(newSelectedRange);
 
 		// Radio választásakor töröljük a beírt árértékeket
-		setDisplayMinPrice("");
-		setDisplayMaxPrice("");
 		setMinPrice("");
 		setMaxPrice("");
 
-		router.replace(decodeURI(`${pathname}?${updatedUrl.toString()}`));
+		const updatedUrl = updateQueryParam.updateQueryParams({
+			min_price: "", // Min/max törlése
+			max_price: "",
+			"price_range[]": newSelectedRange || "", // Új range vagy üres string
+		});
+		window.history.replaceState(null, "", decodeURI(`${pathname}?${updatedUrl.toString()}`));
 	};
+
+	// Formázott értékek kiszámítása a megjelenítéshez
+	const displayMinPrice = minPrice ? formatNumber(Number(minPrice)) : "";
+	const displayMaxPrice = maxPrice ? formatNumber(Number(maxPrice)) : "";
 
 	return (
 		<div className="space-y-3">
 			<h5>Ár</h5>
 			<RadioGroup
-				className="space-y-1"
+				className="space-y-1 "
 				value={selectedRange || ""}
 				onValueChange={handleRadioChange}
 			>
@@ -116,27 +101,36 @@ const PriceFilter = ({ prices }: { prices: Prices }) => {
 						<RadioGroupItem
 							className="w-5 h-5"
 							value={`${priceRange.min}-${priceRange.max}`}
-							id={`${priceRange.min}-${priceRange.max}`}
+							id={`price-range-${priceRange.min}-${priceRange.max}`} // Egyedi ID
 						/>
 						<FilterLabel
-							htmlFor={`${priceRange.min}-${priceRange.max}`}
+							htmlFor={`price-range-${priceRange.min}-${priceRange.max}`} // ID-hoz illeszkedő htmlFor
 							productNumber={priceRange.total}
 						>
 							{formatNumber(priceRange.min)} - {formatNumber(priceRange.max)}
 						</FilterLabel>
 					</div>
 				))}
+				<div key="all" className="flex items-center space-x-2">
+					<RadioGroupItem className="w-5 h-5" value="" id="all" />
+					<FilterLabel
+						htmlFor="all" // ID-hoz illeszkedő htmlFor
+						productNumber={prices.ranges.reduce((sum, range) => sum + range.total, 0)}
+					>
+						Összes
+					</FilterLabel>
+				</div>
 			</RadioGroup>
 
 			<div className="flex gap-3 mt-5">
 				<OpInput
 					label="Minimum ár"
-					value={displayMinPrice}
+					value={displayMinPrice} // Megjelenítéshez formázott érték
 					onChange={handlePriceInputChange("min")}
 				/>
 				<OpInput
 					label="Maximum ár"
-					value={displayMaxPrice}
+					value={displayMaxPrice} // Megjelenítéshez formázott érték
 					onChange={handlePriceInputChange("max")}
 				/>
 			</div>

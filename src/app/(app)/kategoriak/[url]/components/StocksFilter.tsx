@@ -1,7 +1,7 @@
 "use client";
 import { Stocks } from "../schema";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import FilterLabel from "./FilterLabel";
+import FilterLabel from "./FilterSidebarLabel";
 import { usePathname, useRouter } from "next/navigation";
 import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
 

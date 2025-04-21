@@ -1,25 +1,22 @@
-//src/app/(app)/kategoriak/[url]/components/SubCategoryFilter.tsx
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { subCategoriesFromProducts } from "../schema";
-import FilterLabel from "./FilterLabel";
+import FilterLabel from "./FilterSidebarLabel";
 import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFromProducts[] }) => {
-	const router = useRouter();
 	const pathname = usePathname();
 	// Hívjuk meg a hook-ot csak egyszer
 	const { searchParams, appendQueryParams, removeQueryParamItem } = useQueryParams();
 	const checkedCategories = searchParams.getAll("category[]");
 
 	const handleChecked = (isChecked: boolean, url: string) => {
-		// Egyszerűsített URL frissítési logika
 		const updatedUrl = isChecked
 			? appendQueryParams({ "category[]": url })
 			: removeQueryParamItem("category[]", url);
 
-		router.replace(decodeURI(`${pathname}?${updatedUrl.toString()}`));
+		window.history.replaceState(null, "", decodeURI(`${pathname}?${updatedUrl.toString()}`));
 	};
 
 	// Csak akkor rendereljük, ha több alkategória van

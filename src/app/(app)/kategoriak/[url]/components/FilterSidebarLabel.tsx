@@ -2,12 +2,17 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import React from "react";
 
-interface FilterLabelProps extends React.ComponentPropsWithoutRef<typeof Label> {
+interface FilterSidebarLabelProps extends React.ComponentPropsWithoutRef<typeof Label> {
 	children: React.ReactNode;
 	productNumber?: number;
 }
 
-export default function FilterLabel({ children, className, productNumber, ...props }: FilterLabelProps) {
+export default function FilterSidebarLabel({
+	children,
+	className,
+	productNumber,
+	...props
+}: FilterSidebarLabelProps) {
 	return (
 		<Label
 			className={cn(
