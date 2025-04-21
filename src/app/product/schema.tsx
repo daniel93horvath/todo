@@ -1,4 +1,4 @@
-import { Partner } from "../(app)/kategoriak-fetchhook-kesz/[url]/schema";
+import { Partner } from "../(app)/kategoriak/[url]/schema";
 export type Product = {
 	// Azonosítók
 	product_id: string;
