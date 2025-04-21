@@ -4,6 +4,7 @@ import FilterLabel from "./FilterLabel";
 import { useProducts } from "../hook";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
+import { formatNumber } from "@/lib/helpers/number";
 
 const FilterLabelContainer = () => {
 	const { products } = useProducts();
@@ -28,7 +29,8 @@ const FilterLabelContainer = () => {
 				</div>
 				{total !== undefined && (
 					<div className="text-sm text-right min-w-40">
-						Összesen <span className="font-bold">{total} db</span>
+						Összesen{" "}
+						<span className="font-bold">{formatNumber(products?.total || 0)} db</span>
 					</div>
 				)}
 			</div>

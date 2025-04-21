@@ -14,6 +14,7 @@ import {
 	DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import { formatNumber } from "@/lib/helpers/number";
 const FilterSidebar = () => {
 	const { products } = useProducts();
 	const subCategories = products?.subCategoriesFromProducts || [];
@@ -35,7 +36,7 @@ const FilterSidebar = () => {
 					<StocksFilter stocks={stocks} />
 				</div>
 			</div>
-			<div className="flex md:hidden fixed bottom-0 w-100 p-4 z-50 justify-center">
+			<div className="flex md:hidden fixed bottom-0 left-0 right-0 p-4 z-50 justify-center">
 				<Drawer>
 					<DrawerTrigger asChild>
 						<Button variant="secondary" className="font-bold">
@@ -54,8 +55,8 @@ const FilterSidebar = () => {
 							<br />
 						</div>
 						<DrawerClose asChild>
-							<Button variant="secondary" className="font-bold">
-								Szűrés ({products?.total} db)
+							<Button variant="secondary" className="font-bold mx-8">
+								Szűrés ({formatNumber(products?.total || 0)} db)
 							</Button>
 						</DrawerClose>
 					</DrawerContent>
