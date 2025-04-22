@@ -4,18 +4,18 @@ import { subCategoriesFromProducts } from "../schema";
 import FilterLabel from "./FilterSidebarLabel";
 import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
 import { usePathname } from "next/navigation";
+import { updateUrlWithoutReloadPage } from "../hook";
 
 const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFromProducts[] }) => {
 	const pathname = usePathname();
 	// Hívjuk meg a hook-ot csak egyszer
 	const { searchParams, appendQueryParams, removeQueryParamItem } = useQueryParams();
 	const checkedCategories = searchParams.getAll("category[]");
-
 	const handleChecked = (isChecked: boolean, url: string) => {
 		const updatedUrl = isChecked
 			? appendQueryParams({ "category[]": url })
 			: removeQueryParamItem("category[]", url);
-		window.history.replaceState(null, "", decodeURIComponent(`${pathname}?${updatedUrl.toString()}`));
+		updateUrlWithoutReloadPage(`${pathname}?${updatedUrl.toString()}`);
 	};
 
 	// Csak akkor rendereljük, ha több alkategória van

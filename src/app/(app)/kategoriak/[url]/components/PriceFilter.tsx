@@ -8,6 +8,7 @@ import FilterLabel from "./FilterSidebarLabel";
 import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
 import { usePathname, useSearchParams, useRouter } from "next/navigation"; // Import useRouter
 import { useDebounce } from "@/lib/helpers/hooks/useDebounce";
+import { updateUrlWithoutReloadPage } from "../hook";
 
 const PriceFilter = ({ prices }: { prices: Prices }) => {
 	const updateQueryParam = useQueryParams();
@@ -60,12 +61,7 @@ const PriceFilter = ({ prices }: { prices: Prices }) => {
 				min_price: debouncedMinPrice || "", // Üres string, ha nincs érték
 				max_price: debouncedMaxPrice || "", // Üres string, ha nincs érték
 			});
-			// router.replace használata a window.history helyett
-			window.history.replaceState(
-				null,
-				"",
-				decodeURIComponent(`${pathname}?${updatedUrl.toString()}`)
-			);
+			updateUrlWithoutReloadPage(`${pathname}?${updatedUrl.toString()}`);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedMinPrice, debouncedMaxPrice, pathname, router, selectedRange]); // Függőség: debounced értékek és selectedRange
@@ -85,7 +81,7 @@ const PriceFilter = ({ prices }: { prices: Prices }) => {
 			max_price: "",
 			"price_range[]": newSelectedRange || "", // Új range vagy üres string
 		});
-		window.history.replaceState(null, "", decodeURIComponent(`${pathname}?${updatedUrl.toString()}`));
+		updateUrlWithoutReloadPage(`${pathname}?${updatedUrl.toString()}`);
 	};
 
 	// Formázott értékek kiszámítása a megjelenítéshez

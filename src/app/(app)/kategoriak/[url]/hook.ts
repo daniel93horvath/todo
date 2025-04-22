@@ -29,3 +29,20 @@ export function useProducts() {
 	});
 	return { products, isFetching, isError };
 }
+
+/**
+ * Biztonságosan frissíti az URL-t kliens oldalon anélkül,
+ * hogy újrarenderelné az oldalt
+ */
+export function updateUrlWithoutReloadPage(url: string): void {
+	alert(decodeURIComponent(url));
+	console.log("UPDATE URL WITHOUT RELOAD PAGE");
+	if (typeof window === "undefined") return;
+
+	try {
+		window.history.replaceState({ as: url, url: url }, "", decodeURIComponent(url));
+	} catch (error) {
+		// Csendes hiba, nem törjük meg az alkalmazás működését
+		console.warn("URL frissítése nem sikerült:", error);
+	}
+}

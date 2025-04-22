@@ -2,13 +2,13 @@
 import { Stocks } from "../schema";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import FilterLabel from "./FilterSidebarLabel";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
+import { updateUrlWithoutReloadPage } from "../hook";
 
 const StocksFilter = ({ stocks }: { stocks: Stocks }) => {
 	const pathname = usePathname();
 	const updateSearchQuery = useQueryParams();
-	const router = useRouter();
 
 	const handleChangeStock = (value: string) => {
 		const url =
@@ -18,7 +18,7 @@ const StocksFilter = ({ stocks }: { stocks: Stocks }) => {
 				? updateSearchQuery.updateQueryParams({ stock: "full" })
 				: updateSearchQuery.updateQueryParams({ stock: "none" });
 
-		router.replace(decodeURIComponent(`${pathname}?${url.toString()}`));
+		updateUrlWithoutReloadPage(`${pathname}?${url.toString()}`);
 	};
 
 	return (

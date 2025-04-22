@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import FilterLabel from "./FilterLabel";
-import { useProducts } from "../hook";
+import { updateUrlWithoutReloadPage, useProducts } from "../hook";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { formatNumber } from "@/lib/helpers/number";
@@ -12,7 +12,7 @@ const FilterLabelContainer = () => {
 	const total = products?.total;
 	const pathName = usePathname();
 	const handleClick = () => {
-		window.history.replaceState(null, "", decodeURIComponent(`${pathName}`));
+		updateUrlWithoutReloadPage(`${pathName}`);
 	};
 	return (
 		<div className="grid md:grid-cols-[300px_1fr] gap-4">
