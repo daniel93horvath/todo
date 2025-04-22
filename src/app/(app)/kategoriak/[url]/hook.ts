@@ -9,25 +9,29 @@ export function useProducts() {
 	const path = decodeURIComponent(
 		`/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`
 	);
-	const {
-		data: products,
-		isFetching,
-		isError,
-	} = useQuery<ProductsWithCategories>({
-		queryKey: ["products", path],
-		queryFn: async () => {
-			const response = await fetchGet<ProductsWithCategories>(path, {
-				baseUrl: "https://www.onlinepenztarca.hu",
-			});
-			if (!response.data) {
-				throw new Error("Sikertelen a termékek lekérdezése!");
-			}
-			return response.data;
-		},
-		staleTime: 5 * 60 * 1000,
-		placeholderData: (previousData) => previousData,
-	});
-	return { products, isFetching, isError };
+	try {
+		const {
+			data: products,
+			isFetching,
+			isError,
+		} = useQuery<ProductsWithCategories>({
+			queryKey: ["products", path],
+			queryFn: async () => {
+				const response = await fetchGet<ProductsWithCategories>(path, {
+					baseUrl: "https://www.onlinepenztarca.hu",
+				});
+				if (!response.data) {
+					throw new Error("Sikertelen a termékek lekérdezése!");
+				}
+				return response.data;
+			},
+			staleTime: 5 * 60 * 1000,
+			placeholderData: (previousData) => previousData,
+		});
+		return { products, isFetching, isError };
+	} catch (error) {
+		alert("updateUrlWithoutReloadPage: " + JSON.stringify(error));
+	}
 }
 
 /**
@@ -35,7 +39,6 @@ export function useProducts() {
  * hogy újrarenderelné az oldalt
  */
 export function updateUrlWithoutReloadPage(url: string): void {
-	alert(decodeURIComponent(url));
 	console.log("UPDATE URL WITHOUT RELOAD PAGE");
 	if (typeof window === "undefined") return;
 
@@ -43,6 +46,6 @@ export function updateUrlWithoutReloadPage(url: string): void {
 		window.history.replaceState({ as: url, url: url }, "", decodeURIComponent(url));
 	} catch (error) {
 		// Csendes hiba, nem törjük meg az alkalmazás működését
-		console.warn("URL frissítése nem sikerült:", error);
+		alert("updateUrlWithoutReloadPage: " + JSON.stringify(error));
 	}
 }
