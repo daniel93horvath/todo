@@ -6,13 +6,9 @@ import { useParams, useSearchParams } from "next/navigation";
 export function useProducts() {
 	const categoryUrl = useParams(); // Kategória URL lekérdezése
 	const searchParams = useSearchParams();
-	const path = decodeURIComponent(
-		`/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`
-	);
-
+	const path = `/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`;
 	const {
 		data: products,
-		error,
 		isFetching,
 		isError,
 	} = useQuery<ProductsWithCategories>({
@@ -29,9 +25,6 @@ export function useProducts() {
 		staleTime: 5 * 60 * 1000,
 		placeholderData: (previousData) => previousData,
 	});
-	if (isError) {
-		alert("hiba: " + (error as Error).message);
-	}
 	return { products, isFetching, isError };
 }
 
@@ -40,14 +33,13 @@ export function useProducts() {
  * hogy újrarenderelné az oldalt
  */
 export function updateUrlWithoutReloadPage(url: string): void {
-	alert(decodeURIComponent(url));
 	console.log("UPDATE URL WITHOUT RELOAD PAGE");
 	if (typeof window === "undefined") return;
 
 	try {
-		window.history.replaceState({ as: url, url: url }, "", decodeURIComponent(url));
+		window.history.replaceState({ as: url, url: url }, "", url);
 	} catch (error) {
 		// Csendes hiba, nem törjük meg az alkalmazás működését
-		alert("updateUrlWithoutReloadPage: " + JSON.stringify(error));
+		console.warn("URL frissítése nem sikerült:", error);
 	}
 }
