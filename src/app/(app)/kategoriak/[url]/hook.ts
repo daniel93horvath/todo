@@ -30,7 +30,7 @@ export function useProducts() {
 		placeholderData: (previousData) => previousData,
 	});
 	if (isError) {
-		alert(error);
+		alert(JSON.stringify(error));
 	}
 	return { products, isFetching, isError };
 }
