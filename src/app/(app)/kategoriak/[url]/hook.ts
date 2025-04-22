@@ -6,7 +6,9 @@ import { useParams, useSearchParams } from "next/navigation";
 export function useProducts() {
 	const categoryUrl = useParams(); // Kategória URL lekérdezése
 	const searchParams = useSearchParams();
-	const path = `/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`;
+	const path = decodeURIComponent(
+		`/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`
+	);
 	const {
 		data: products,
 		isFetching,
@@ -17,6 +19,7 @@ export function useProducts() {
 			const response = await fetchGet<ProductsWithCategories>(path, {
 				baseUrl: "https://www.onlinepenztarca.hu",
 			});
+			alert(path);
 			if (!response.data) {
 				throw new Error("Sikertelen a termékek lekérdezése!");
 			}
@@ -35,9 +38,9 @@ export function useProducts() {
 export function updateUrlWithoutReloadPage(url: string): void {
 	console.log("UPDATE URL WITHOUT RELOAD PAGE");
 	if (typeof window === "undefined") return;
-
+	const safeUrl = decodeURIComponent(url);
 	try {
-		window.history.replaceState({ as: url, url: url }, "", url);
+		window.history.replaceState({ as: safeUrl, url: safeUrl }, "", safeUrl);
 	} catch (error) {
 		// Csendes hiba, nem törjük meg az alkalmazás működését
 		console.warn("URL frissítése nem sikerült:", error);
