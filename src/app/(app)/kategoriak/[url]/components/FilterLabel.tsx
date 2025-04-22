@@ -11,7 +11,7 @@ const FilterLabel = ({ filter }: { filter: Filters }) => {
 	const handleClick = () => {
 		const urlItem = filter.url.split("="); //pl: category[]=hutok-es-fagyasztok
 		const updatedUrl = useQuery.removeQueryParamItem(urlItem[0], urlItem[1]);
-		window.history.replaceState(null, "", decodeURI(`${pathName}?${updatedUrl.toString()}`));
+		window.history.replaceState(null, "", decodeURIComponent(`${pathName}?${updatedUrl.toString()}`));
 	};
 	return (
 		<Badge className="flex items-center h-fit">

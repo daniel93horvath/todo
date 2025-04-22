@@ -12,7 +12,7 @@ const FilterLabelContainer = () => {
 	const total = products?.total;
 	const pathName = usePathname();
 	const handleClick = () => {
-		window.history.replaceState(null, "", decodeURI(`${pathName}`));
+		window.history.replaceState(null, "", decodeURIComponent(`${pathName}`));
 	};
 	return (
 		<div className="grid md:grid-cols-[300px_1fr] gap-4">

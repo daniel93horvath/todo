@@ -16,7 +16,7 @@ const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFrom
 			? appendQueryParams({ "category[]": url })
 			: removeQueryParamItem("category[]", url);
 
-		window.history.replaceState(null, "", decodeURI(`${pathname}?${updatedUrl.toString()}`));
+		window.history.replaceState(null, "", decodeURIComponent(`${pathname}?${updatedUrl.toString()}`));
 	};
 
 	// Csak akkor rendereljük, ha több alkategória van

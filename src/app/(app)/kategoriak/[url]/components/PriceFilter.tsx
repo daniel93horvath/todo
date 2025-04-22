@@ -61,7 +61,11 @@ const PriceFilter = ({ prices }: { prices: Prices }) => {
 				max_price: debouncedMaxPrice || "", // Üres string, ha nincs érték
 			});
 			// router.replace használata a window.history helyett
-			window.history.replaceState(null, "", decodeURI(`${pathname}?${updatedUrl.toString()}`));
+			window.history.replaceState(
+				null,
+				"",
+				decodeURIComponent(`${pathname}?${updatedUrl.toString()}`)
+			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedMinPrice, debouncedMaxPrice, pathname, router, selectedRange]); // Függőség: debounced értékek és selectedRange
@@ -81,7 +85,7 @@ const PriceFilter = ({ prices }: { prices: Prices }) => {
 			max_price: "",
 			"price_range[]": newSelectedRange || "", // Új range vagy üres string
 		});
-		window.history.replaceState(null, "", decodeURI(`${pathname}?${updatedUrl.toString()}`));
+		window.history.replaceState(null, "", decodeURIComponent(`${pathname}?${updatedUrl.toString()}`));
 	};
 
 	// Formázott értékek kiszámítása a megjelenítéshez
