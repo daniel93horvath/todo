@@ -6,7 +6,10 @@ import { useParams, useSearchParams } from "next/navigation";
 export function useProducts() {
 	const categoryUrl = useParams(); // Kategória URL lekérdezése
 	const searchParams = useSearchParams();
-	const path = decodeURI(`/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`);
+	const path = decodeURIComponent(
+		`/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`
+	);
+
 	const {
 		data: products,
 		isFetching,

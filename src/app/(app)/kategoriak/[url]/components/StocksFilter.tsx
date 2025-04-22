@@ -18,7 +18,7 @@ const StocksFilter = ({ stocks }: { stocks: Stocks }) => {
 				? updateSearchQuery.updateQueryParams({ stock: "full" })
 				: updateSearchQuery.updateQueryParams({ stock: "none" });
 
-		router.replace(decodeURI(`${pathname}?${url.toString()}`));
+		router.replace(decodeURIComponent(`${pathname}?${url.toString()}`));
 	};
 
 	return (
