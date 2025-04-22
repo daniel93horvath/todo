@@ -17,17 +17,14 @@ const Page = async ({
 	const categoryUrl = await params;
 	const urlParams = await searchParams;
 	const urlSearchParams = createURLSearchParams(urlParams);
-	const url = `/api/v3/categories/${categoryUrl.url}/products?${urlSearchParams}`;
-
+	const url = `${process.env.NEXT_PUBLIC_APP_URL_BACKEND}/categories/${categoryUrl.url}/products?${urlSearchParams}`;
 	const queryClient = new QueryClient();
-	const queryKey = ["products", url];
+	const queryKey = ["products", urlSearchParams.toString()];
 
 	await queryClient.prefetchQuery({
 		queryKey: queryKey,
 		queryFn: async () => {
-			const { data = [] } = await fetchGet<ProductsWithCategories>(url, {
-				baseUrl: "https://www.onlinepenztarca.hu",
-			});
+			const { data = [] } = await fetchGet<ProductsWithCategories>(url);
 			return data;
 		},
 		staleTime: 5 * 60 * 1000,

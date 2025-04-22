@@ -11,7 +11,7 @@ export async function opFetch<T>(
 		method = "GET",
 		data = null,
 		headers = {},
-		baseUrl = process.env.NEXT_PUBLIC_APP_URL_BACKEND,
+		baseUrl = "",
 		cacheOptions = {},
 	}: {
 		method?: string;
@@ -23,12 +23,12 @@ export async function opFetch<T>(
 ): Promise<StandardApiResponse<T>> {
 	const options: RequestInit & { next?: { revalidate?: number | false; tags?: string[] } } = {
 		method,
+		credentials: "include",
 		headers: {
 			"Content-Type": "application/json",
 			...headers,
 		},
 	};
-
 	// Cache beállítások hozzáadása
 	if (Object.keys(cacheOptions).length > 0) {
 		// Next.js specifikus cache opciók
@@ -96,7 +96,7 @@ export async function fetchGet<T>(
 	url: string,
 	{
 		headers = {},
-		baseUrl = process.env.NEXT_PUBLIC_APP_URL_BACKEND,
+		baseUrl = "",
 		cacheOptions = {},
 	}: {
 		headers?: Record<string, string>;
@@ -117,7 +117,7 @@ export async function fetchGetPaginated<T>(
 	url: string,
 	{
 		headers = {},
-		baseUrl = process.env.NEXT_PUBLIC_APP_URL_BACKEND,
+		baseUrl = "",
 		cacheOptions = {},
 	}: {
 		headers?: Record<string, string>;
@@ -139,7 +139,7 @@ export async function fetchPost<T>(
 	data: unknown,
 	{
 		headers = {},
-		baseUrl = process.env.NEXT_PUBLIC_APP_URL_BACKEND,
+		baseUrl = "",
 		cacheOptions = {},
 	}: {
 		headers?: Record<string, string>;
@@ -162,7 +162,7 @@ export async function fetchDelete<T>(
 	{
 		data = null,
 		headers = {},
-		baseUrl = process.env.NEXT_PUBLIC_APP_URL_BACKEND,
+		baseUrl = "",
 		cacheOptions = {},
 	}: {
 		data?: unknown;
@@ -186,7 +186,7 @@ export async function fetchPut<T>(
 	data: unknown,
 	{
 		headers = {},
-		baseUrl = process.env.NEXT_PUBLIC_APP_URL_BACKEND,
+		baseUrl = "",
 		cacheOptions = {},
 	}: {
 		headers?: Record<string, string>;

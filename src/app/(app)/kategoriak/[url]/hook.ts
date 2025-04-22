@@ -14,12 +14,10 @@ export function useProducts() {
 		isFetching,
 		isError,
 	} = useQuery<ProductsWithCategories>({
-		queryKey: ["products", path],
+		queryKey: ["products", searchParams.toString()],
+
 		queryFn: async () => {
-			const response = await fetchGet<ProductsWithCategories>(path, {
-				baseUrl: "https://www.onlinepenztarca.hu",
-			});
-			alert(path);
+			const response = await fetchGet<ProductsWithCategories>(path);
 			if (!response.data) {
 				throw new Error("Sikertelen a termékek lekérdezése!");
 			}

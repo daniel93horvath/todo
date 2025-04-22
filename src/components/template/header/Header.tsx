@@ -15,10 +15,12 @@ import { Button } from "@/components/ui/button";
 import { ClientHeaderScrollFeature } from "./ClientHeaderScrollFeature";
 
 const Header = async () => {
-	const { data: categories = [] } = await fetchGet<Category[]>("/api/v3/categories", {
-		baseUrl: "https://www.onlinepenztarca.hu",
-		cacheOptions: { revalidate: 3600 },
-	});
+	const { data: categories = [] } = await fetchGet<Category[]>(
+		`${process.env.NEXT_PUBLIC_APP_URL_BACKEND}/categories/`,
+		{
+			cacheOptions: { revalidate: 3600 },
+		}
+	);
 	return (
 		<ClientHeaderScrollFeature>
 			<header className="hidden md:block p-2 pb-0 bg-secondary">
