@@ -30,7 +30,7 @@ export function useProducts() {
 		placeholderData: (previousData) => previousData,
 	});
 	if (isError) {
-		alert("hiba: " + JSON.stringify(error));
+		alert("hiba: " + (error as Error).message);
 	}
 	return { products, isFetching, isError };
 }
