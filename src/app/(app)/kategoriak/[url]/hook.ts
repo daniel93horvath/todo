@@ -4,14 +4,11 @@ import { fetchGet } from "@/lib/api/fetch";
 import { useParams, useSearchParams } from "next/navigation";
 
 export function useProducts() {
-	alert("useProducts");
-
 	const categoryUrl = useParams(); // Kategória URL lekérdezése
 	const searchParams = useSearchParams();
 	const path = decodeURIComponent(
 		`/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`
 	);
-	alert(path);
 	const {
 		data: products,
 		isFetching,

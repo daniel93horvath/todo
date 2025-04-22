@@ -6,8 +6,6 @@ import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
 import { usePathname } from "next/navigation";
 
 const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFromProducts[] }) => {
-	alert("SubCategory filter");
-
 	const pathname = usePathname();
 	// Hívjuk meg a hook-ot csak egyszer
 	const { searchParams, appendQueryParams, removeQueryParamItem } = useQueryParams();
@@ -17,7 +15,6 @@ const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFrom
 		const updatedUrl = isChecked
 			? appendQueryParams({ "category[]": url })
 			: removeQueryParamItem("category[]", url);
-		alert(decodeURIComponent(`${pathname}?${updatedUrl.toString()}`));
 		window.history.replaceState(null, "", decodeURIComponent(`${pathname}?${updatedUrl.toString()}`));
 	};
 
