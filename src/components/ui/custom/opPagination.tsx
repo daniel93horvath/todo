@@ -25,6 +25,7 @@ export interface PaginationProps {
 	className?: string;
 	/** The URL query parameter name used for the page number. Defaults to "page". */
 	pageQueryParam?: string;
+	scroll?: boolean; //Felpörget az oldal tetejére
 }
 
 // Define constants for ellipsis keys for better readability and stable keys
@@ -36,13 +37,14 @@ const ELLIPSIS_RIGHT_KEY = "ellipsis-right";
  * It supports reading the current page from props or URL search parameters
  * and handles client-side navigation using `useRouter` and `useTransition`.
  */
-const CustomPagination = ({
+const OpPagination = ({
 	currentPage: currentPageProp,
 	totalItems,
 	itemsPerPage,
 	visiblePages = false,
 	className = "",
 	pageQueryParam = "page",
+	scroll = false,
 }: PaginationProps) => {
 	const router = useRouter();
 	const pathname = usePathname();
@@ -105,6 +107,7 @@ const CustomPagination = ({
 			// Update URL using transition for smoother UX
 			startTransition(() => {
 				router.push(newUrl);
+				if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
 			});
 		},
 		[
@@ -117,6 +120,7 @@ const CustomPagination = ({
 			pathname,
 			router,
 			startTransition,
+			scroll,
 		]
 	);
 
@@ -261,4 +265,4 @@ const CustomPagination = ({
 	);
 };
 
-export default CustomPagination;
+export default OpPagination;

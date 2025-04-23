@@ -3,7 +3,7 @@
 import ProductCard from "@/components/shared/ProductCard/ProductCard";
 import { useProducts } from "../hook"; // Importáld a hookot
 import Loading from "../loading";
-import CustomPagination from "@/components/ui/custom/opPagination";
+import OpPagination from "@/components/ui/custom/opPagination";
 
 export default function ProductList() {
 	const { products, isFetching, isError } = useProducts();
@@ -29,8 +29,7 @@ export default function ProductList() {
 				))}
 			</div>
 			<div className="my-8 text-center">
-				<CustomPagination itemsPerPage={40} totalItems={products.total} />
-				{/* <NextPageButton /> */}
+				<OpPagination scroll itemsPerPage={40} totalItems={products.total} />
 			</div>
 		</div>
 	);
