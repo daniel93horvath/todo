@@ -57,7 +57,6 @@ const Header = async () => {
 							<Link href="/villamajanlatok">Villámajánlatok</Link>
 							<Link href="#">onlineTombola</Link>
 							<Link href="#">Információ</Link>
-							<Link href="#">{new Date().toLocaleString("hu-HU")}</Link>
 							<ChangeTheme />
 						</div>
 					</div>
@@ -68,6 +67,10 @@ const Header = async () => {
 			<header className="block md:hidden p-2 pb-0 bg-secondary">
 				<nav className="flex-col p-1 pb-2 space-y-2">
 					<div className="flex items-center justify-between w-full gap-3">
+						{/* <div className="sr-only" aria-hidden="true">
+							<DropDownCategory categories={categories} />
+						</div> */}
+
 						<DropDownCategoryDrawer categories={categories} />
 						<Link href="/" title="Főoldal">
 							<OpLogo colorVariant="light" size={150} className="block mx-auto my-[0.5]" />

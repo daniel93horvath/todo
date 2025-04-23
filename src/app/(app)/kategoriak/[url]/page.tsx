@@ -35,7 +35,6 @@ const Page = async ({
 	return (
 		<main>
 			<h1>{prefetchedData?.category.name}</h1> <br />
-			<br />
 			<HydrationBoundary state={dehydratedState}>
 				<FilterLabelContainer />
 				<div className="grid md:grid-cols-[300px_1fr] gap-4">

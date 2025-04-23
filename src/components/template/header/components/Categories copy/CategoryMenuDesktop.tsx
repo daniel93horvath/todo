@@ -17,16 +17,14 @@ export function CategoryMenuDesktop({ initialCategories }: { initialCategories: 
 		[initialCategories]
 	);
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-	const [serverLoading, setServerLoading] = useState<boolean>(true);
+
 	const [activeCategory, setActiveCategory] = useState<number | null>(null);
 	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
-		setServerLoading(false);
 		// Csak inicializáláskor állítjuk be az első kategóriát aktívnak
 		if (firstLevelCategories.length > 0) {
-			//setActiveCategory(firstLevelCategories[0].id);
-			//setIsOpen(true);
+			//setActiveCategory(firstLevelCategories[0].id); //setIsOpen(true);
 		}
 		// Tisztítás komponens unmountoláskor
 		return () => {
@@ -76,16 +74,12 @@ export function CategoryMenuDesktop({ initialCategories }: { initialCategories: 
 					<NavigationMenuTrigger className="bg-secondary pt-0 p-3 h-auto rounded-b-none data-[state=open]:bg-card font-extrabold">
 						Kategóriák
 					</NavigationMenuTrigger>
-					{/* <NavigationMenuContent className={`p-0 ${isOpen ? "" : "hidden"}`} forceMount> */}
-
-					<NavigationMenuContent
-						className={`p-0 ${serverLoading ? "hidden" : ""}`}
-						{...(serverLoading ? { forceMount: true } : {})}
-					>
+					<NavigationMenuContent className="p-0">
 						<div className="flex">
 							{/* Kategória lista a bal oldalon - kliens és szerver komponensek kombinációja */}
 							<DropDownCategory
 								categories={firstLevelCategories}
+								activeCategory={activeCategory}
 								onCategoryHover={setActiveCategory}
 							/>
 
