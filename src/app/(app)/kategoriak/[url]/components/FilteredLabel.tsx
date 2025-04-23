@@ -6,7 +6,7 @@ import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
 import { usePathname } from "next/navigation";
 import { updateUrlWithoutReloadPage } from "../hook";
 
-const FilterLabel = ({ filter }: { filter: Filters }) => {
+const FilteredLabel = ({ filter }: { filter: Filters }) => {
 	const useQuery = useQueryParams();
 	const pathName = usePathname();
 	const handleClick = () => {
@@ -24,4 +24,4 @@ const FilterLabel = ({ filter }: { filter: Filters }) => {
 	);
 };
 
-export default FilterLabel;
+export default FilteredLabel;

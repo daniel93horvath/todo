@@ -9,12 +9,13 @@ export function useProducts() {
 	const path = decodeURIComponent(
 		`/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`
 	);
+	const queryKey = ["products", decodeURIComponent(searchParams.toString())];
 	const {
 		data: products,
 		isFetching,
 		isError,
 	} = useQuery<ProductsWithCategories>({
-		queryKey: ["products", searchParams.toString()],
+		queryKey: queryKey,
 
 		queryFn: async () => {
 			const response = await fetchGet<ProductsWithCategories>(path);
@@ -31,13 +32,24 @@ export function useProducts() {
 
 /**
  * Biztonságosan frissíti az URL-t kliens oldalon anélkül,
- * hogy újrarenderelné az oldalt
+ * hogy újrarenderelné az oldalt. Eltávolítja a 'page' query paramétert.
  */
 export function updateUrlWithoutReloadPage(url: string): void {
-	console.log("UPDATE URL WITHOUT RELOAD PAGE");
 	if (typeof window === "undefined") return;
-	const safeUrl = decodeURIComponent(url);
+	// const safeUrl = decodeURIComponent(url.replace("page", "")); // Eredeti kód helyett:
 	try {
+		// Szétválasztjuk az útvonalat és a query stringet
+		const [path, queryString] = url.split("?");
+		const params = new URLSearchParams(queryString || ""); // Kezeljük, ha nincs query string
+
+		// Töröljük a 'page' paramétert
+		params.delete("page");
+
+		// Összerakjuk az új URL-t
+		const newQueryString = params.toString();
+		// Csak akkor adjuk hozzá a ?-t, ha maradtak paraméterek
+		const safeUrl = decodeURIComponent(path + (newQueryString ? `?${newQueryString}` : ""));
+
 		window.history.replaceState({ as: safeUrl, url: safeUrl }, "", safeUrl);
 	} catch (error) {
 		// Csendes hiba, nem törjük meg az alkalmazás működését

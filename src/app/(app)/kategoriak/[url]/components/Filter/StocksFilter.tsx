@@ -1,10 +1,10 @@
 "use client";
-import { Stocks } from "../schema";
+import { Stocks } from "../../schema";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import FilterLabel from "./FilterSidebarLabel";
 import { usePathname } from "next/navigation";
 import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
-import { updateUrlWithoutReloadPage } from "../hook";
+import { updateUrlWithoutReloadPage } from "../../hook";
 
 const StocksFilter = ({ stocks }: { stocks: Stocks }) => {
 	const pathname = usePathname();

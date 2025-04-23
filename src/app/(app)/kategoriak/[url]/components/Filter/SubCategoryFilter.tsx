@@ -1,10 +1,10 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
-import { subCategoriesFromProducts } from "../schema";
+import { subCategoriesFromProducts } from "../../schema";
 import FilterLabel from "./FilterSidebarLabel";
 import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
 import { usePathname } from "next/navigation";
-import { updateUrlWithoutReloadPage } from "../hook";
+import { updateUrlWithoutReloadPage } from "../../hook";
 
 const SubCategoryFilter = ({ subCategories }: { subCategories: subCategoriesFromProducts[] }) => {
 	const pathname = usePathname();

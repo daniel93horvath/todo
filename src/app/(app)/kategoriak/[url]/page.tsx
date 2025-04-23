@@ -2,10 +2,10 @@ import { fetchGet } from "@/lib/api/fetch";
 import { createURLSearchParams } from "@/lib/helpers/url";
 import { ProductsWithCategories } from "./schema";
 import ProductList from "./components/ClientProductList";
-import FilterSidebar from "./components/FilterSidebar";
+import FilterSidebar from "./components/Filter/FilterSidebar";
 import { dehydrate, QueryClient } from "@tanstack/query-core";
 import { HydrationBoundary } from "@tanstack/react-query";
-import FilterLabelContainer from "./components/FilterLabelContainer";
+import FilteredLabelContainer from "./components/FilteredLabelContainer";
 
 const Page = async ({
 	params,
@@ -31,12 +31,13 @@ const Page = async ({
 	});
 	// Adat kinyerése a cache-ből a prefetch után
 	const prefetchedData = queryClient.getQueryData<ProductsWithCategories>(queryKey);
+
 	const dehydratedState = dehydrate(queryClient);
 	return (
 		<main>
-			<h1>{prefetchedData?.category.name}</h1> <br />
+			<h1>{prefetchedData?.category?.name}</h1> <br />
 			<HydrationBoundary state={dehydratedState}>
-				<FilterLabelContainer />
+				<FilteredLabelContainer />
 				<div className="grid md:grid-cols-[300px_1fr] gap-4">
 					<FilterSidebar />
 					<ProductList />

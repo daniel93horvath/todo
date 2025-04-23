@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { Prices } from "../schema";
+import { Prices } from "../../schema";
 import { formatNumber } from "@/lib/helpers/number";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { OpInput } from "@/components/ui/custom/input/opInput";
@@ -8,7 +8,7 @@ import FilterLabel from "./FilterSidebarLabel";
 import { useQueryParams } from "@/lib/helpers/hooks/useQueryParams";
 import { usePathname, useSearchParams, useRouter } from "next/navigation"; // Import useRouter
 import { useDebounce } from "@/lib/helpers/hooks/useDebounce";
-import { updateUrlWithoutReloadPage } from "../hook";
+import { updateUrlWithoutReloadPage } from "../../hook";
 
 const PriceFilter = ({ prices }: { prices: Prices }) => {
 	const updateQueryParam = useQueryParams();

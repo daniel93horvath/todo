@@ -2,7 +2,7 @@
 import SubCategoryFilter from "./SubCategoryFilter";
 import PriceFilter from "./PriceFilter";
 import StocksFilter from "./StocksFilter";
-import { useProducts } from "../hook"; // Importáld a hookot
+import { useProducts } from "../../hook"; // Importáld a hookot
 
 import {
 	Drawer,
