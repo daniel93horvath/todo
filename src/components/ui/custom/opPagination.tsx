@@ -10,7 +10,7 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useTransition, useCallback } from "react";
+import { useTransition } from "react";
 
 export interface PaginationProps {
 	/** Optional current page number. If not provided, it will be read from the URL search params. */
@@ -52,7 +52,7 @@ const OpPagination = ({
 	const [isPending, startTransition] = useTransition();
 
 	// --- Current Page Determination ---
-	const getCurrentPage = useCallback((): number => {
+	const getCurrentPage = (): number => {
 		if (currentPageProp !== undefined) {
 			// Validate prop value
 			return Math.max(1, Math.floor(currentPageProp));
@@ -61,7 +61,7 @@ const OpPagination = ({
 		const parsedPage = pageFromUrl ? parseInt(pageFromUrl, 10) : 1;
 		// Return 1 if parsing fails, page is not a number, or page is less than 1
 		return !isNaN(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-	}, [currentPageProp, searchParams, pageQueryParam]);
+	};
 
 	const currentPage = getCurrentPage();
 
@@ -73,59 +73,42 @@ const OpPagination = ({
 	// --- Helper Functions ---
 
 	/** Creates a new query string, preserving existing params and updating the specified one. */
-	const createQueryString = useCallback(
-		(name: string, value: string) => {
-			const params = new URLSearchParams(searchParams.toString());
-			params.set(name, value);
-			return params.toString();
-		},
-		[searchParams]
-	);
+	const createQueryString = (name: string, value: string) => {
+		const params = new URLSearchParams(searchParams.toString());
+		params.set(name, value);
+		return params.toString();
+	};
 
 	/** Handles navigation to a new page. */
-	const handleNavigation = useCallback(
-		(e: React.MouseEvent<HTMLAnchorElement>, page: number | "prev" | "next") => {
-			e.preventDefault(); // Prevent default link behavior
+	const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, page: number | "prev" | "next") => {
+		e.preventDefault(); // Prevent default link behavior
 
-			let targetPage: number;
+		let targetPage: number;
 
-			if (page === "prev") {
-				if (!hasPrevPage) return;
-				targetPage = currentPage - 1;
-			} else if (page === "next") {
-				if (!hasNextPage) return;
-				targetPage = currentPage + 1;
-			} else {
-				// Prevent navigation to the same page or invalid pages
-				if (page === currentPage || page < 1 || page > totalPages) return;
-				targetPage = page;
-			}
+		if (page === "prev") {
+			if (!hasPrevPage) return;
+			targetPage = currentPage - 1;
+		} else if (page === "next") {
+			if (!hasNextPage) return;
+			targetPage = currentPage + 1;
+		} else {
+			// Prevent navigation to the same page or invalid pages
+			if (page === currentPage || page < 1 || page > totalPages) return;
+			targetPage = page;
+		}
 
-			const newQueryString = createQueryString(pageQueryParam, targetPage.toString());
-			const newUrl = decodeURIComponent(`${pathname}?${newQueryString}`);
+		const newQueryString = createQueryString(pageQueryParam, targetPage.toString());
+		const newUrl = decodeURIComponent(`${pathname}?${newQueryString}`);
 
-			// Update URL using transition for smoother UX
-			startTransition(() => {
-				router.push(newUrl);
-				if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
-			});
-		},
-		[
-			currentPage,
-			hasPrevPage,
-			hasNextPage,
-			totalPages,
-			createQueryString,
-			pageQueryParam,
-			pathname,
-			router,
-			startTransition,
-			scroll,
-		]
-	);
+		// Update URL using transition for smoother UX
+		startTransition(() => {
+			router.push(newUrl);
+		});
+		if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
+	};
 
 	/** Calculates the array of page numbers and ellipsis markers to display. */
-	const getVisiblePageNumbers = useCallback((): (number | string)[] => {
+	const getVisiblePageNumbers = (): (number | string)[] => {
 		const current = currentPage;
 		const last = totalPages;
 		const delta = 2; // How many pages to show on each side of the current page
@@ -174,31 +157,25 @@ const OpPagination = ({
 		}
 
 		return range;
-	}, [currentPage, totalPages]);
+	};
 
 	/** Generates the URL for a specific page number. */
-	const getPageUrl = useCallback(
-		(pageNum: number) => {
-			return `${pathname}?${createQueryString(pageQueryParam, pageNum.toString())}`;
-		},
-		[pathname, createQueryString, pageQueryParam]
-	);
+	const getPageUrl = (pageNum: number) => {
+		return `${pathname}?${createQueryString(pageQueryParam, pageNum.toString())}`;
+	};
 
 	/** Generates the URL for the previous page. */
-	const getPreviousPageUrl = useCallback(() => {
+	const getPreviousPageUrl = () => {
 		return hasPrevPage ? getPageUrl(currentPage - 1) : "#";
-	}, [hasPrevPage, currentPage, getPageUrl]);
+	};
 
 	/** Generates the URL for the next page. */
-	const getNextPageUrl = useCallback(() => {
+	const getNextPageUrl = () => {
 		return hasNextPage ? getPageUrl(currentPage + 1) : "#";
-	}, [hasNextPage, currentPage, getPageUrl]);
+	};
 
-	// --- Render Logic ---
-
-	// Don't render pagination if there's only one page or fewer
 	if (totalPages <= 1) {
-		return null;
+		return null; // Don't render pagination if there's only one page or fewer
 	}
 
 	const disabledClass = "pointer-events-none opacity-50";

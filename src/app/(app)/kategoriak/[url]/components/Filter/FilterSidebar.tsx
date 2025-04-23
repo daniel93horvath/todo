@@ -39,14 +39,14 @@ const FilterSidebar = () => {
 			<div className="flex md:hidden fixed bottom-0 left-0 right-0 p-4 z-50 justify-center">
 				<Drawer>
 					<DrawerTrigger asChild>
-						<Button variant="secondary" className="font-bold">
+						<Button variant="secondary" className="font-bold w-9/12 border shadow-lg">
 							Szűrés
 						</Button>
 					</DrawerTrigger>
 					<DrawerContent className="p-2">
-						<DrawerHeader>
-							<DrawerTitle className="text-secondary">Kategóriák</DrawerTitle>
-							<DrawerDescription>Termékek szűrése</DrawerDescription>
+						<DrawerHeader className="border-b-1 pt-1">
+							<DrawerTitle className="text-secondary">Szűrés</DrawerTitle>
+							<DrawerDescription>Szűrd le az onlinePénztárca termékeit</DrawerDescription>
 						</DrawerHeader>
 						<div className="overflow-y-auto space-y-4 p-2">
 							<SubCategoryFilter subCategories={subCategories} />

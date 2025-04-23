@@ -16,13 +16,13 @@ const FilteredLabelContainer = () => {
 	};
 	return (
 		<div className="grid md:grid-cols-[300px_1fr] gap-4">
-			<div className="mb-3 md:col-start-2 flex items-center justify-between">
+			<div className="mb-3 md:col-start-2 items-center justify-between">
 				<div className="flex gap-3 flex-wrap items-center">
 					{filters.map((filter) => (
 						<FilteredLabel key={filter.name} filter={filter} />
 					))}
 					{filters.length > 0 && (
-						<Button variant="ghost" className="h-7" onClick={handleClick}>
+						<Button variant="outline" className="h-7" onClick={handleClick}>
 							Összes törlése
 						</Button>
 					)}
