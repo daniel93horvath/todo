@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { formatNumber } from "@/lib/helpers/number";
+import { SlidersHorizontalIcon } from "lucide-react";
 const FilterSidebar = () => {
 	const { products } = useProducts();
 	const subCategories = products?.subCategoriesFromProducts || [];
@@ -40,6 +41,7 @@ const FilterSidebar = () => {
 				<Drawer>
 					<DrawerTrigger asChild>
 						<Button variant="secondary" className="font-bold w-9/12 border shadow-lg">
+							<SlidersHorizontalIcon />
 							Szűrés
 						</Button>
 					</DrawerTrigger>
