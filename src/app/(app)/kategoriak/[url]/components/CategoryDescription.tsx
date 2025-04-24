@@ -1,25 +1,60 @@
+"use client";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import DOMPurify from "isomorphic-dompurify";
+import { FileSpreadsheetIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 
-export function CategoryDescription() {
+export const dynamic = "force-static";
+
+export function CategoryDescription({ description }: { description?: string }) {
+	// Kezdetben nyitott állapotban van
+	const [accordionValue, setAccordionValue] = useState("category-description");
+
+	useEffect(() => {
+		// Az oldal betöltése után egy kis késleltetéssel automatikusan becsukjuk
+		setAccordionValue("");
+	}, []);
+
+	if (!description) return;
+
+	const cleanDescription = DOMPurify.sanitize(description, {
+		USE_PROFILES: { html: true },
+	});
+
+	const base = process.env.NEXT_PUBLIC_IMAGE_BASE_URL?.replace(/\/$/, "") ?? "";
+	const descriptionWithImages = cleanDescription.replace(
+		/<img\s+([^>]*?)src="(?!https?:\/\/)([^">]+)"/gi,
+		`<img $1src="${base}$2"`
+	);
+
+	const descriptionTitleMatch = cleanDescription.match(/<h2[^>]*>(.*?)<\/h2>/i);
+	const categoryDescriptionTitle = descriptionTitleMatch?.[1] ?? "";
+
 	return (
-		<Accordion type="single" collapsible className="w-full p-3 bg-white rounded-md">
-			<AccordionItem value="item-1">
-				<AccordionTrigger className="hover:no-underline">
-					<div>
-						<h4>Is it accessible? Yes. It adheres to the WAI-ARIA design pattern Yes.</h4>
-						<span className="text-xs font-light">
-							Yes. It adheres to the WAI-ARIA design pattern Yes. It adheres to the WAI-ARIA
-							design pattern Yes. It adheres to the WAI-ARIA de design pattern Yes. It
-							adheres to the WAI-ARIA design pattern Yes. It adheres
-						</span>
+		<Accordion
+			type="single"
+			value={accordionValue}
+			onValueChange={setAccordionValue}
+			collapsible
+			className="w-full p-3 bg-card rounded-md border"
+		>
+			<AccordionItem value="category-description">
+				<AccordionTrigger className="items-center">
+					<div className="flex items-center gap-3">
+						<FileSpreadsheetIcon />
+						<h5 className="font-extrabold">{categoryDescriptionTitle}</h5>
 					</div>
 				</AccordionTrigger>
 				<AccordionContent>
-					Yes. It adheres to the WAI-ARIA design pattern Yes. It adheres to the WAI-ARIA design
-					pattern Yes. It adheres to the WAI-ARIA design pattern Yes. It adheres to the WAI-ARIA
-					design pattern Yes. It adheres to the WAI-ARIA design pattern Yes. It adheres to the
-					WAI-ARIA design pattern Yes. It adheres to the WAI-ARIA design pattern Yes. It adheres
-					to the WAI-ARIA design pattern.
+					<div
+						className="
+              [&_h3]:my-3
+              [&_h4]:my-3
+              [&_h5]:my-3
+              [&_img]:my-3
+            "
+						dangerouslySetInnerHTML={{ __html: descriptionWithImages }}
+					/>
 				</AccordionContent>
 			</AccordionItem>
 		</Accordion>

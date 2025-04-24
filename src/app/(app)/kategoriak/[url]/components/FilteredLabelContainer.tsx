@@ -5,6 +5,7 @@ import { updateUrlWithoutReloadPage, useProducts } from "../hook";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { formatNumber } from "@/lib/helpers/number";
+import { FilterSort } from "./Filter/FilterSort";
 
 const FilteredLabelContainer = () => {
 	const { products } = useProducts();
@@ -28,9 +29,14 @@ const FilteredLabelContainer = () => {
 					)}
 				</div>
 				{total !== undefined && (
-					<div className="text-sm text-right min-w-40">
-						Összesen &nbsp;
-						<span className="font-bold">{formatNumber(products?.total || 0)} db</span>
+					<div className="flex justify-between mt-3">
+						<div className="text-sm min-w-40">
+							Összesen &nbsp;
+							<span className="font-bold">{formatNumber(products?.total || 0)} db</span>
+						</div>
+						<div className="flex justify-end">
+							<FilterSort />
+						</div>
 					</div>
 				)}
 			</div>

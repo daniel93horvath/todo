@@ -6,6 +6,7 @@ import FilterSidebar from "./components/Filter/FilterSidebar";
 import { dehydrate, QueryClient } from "@tanstack/query-core";
 import { HydrationBoundary } from "@tanstack/react-query";
 import FilteredLabelContainer from "./components/FilteredLabelContainer";
+import { CategoryDescription } from "./components/CategoryDescription";
 
 const Page = async ({
 	params,
@@ -40,6 +41,11 @@ const Page = async ({
 				<div className="grid md:grid-cols-[300px_1fr] gap-4">
 					<FilterSidebar />
 					<ProductList />
+					<div className="col-start-2">
+						<CategoryDescription
+							description={prefetchedData?.category?.description ?? undefined}
+						/>
+					</div>
 				</div>
 			</HydrationBoundary>
 		</main>

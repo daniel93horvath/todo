@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { formatNumber } from "@/lib/helpers/number";
 import { SlidersHorizontalIcon } from "lucide-react";
+import SearchFilter from "./SearchFilter";
 const FilterSidebar = () => {
 	const { products } = useProducts();
 	const subCategories = products?.subCategoriesFromProducts || [];
@@ -30,6 +31,9 @@ const FilterSidebar = () => {
 						<SubCategoryFilter subCategories={subCategories} />
 					</div>
 				)}
+				<div className="bg-card rounded-lg p-4 border">
+					<SearchFilter />
+				</div>
 				<div className="bg-card rounded-lg p-4 border">
 					<PriceFilter prices={prices} />
 				</div>
@@ -52,6 +56,7 @@ const FilterSidebar = () => {
 						</DrawerHeader>
 						<div className="overflow-y-auto space-y-4 p-2">
 							<SubCategoryFilter subCategories={subCategories} />
+							<SearchFilter />
 							<PriceFilter prices={prices} />
 							<StocksFilter stocks={stocks} />
 							<br />
