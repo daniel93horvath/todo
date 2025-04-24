@@ -4,14 +4,13 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation"; // Im
 import { OpInput } from "@/components/ui/custom/input/opInput";
 import { SearchIcon } from "lucide-react";
 import { useDebounce } from "@/lib/helpers/hooks/useDebounce";
-import { useEffect, useState, useTransition } from "react"; // Import useTransition
+import { useEffect, useState } from "react"; // Import useTransition
 import { updateUrlWithoutReloadPage } from "../../hook";
 
 const SearchFilter = () => {
 	const router = useRouter(); // Get router instance
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
-	const [isPending, startTransition] = useTransition(); // Optional: for smoother updates
 
 	// Initialize state from current URL search params
 	const [searchValue, setSearchValue] = useState(searchParams.get("searchquery") || "");
@@ -54,7 +53,6 @@ const SearchFilter = () => {
 				onChange={(event) => handleOnChange(event.target.value)}
 				label="Keresés a kategóriában"
 				icon={SearchIcon}
-				disabled={isPending} // Optional: disable input during transition
 			/>
 		</div>
 	);
