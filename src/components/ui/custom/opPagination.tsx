@@ -10,7 +10,7 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useTransition } from "react";
+import { useEffect, useRef, useTransition } from "react";
 
 export interface PaginationProps {
 	/** Optional current page number. If not provided, it will be read from the URL search params. */
@@ -50,6 +50,7 @@ const OpPagination = ({
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
 	const [isPending, startTransition] = useTransition();
+	const scrollPendingRef = useRef(false);
 
 	// --- Current Page Determination ---
 	const getCurrentPage = (): number => {
@@ -101,11 +102,17 @@ const OpPagination = ({
 		const newUrl = decodeURIComponent(`${pathname}?${newQueryString}`);
 
 		// Update URL using transition for smoother UX
+		scrollPendingRef.current = scroll;
 		startTransition(() => {
-			router.push(newUrl);
+			router.push(newUrl, { scroll: true });
 		});
-		if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
 	};
+	useEffect(() => {
+		if (!isPending && scrollPendingRef.current) {
+			window.scrollTo({ top: 0, behavior: "smooth" });
+			scrollPendingRef.current = false;
+		}
+	}, [isPending]);
 
 	/** Calculates the array of page numbers and ellipsis markers to display. */
 	const getVisiblePageNumbers = (): (number | string)[] => {
