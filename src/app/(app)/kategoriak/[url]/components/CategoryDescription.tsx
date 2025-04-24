@@ -48,11 +48,11 @@ export function CategoryDescription({ description }: { description?: string }) {
 				<AccordionContent>
 					<div
 						className="
-              [&_h3]:my-3
-              [&_h4]:my-3
-              [&_h5]:my-3
-              [&_img]:my-3
-            "
+							[&_h3]:my-3
+							[&_h4]:my-3
+							[&_h5]:my-3
+							[&_img]:my-3
+							"
 						dangerouslySetInnerHTML={{ __html: descriptionWithImages }}
 					/>
 				</AccordionContent>

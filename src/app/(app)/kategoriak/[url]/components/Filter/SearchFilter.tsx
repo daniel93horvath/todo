@@ -1,34 +1,52 @@
 "use client";
-import { usePathname, useSearchParams } from "next/navigation";
-import { updateUrlWithoutReloadPage } from "../../hook";
+import { usePathname, useSearchParams, useRouter } from "next/navigation"; // Import useRouter
+// import { updateUrlWithoutReloadPage } from "../../hook"; // Ezt valószínűleg eltávolíthatod
 import { OpInput } from "@/components/ui/custom/input/opInput";
 import { SearchIcon } from "lucide-react";
 import { useDebounce } from "@/lib/helpers/hooks/useDebounce";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState, useTransition } from "react"; // Import useTransition
+import { updateUrlWithoutReloadPage } from "../../hook";
 
 const SearchFilter = () => {
+	const router = useRouter(); // Get router instance
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
-	const urlQuery = useMemo(() => new URLSearchParams(searchParams.toString()), [searchParams]);
+	const [isPending, startTransition] = useTransition(); // Optional: for smoother updates
 
-	const [searchValue, setSearchValue] = useState(urlQuery.get("searchquery") || "");
-	const debouncedSearchValue = useDebounce(searchValue, 500); // 500 ms-es debounce
+	// Initialize state from current URL search params
+	const [searchValue, setSearchValue] = useState(searchParams.get("searchquery") || "");
+	const debouncedSearchValue = useDebounce(searchValue, 500); // 500 ms debounce
 
 	const handleOnChange = (value: string) => {
 		setSearchValue(value);
 	};
+
 	useEffect(() => {
+		// Create new search params based on the *current* ones each time the effect runs
+		const newSearchParams = new URLSearchParams(searchParams.toString());
+
 		if (!debouncedSearchValue) {
-			urlQuery.delete("searchquery");
+			newSearchParams.delete("searchquery");
 		} else {
-			urlQuery.set("searchquery", debouncedSearchValue);
+			newSearchParams.set("searchquery", debouncedSearchValue);
 		}
-		updateUrlWithoutReloadPage(decodeURIComponent(`${pathname}?${urlQuery.toString()}`));
-	}, [debouncedSearchValue, pathname, searchParams, urlQuery]);
+
+		// Reset to page 1 when the search query changes
+		newSearchParams.delete("page");
+
+		const newUrl = `${pathname}?${newSearchParams.toString()}`;
+
+		// Update URL using router.replace for better integration with Next.js
+		// Use transition for potentially smoother UX without hard navigation feel
+		updateUrlWithoutReloadPage(decodeURIComponent(newUrl));
+
+		// updateUrlWithoutReloadPage(decodeURIComponent(newUrl)); // Replace this with router.replace
+	}, [debouncedSearchValue, pathname, searchParams, router]); // Include searchParams and router in dependencies
 
 	return (
 		<div className="space-y-3">
 			<div className="text-sm mb-0">Keresés az alábbi kategóriában </div>
+			{/* TODO: Ezt a részt dinamikussá kellene tenni */}
 			<h5>Hűtők és fagyasztók</h5>
 
 			<OpInput
@@ -36,6 +54,7 @@ const SearchFilter = () => {
 				onChange={(event) => handleOnChange(event.target.value)}
 				label="Keresés a kategóriában"
 				icon={SearchIcon}
+				disabled={isPending} // Optional: disable input during transition
 			/>
 		</div>
 	);
