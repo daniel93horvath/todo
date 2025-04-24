@@ -5,7 +5,7 @@ import ChangeTheme from "./components/ChangeTheme";
 import { fetchGet } from "@/lib/api/fetch";
 import { CategoryMenuDesktop } from "./components/Categories/CategoryMenuDesktop";
 import { Category } from "./components/Categories/schema";
-import SearchInput from "./components/SearchInput";
+// import SearchInput from "./components/SearchInput";
 import DropDownCategoryDrawer from "./components/Categories/mobile/DropDownCategoryDrawer";
 import LoginPopover from "./components/LoginPopover";
 import UserProfilePopover from "./components/Categories/UserProfilePopover";
@@ -13,6 +13,7 @@ import OpLogo from "@/components/branding/opLogo";
 import LoginDrawer from "./components/Categories/mobile/LoginDrawer";
 import { Button } from "@/components/ui/button";
 import { ClientHeaderScrollFeature } from "./ClientHeaderScrollFeature";
+import SearchResponsive from "./components/search/Search";
 
 const Header = async () => {
 	const { data: categories = [] } = await fetchGet<Category[]>(
@@ -30,7 +31,7 @@ const Header = async () => {
 							<OpLogo colorVariant="light" />
 						</Link>
 						<div className="w-3xl">
-							<SearchInput />
+							<SearchResponsive />
 						</div>
 						<div className="flex gap-5">
 							{process.env.NEXT_PUBLIC_APP_USER_LOGGED === "true" ? (
@@ -93,7 +94,8 @@ const Header = async () => {
 							</div>
 						</LoginDrawer>
 					</div>
-					<SearchInput />
+					{/* <SearchInput /> */}
+					<SearchResponsive />
 				</nav>
 			</header>
 		</ClientHeaderScrollFeature>

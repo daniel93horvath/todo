@@ -7,11 +7,8 @@ import { useEffect, useState } from "react";
 export const dynamic = "force-static";
 
 export function CategoryDescription({ description }: { description?: string }) {
-	// Kezdetben nyitott állapotban van
-	const [accordionValue, setAccordionValue] = useState("category-description");
-
+	const [accordionValue, setAccordionValue] = useState("category-description"); // Kezdetben nyitott állapotban van, mert így olvassa be a crawler, utána becsukom...
 	useEffect(() => {
-		// Az oldal betöltése után egy kis késleltetéssel automatikusan becsukjuk
 		setAccordionValue("");
 	}, []);
 
