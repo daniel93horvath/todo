@@ -19,7 +19,13 @@ export default function Search() {
 
 	const renderResults = (
 		<Command shouldFilter={false} className="max-h-125">
-			<CommandInput autoFocus placeholder="Keresés…" value={query} onValueChange={setQuery} />
+			<CommandInput
+				className="text-base md:text-sm"
+				autoFocus
+				placeholder="Keresés…"
+				value={query}
+				onValueChange={setQuery}
+			/>
 			<CommandList className="flex-1 overflow-y-auto md:min-h-95">
 				{loading && <LoadingSkeleton />}
 				{!loading && !hasResults && query && <CommandEmpty>Nincs találat.</CommandEmpty>}
@@ -84,7 +90,10 @@ export default function Search() {
 
 			{isDesktop ? (
 				<Dialog open={open} onOpenChange={setOpen}>
-					<DialogContent className="overflow-hidden p-0 md:max-w-2xl lg:max-w-3xl shadow-xl">
+					<DialogContent
+						className="overflow-hidden p-0 md:max-w-2xl lg:max-w-3xl shadow-xl"
+						aria-describedby={undefined}
+					>
 						<DialogTitle className="sr-only">Találatok</DialogTitle>
 						{renderResults}
 					</DialogContent>
@@ -92,7 +101,12 @@ export default function Search() {
 			) : (
 				<Drawer open={open} onOpenChange={setOpen}>
 					<DrawerTitle className="sr-only">Találatok</DrawerTitle>
-					<DrawerContent>{renderResults}</DrawerContent>
+					<DrawerContent
+						className="fixed inset-0 h-[100dvh] flex flex-col overflow-y-auto"
+						aria-describedby={undefined}
+					>
+						{renderResults}
+					</DrawerContent>
 				</Drawer>
 			)}
 		</>
