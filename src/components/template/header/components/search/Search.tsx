@@ -20,7 +20,7 @@ export default function Search() {
 	const renderResults = (
 		<Command shouldFilter={false} className="max-h-125">
 			<CommandInput autoFocus placeholder="Keresés…" value={query} onValueChange={setQuery} />
-			<CommandList className="flex-1 overflow-y-auto min-h-95 p-1">
+			<CommandList className="flex-1 overflow-y-auto min-h-95">
 				{loading && <LoadingSkeleton />}
 				{!loading && !hasResults && query && <CommandEmpty>Nincs találat.</CommandEmpty>}
 
@@ -35,7 +35,7 @@ export default function Search() {
 						<CommandGroup
 							heading="Kategóriák"
 							className={`${
-								results.products.length > 0 ? "border-r-1" : ""
+								results.products.length > 0 ? "border-r-1 h-100" : ""
 							} order-2 md:order-1`}
 						>
 							{results.categories.map((category) => (
@@ -43,6 +43,7 @@ export default function Search() {
 									key={category.url}
 									{...category}
 									total={category.total}
+									url={`/kategoriak/${category.url}`}
 									type="category"
 									image={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/images/categories/images/${category.image}`} //INNEN FOLYTATOM
 									onClose={() => setOpen(false)}

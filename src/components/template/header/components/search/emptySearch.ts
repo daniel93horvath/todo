@@ -3,37 +3,37 @@ import { Category } from "./Schema";
 export const EMPTY_SEARCH_CATEGORIES: Category[] = [
 	{
 		image: `konyhai-kisgepek.png`,
-		url: "/categories/hutok-es-fagyasztok",
+		url: "hutok-es-fagyasztok",
 		name: "Hűtők és fagyasztók",
 	},
 	{
 		image: `egeszseges-mentes-etkezes.png`,
-		url: "/kategoriak/egeszseges-mentes-etkezes",
+		url: "egeszseges-mentes-etkezes",
 		name: "Egészséges, mentes étkezés",
 	},
 	{
 		image: `telefonok.png`,
-		url: "/kategoriak/telefonok",
+		url: "telefonok",
 		name: "Telefonok",
 	},
 	{
 		image: `okos-orak-es-kiegeszitok.png`,
-		url: "/kategoriak/okos-orak-es-kiegeszitok",
+		url: "okos-orak-es-kiegeszitok",
 		name: "Okos órák és kiegészítők",
 	},
 	{
 		image: `taplalekkiegeszitok.png`,
-		url: "/kategoriak/taplalekkiegeszitok",
+		url: "taplalekkiegeszitok",
 		name: "Táplálékkiegészítők",
 	},
 	{
 		image: `kerekparozas.png`,
-		url: "/kategoriak/kerekparozas",
+		url: "kerekparozas",
 		name: "Kerékpározás",
 	},
 	{
 		image: `szerszamok.png`,
-		url: "/kategoriak/szerszamok",
+		url: "szerszamok",
 		name: "Szerszámok",
 	},
 ];
