@@ -7,17 +7,20 @@ import { Category } from "./schema";
 export function DropDownCategory({
 	categories,
 	onCategoryHover = undefined,
+	onCategoryClick,
 }: {
 	categories: Category[];
 	onCategoryHover?: (categoryId: Category["id"]) => void;
+	onCategoryClick?: () => void;
 }) {
 	return (
-		<ul className="w-full lg:w-60 md:w-55">
+		<ul className="w-full md:w-60">
 			{categories.map((category) => (
 				<li
 					key={category.id}
 					className="text-sm flex justify-between font-medium cursor-pointer p-2 hover:bg-accent"
 					onMouseEnter={onCategoryHover ? () => onCategoryHover(category.id) : undefined}
+					onClick={() => onCategoryClick?.()}
 				>
 					<span className="flex items-center gap-2">
 						{category.icon && (

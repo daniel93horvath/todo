@@ -1,4 +1,5 @@
 // /lib/api/fetch.ts
+import { ApiError } from "./error";
 import { ErrorInfo, NextJSCacheOptions, LaravelPaginationMeta, StandardApiResponse } from "./schema";
 
 /**
@@ -13,12 +14,14 @@ export async function opFetch<T>(
 		headers = {},
 		baseUrl = "",
 		cacheOptions = {},
+		signal,
 	}: {
 		method?: string;
 		data?: unknown;
 		headers?: Record<string, string>;
 		baseUrl?: string;
 		cacheOptions?: NextJSCacheOptions;
+		signal?: AbortSignal;
 	} = {}
 ): Promise<StandardApiResponse<T>> {
 	const options: RequestInit & { next?: { revalidate?: number | false; tags?: string[] } } = {
@@ -28,6 +31,7 @@ export async function opFetch<T>(
 			"Content-Type": "application/json",
 			...headers,
 		},
+		signal,
 	};
 	// Cache beállítások hozzáadása
 	if (Object.keys(cacheOptions).length > 0) {
@@ -57,15 +61,16 @@ export async function opFetch<T>(
 		if (!res.ok) {
 			const serverMessage = responseData?.message || "Hiba történt a kérés során!";
 			console.error(`API hiba (${res.status}):`, serverMessage);
-			return {
-				success: false,
-				message: serverMessage,
-				error: {
-					message: serverMessage,
-					code: String(res.status),
-					details: responseData,
-				},
-			};
+			throw new ApiError(res.status, serverMessage, responseData);
+			// return {
+			// 	success: false,
+			// 	message: serverMessage,
+			// 	error: {
+			// 		message: serverMessage,
+			// 		code: String(res.status),
+			// 		details: responseData,
+			// 	},
+			// };
 		}
 
 		// Sikeres válasz esetén visszaadjuk az adatokat
@@ -77,6 +82,15 @@ export async function opFetch<T>(
 			...(responseData.meta ? { meta: responseData.meta } : {}),
 		};
 	} catch (error) {
+		if (error instanceof DOMException && (error as DOMException).name === "AbortError") {
+			// kérést ténylegesen megszakítottuk, csendben térjünk vissza
+			return {
+				success: false,
+				message: "Lekérés megszakítva",
+				data: undefined as unknown as T,
+			};
+		}
+
 		// Hálózati vagy egyéb hibák kezelése
 		const errorMessage = error instanceof Error ? error.message : "Ismeretlen hiba történt";
 		console.error("Hiba a kérés során:", errorMessage);
@@ -119,10 +133,12 @@ export async function fetchGetPaginated<T>(
 		headers = {},
 		baseUrl = "",
 		cacheOptions = {},
+		signal,
 	}: {
 		headers?: Record<string, string>;
 		baseUrl?: string;
 		cacheOptions?: NextJSCacheOptions;
+		signal?: AbortSignal;
 	} = {}
 ): Promise<StandardApiResponse<T> & { meta: LaravelPaginationMeta }> {
 	return opFetch<T>(url, {
@@ -130,6 +146,7 @@ export async function fetchGetPaginated<T>(
 		headers,
 		baseUrl,
 		cacheOptions,
+		signal,
 	}) as Promise<StandardApiResponse<T> & { meta: LaravelPaginationMeta }>;
 }
 
@@ -141,10 +158,12 @@ export async function fetchPost<T>(
 		headers = {},
 		baseUrl = "",
 		cacheOptions = {},
+		signal,
 	}: {
 		headers?: Record<string, string>;
 		baseUrl?: string;
 		cacheOptions?: NextJSCacheOptions;
+		signal?: AbortSignal;
 	} = {}
 ): Promise<StandardApiResponse<T>> {
 	return opFetch<T>(url, {
@@ -153,6 +172,7 @@ export async function fetchPost<T>(
 		headers,
 		baseUrl,
 		cacheOptions,
+		signal,
 	});
 }
 
@@ -164,11 +184,13 @@ export async function fetchDelete<T>(
 		headers = {},
 		baseUrl = "",
 		cacheOptions = {},
+		signal,
 	}: {
 		data?: unknown;
 		headers?: Record<string, string>;
 		baseUrl?: string;
 		cacheOptions?: NextJSCacheOptions;
+		signal?: AbortSignal;
 	} = {}
 ): Promise<StandardApiResponse<T>> {
 	return opFetch<T>(url, {
@@ -177,6 +199,7 @@ export async function fetchDelete<T>(
 		headers,
 		baseUrl,
 		cacheOptions,
+		signal,
 	});
 }
 
@@ -188,10 +211,12 @@ export async function fetchPut<T>(
 		headers = {},
 		baseUrl = "",
 		cacheOptions = {},
+		signal,
 	}: {
 		headers?: Record<string, string>;
 		baseUrl?: string;
 		cacheOptions?: NextJSCacheOptions;
+		signal?: AbortSignal;
 	} = {}
 ): Promise<StandardApiResponse<T>> {
 	return opFetch<T>(url, {
@@ -200,5 +225,6 @@ export async function fetchPut<T>(
 		headers,
 		baseUrl,
 		cacheOptions,
+		signal,
 	});
 }

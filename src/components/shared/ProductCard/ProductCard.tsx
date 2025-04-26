@@ -2,11 +2,11 @@ import * as React from "react";
 import { Card, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { ShoppingCart } from "lucide-react";
 import { Product } from "@/app/product/schema";
 import { formatNumber } from "@/lib/helpers/number";
 import ProductLabels from "./ProductLabels";
+import ImageWithFallback from "@/components/ui/custom/image/ImageWithFallback";
 
 function ProductCard({ product }: { product: Product }) {
 	// Szerver oldali véletlenszerű leárazás generálás
@@ -25,7 +25,7 @@ function ProductCard({ product }: { product: Product }) {
 			</div>
 			<CardContent className="p-4 mt-3 sm:mt-0 flex sm:flex-col justify-between gap-4">
 				<div className="relative min-w-32 sm:w-full h-40">
-					<Image
+					<ImageWithFallback
 						src={product.image}
 						alt={product.name}
 						fill

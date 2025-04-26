@@ -87,6 +87,7 @@ export function CategoryMenuDesktop({ initialCategories }: { initialCategories: 
 							<DropDownCategory
 								categories={firstLevelCategories}
 								onCategoryHover={setActiveCategory}
+								onCategoryClick={() => setIsOpen(false)}
 							/>
 
 							{/* Alkategóriák - előre renderelt, de kliensoldali megjelenítés */}
