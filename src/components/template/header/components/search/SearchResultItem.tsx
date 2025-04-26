@@ -26,7 +26,7 @@ export default function SearchResultItem({ type, image, name, url, price, total,
 		<CommandItem
 			value={name}
 			onSelect={handleSelect}
-			className="flex items-center justify-between gap-3 px-2 py-1 data-[selected=true]:rounded-sm data-[selected=true]:bg-accent/70"
+			className="flex items-center border-transparent border-1 justify-between gap-3 px-2 py-1 data-[selected=true]:rounded-sm md:data-[selected=true]:bg-accent/30 data-[selected=true]:bg-transparent  md:data-[selected=true]:border-border"
 		>
 			<div className="flex items-center gap-3 max-w-lg">
 				{type && (
@@ -35,6 +35,7 @@ export default function SearchResultItem({ type, image, name, url, price, total,
 						alt={name}
 						width={60}
 						height={60}
+						priority
 						className="p-1 rounded-md object-contain w-[60px] h-[60px]"
 					/>
 				)}

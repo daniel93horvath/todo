@@ -18,58 +18,59 @@ export default function Search() {
 	const hasResults = Boolean(results.categories.length || results.products.length);
 
 	const renderResults = (
-		<Command shouldFilter={false} className="max-h-125">
+		<Command shouldFilter={false} className="h-full md:h-120 mt-3 border md:border-0 md:mt-0">
 			<CommandInput
-				className="text-base md:text-sm"
-				autoFocus
+				className="text-base md:text-sm h-12"
 				placeholder="Keresés…"
 				value={query}
+				autoFocus={false}
 				onValueChange={setQuery}
 			/>
-			<CommandList className="flex-1 overflow-y-auto md:min-h-95">
+			<CommandList className="flex-1 min-h-0 overflow-auto [&_[cmdk-list-sizer]]:h-full">
 				{loading && <LoadingSkeleton />}
 				{!loading && !hasResults && query && <CommandEmpty>Nincs találat.</CommandEmpty>}
-
-				<div
-					className={`grid ${
-						results.products.length > 0 &&
-						results.categories.length > 0 &&
-						"md:grid-cols-[250px_1fr]"
-					}`}
-				>
-					{results.categories.length > 0 && (
-						<CommandGroup
-							heading="Kategóriák"
-							className={`${
-								results.products.length > 0 ? "border-r-1 h-100" : ""
-							} order-2 md:order-1`}
-						>
-							{results.categories.map((category) => (
-								<SearchResultItem
-									key={category.url}
-									{...category}
-									total={category.total}
-									url={`/kategoriak/${category.url}`}
-									type="category"
-									image={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/images/categories/images/${category.image}`} //INNEN FOLYTATOM
-									onClose={() => setOpen(false)}
-								/>
-							))}
-						</CommandGroup>
-					)}
-					{results.products.length > 0 && (
-						<CommandGroup heading="Termékek" className="order-1 md:order-2">
-							{results.products.map((product) => (
-								<SearchResultItem
-									type="product"
-									key={product.url}
-									{...product}
-									onClose={() => setOpen(false)}
-								/>
-							))}
-						</CommandGroup>
-					)}
-				</div>
+				{!loading && (
+					<div
+						className={`grid ${
+							results.products.length > 0 &&
+							results.categories.length > 0 &&
+							"md:grid-cols-[250px_1fr] h-full overflow-auto"
+						}`}
+					>
+						{results.categories.length > 0 && (
+							<CommandGroup
+								heading="Kategóriák"
+								className={`${
+									results.products.length > 0 ? "border-r-1 h-fit md:h-full" : ""
+								} order-2 md:order-1`}
+							>
+								{results.categories.map((category) => (
+									<SearchResultItem
+										key={category.url}
+										{...category}
+										total={category.total}
+										url={`/kategoriak/${category.url}`}
+										type="category"
+										image={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/images/categories/images/${category.image}`} //INNEN FOLYTATOM
+										onClose={() => setOpen(false)}
+									/>
+								))}
+							</CommandGroup>
+						)}
+						{results.products.length > 0 && (
+							<CommandGroup heading="Termékek" className="order-1 md:order-2 h-fit">
+								{results.products.map((product) => (
+									<SearchResultItem
+										type="product"
+										key={product.url}
+										{...product}
+										onClose={() => setOpen(false)}
+									/>
+								))}
+							</CommandGroup>
+						)}
+					</div>
+				)}
 			</CommandList>
 		</Command>
 	);
@@ -99,12 +100,9 @@ export default function Search() {
 					</DialogContent>
 				</Dialog>
 			) : (
-				<Drawer open={open} onOpenChange={setOpen} repositionInputs>
+				<Drawer open={open} repositionInputs={false} onOpenChange={setOpen} autoFocus>
 					<DrawerTitle className="sr-only">Találatok</DrawerTitle>
-					<DrawerContent
-						className="fixed inset-0 h-[100dvh] flex flex-col overflow-y-auto"
-						aria-describedby={undefined}
-					>
+					<DrawerContent aria-describedby={undefined} className="min-h-[80vh] ps-3 pe-3">
 						{renderResults}
 					</DrawerContent>
 				</Drawer>
