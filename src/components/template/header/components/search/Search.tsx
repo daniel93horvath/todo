@@ -99,7 +99,7 @@ export default function Search() {
 					</DialogContent>
 				</Dialog>
 			) : (
-				<Drawer open={open} onOpenChange={setOpen}>
+				<Drawer open={open} onOpenChange={setOpen} repositionInputs>
 					<DrawerTitle className="sr-only">Találatok</DrawerTitle>
 					<DrawerContent
 						className="fixed inset-0 h-[100dvh] flex flex-col overflow-y-auto"
