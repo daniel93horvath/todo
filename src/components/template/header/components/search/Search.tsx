@@ -20,7 +20,7 @@ export default function Search() {
 	const renderResults = (
 		<Command shouldFilter={false} className="max-h-125">
 			<CommandInput autoFocus placeholder="Keresés…" value={query} onValueChange={setQuery} />
-			<CommandList className="flex-1 overflow-y-auto min-h-95">
+			<CommandList className="flex-1 overflow-y-auto md:min-h-95">
 				{loading && <LoadingSkeleton />}
 				{!loading && !hasResults && query && <CommandEmpty>Nincs találat.</CommandEmpty>}
 
