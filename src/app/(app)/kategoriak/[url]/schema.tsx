@@ -1,13 +1,21 @@
 import { Product } from "@/app/product/schema";
 
 export type subCategoriesFromProducts = {
+	//Termékekhez köthető alkategóriák. PL 1 termék több kategóriában van, akkor hozni fogja.
 	id: number;
 	image: string;
 	name: string;
 	total: number;
 	url: string;
 };
-
+export type subCategoryBoxesFromRedis = {
+	//Kategóriákhoz köthető alkategóriákl
+	id: number;
+	image: string;
+	name: string;
+	total: number;
+	url: string;
+};
 export type Partner = {
 	// Azonosítók
 	id: number;
@@ -111,6 +119,7 @@ export type ProductsWithCategories = {
 	products: Product[];
 	stocks: Stocks;
 	subCategoriesFromProducts: subCategoriesFromProducts[];
+	subCategoryBoxesFromRedis: subCategoryBoxesFromRedis[];
 	total: number;
 	filters: Filters[];
 	category: Category;

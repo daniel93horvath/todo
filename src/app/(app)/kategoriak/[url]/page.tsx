@@ -7,6 +7,7 @@ import { dehydrate, QueryClient } from "@tanstack/query-core";
 import { HydrationBoundary } from "@tanstack/react-query";
 import FilteredLabelContainer from "./components/FilteredLabelContainer";
 import { CategoryDescription } from "./components/CategoryDescription";
+import SubCategoryBoxes from "./components/mobile/SubCategoryBoxes";
 
 const Page = async ({
 	params,
@@ -40,12 +41,11 @@ const Page = async ({
 				<FilteredLabelContainer />
 				<div className="sm:block md:grid md:grid-cols-[300px_1fr] gap-4">
 					<FilterSidebar />
+					<SubCategoryBoxes subCategories={prefetchedData?.subCategoryBoxesFromRedis} />
 					<ProductList />
-					<div className="col-start-2">
-						<CategoryDescription
-							description={prefetchedData?.category?.description ?? undefined}
-						/>
-					</div>
+					<CategoryDescription
+						description={prefetchedData?.category?.description ?? undefined}
+					/>
 				</div>
 			</HydrationBoundary>
 		</main>

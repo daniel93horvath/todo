@@ -33,7 +33,7 @@ export function CategoryDescription({ description }: { description?: string }) {
 			value={accordionValue}
 			onValueChange={setAccordionValue}
 			collapsible
-			className="w-full p-3 bg-card rounded-md border"
+			className="w-full p-3 bg-card rounded-md border col-start-2"
 		>
 			<AccordionItem value="category-description">
 				<AccordionTrigger className="items-center">
