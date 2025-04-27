@@ -9,8 +9,10 @@ import { useMediaQuery } from "@/lib/helpers/hooks/useMediaQuery";
 import { useSearch } from "./hook";
 import SearchResultItem from "./SearchResultItem";
 import LoadingSkeleton from "./LoadingSkeleton";
+import { useRouter } from "next/navigation";
 
 export default function Search() {
+	const router = useRouter();
 	const [open, setOpen] = useState(false);
 	const [query, setQuery] = useState("");
 	const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -24,6 +26,15 @@ export default function Search() {
 	const handleDeleteQuery = () => {
 		setQuery("");
 	};
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			e.preventDefault();
+			router.push(`/search?searchquery=${encodeURIComponent(query)}`);
+			setOpen(false);
+		}
+	};
+
 	const renderResults = (
 		<Command shouldFilter={false} className="h-full md:h-120 mt-3 border md:border-0 md:mt-0">
 			<div className="relative">
@@ -33,6 +44,7 @@ export default function Search() {
 					value={query}
 					autoFocus={false}
 					enterKeyHint="search"
+					onKeyDown={handleKeyDown}
 					onValueChange={setQuery}
 				/>
 

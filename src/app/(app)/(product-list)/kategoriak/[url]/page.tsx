@@ -1,13 +1,14 @@
 import { fetchGet } from "@/lib/api/fetch";
 import { createURLSearchParams } from "@/lib/helpers/url";
-import { ProductsWithCategories } from "./schema";
-import ProductList from "./components/ClientProductList";
-import FilterSidebar from "./components/Filter/FilterSidebar";
+import { ProductsWithCategories } from "../../schema";
+
+import FilterSidebar from "../../components/Filter/FilterSidebar";
 import { dehydrate, QueryClient } from "@tanstack/query-core";
 import { HydrationBoundary } from "@tanstack/react-query";
-import FilteredLabelContainer from "./components/FilteredLabelContainer";
-import { CategoryDescription } from "./components/CategoryDescription";
-import SubCategoryBoxes from "./components/mobile/SubCategoryBoxes";
+import FilteredLabelContainer from "../../components/FilteredLabelContainer";
+import { CategoryDescription } from "../../components/CategoryDescription";
+import SubCategoryBoxes from "../../components/mobile/SubCategoryBoxes";
+import ProductList from "../../components/ClientProductList";
 
 const Page = async ({
 	params,
@@ -19,8 +20,9 @@ const Page = async ({
 	const categoryUrl = await params;
 	const urlParams = await searchParams;
 	const urlSearchParams = createURLSearchParams(urlParams);
-	const url = `${process.env.NEXT_PUBLIC_APP_URL_BACKEND}/categories/${categoryUrl.url}/products?${urlSearchParams}`;
 	const queryClient = new QueryClient();
+
+	const url = `${process.env.NEXT_PUBLIC_APP_URL_BACKEND}/categories/${categoryUrl.url}/products?${urlSearchParams}`;
 	const queryKey = ["products", urlSearchParams.toString()];
 
 	await queryClient.prefetchQuery({

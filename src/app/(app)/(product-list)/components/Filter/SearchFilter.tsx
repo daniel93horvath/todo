@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { updateUrlWithoutReloadPage } from "../../hook";
 // import { updateUrlWithoutReloadPage } from "../../hook"; // Ezt távolítsd el
 
-const SearchFilter = () => {
+const SearchFilter = ({ categoryName }: { categoryName?: string }) => {
 	const router = useRouter();
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
@@ -42,7 +42,7 @@ const SearchFilter = () => {
 		<div className="space-y-3">
 			<div className="text-sm mb-0">Keresés az alábbi kategóriában </div>
 			{/* TODO: Ezt a részt dinamikussá kellene tenni */}
-			<h5>Hűtők és fagyasztók</h5>
+			<h5>{categoryName}</h5>
 
 			<OpInput
 				value={searchValue}

@@ -1,22 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import { ProductsWithCategories } from "./schema";
 import { fetchGet } from "@/lib/api/fetch";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 
 export function useProducts() {
-	const categoryUrl = useParams(); // Kategória URL lekérdezése
+	const categoryUrl = useParams();
 	const searchParams = useSearchParams();
-	const path = decodeURIComponent(
-		`/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`
-	);
-	const queryKey = ["products", decodeURIComponent(searchParams.toString())];
+	const pathname = usePathname();
+
+	// Ellenőrizzük, hogy keresési oldalon vagyunk-e
+	const isSearchPage = pathname.includes("/search");
+
+	// Építsük fel a megfelelő path-t és queryKey-t az oldaltípus alapján
+	const path = isSearchPage
+		? decodeURIComponent(`/api/v3/search/products/list?${searchParams.toString()}`)
+		: decodeURIComponent(`/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`);
+
+	const queryKey = isSearchPage
+		? ["search", decodeURIComponent(searchParams.toString())]
+		: ["products", decodeURIComponent(searchParams.toString())];
+
 	const {
 		data: products,
 		isFetching,
 		isError,
 	} = useQuery<ProductsWithCategories>({
 		queryKey: queryKey,
-
 		queryFn: async () => {
 			const response = await fetchGet<ProductsWithCategories>(path);
 			if (!response.data) {
@@ -27,6 +36,7 @@ export function useProducts() {
 		staleTime: 5 * 60 * 1000,
 		placeholderData: (previousData) => previousData,
 	});
+
 	return { products, isFetching, isError };
 }
 

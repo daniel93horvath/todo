@@ -14,7 +14,7 @@ export function useSearch(term: string) {
 
 	// csak ha nem üres a kereső kifejezés, építünk URL-t
 	const url = debounced.trim()
-		? `/api/v3/products/search?query=${encodeURIComponent(debounced)}`
+		? `/api/v3/search/products/suggestions?query=${encodeURIComponent(debounced)}`
 		: null;
 
 	// initialData: EMPTY_RESULTS, automatikus fetch URL-váltásnál

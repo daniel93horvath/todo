@@ -12,7 +12,7 @@ export default function ProductList() {
 	}
 
 	// Hiba állapot vagy nincs termék
-	if (isError || !products || products.products?.length < 1) {
+	if (isError || !products || !products.products || products.products?.length < 1) {
 		return (
 			<div className="mx-auto w-full h-fit md:px-5 border p-10 bg-card rounded-lg">
 				Nincs a szűrési feltételeknek megfelelő termék.

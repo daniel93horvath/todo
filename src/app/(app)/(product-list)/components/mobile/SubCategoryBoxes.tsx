@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/card";
 import ImageWithFallback from "@/components/ui/custom/image/ImageWithFallback";
 import Link from "next/link";
 import React from "react";
-//
 const SubCategoryBoxes = ({ subCategories = [] }: { subCategories?: Category[] }) => {
 	return (
 		<div className="md:hidden grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 mb-10">
