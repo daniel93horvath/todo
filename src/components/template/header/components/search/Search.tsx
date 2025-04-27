@@ -4,7 +4,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from "
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, XCircleIcon } from "lucide-react";
 import { useMediaQuery } from "@/lib/helpers/hooks/useMediaQuery";
 import { useSearch } from "./hook";
 import SearchResultItem from "./SearchResultItem";
@@ -16,17 +16,38 @@ export default function Search() {
 	const isDesktop = useMediaQuery("(min-width: 768px)");
 	const { loading, results } = useSearch(query);
 	const hasResults = Boolean(results.categories.length || results.products.length);
-
+	const handleTouchStart = () => {
+		if (document.activeElement instanceof HTMLElement) {
+			document.activeElement.blur();
+		}
+	};
+	const handleDeleteQuery = () => {
+		setQuery("");
+	};
 	const renderResults = (
 		<Command shouldFilter={false} className="h-full md:h-120 mt-3 border md:border-0 md:mt-0">
-			<CommandInput
-				className="text-base md:text-sm h-12"
-				placeholder="Keresés…"
-				value={query}
-				autoFocus={false}
-				onValueChange={setQuery}
-			/>
-			<CommandList className="flex-1 min-h-0 overflow-auto [&_[cmdk-list-sizer]]:h-full">
+			<div className="relative">
+				<CommandInput
+					className="text-base md:text-sm h-12 pe-6"
+					placeholder="Keresés…"
+					value={query}
+					autoFocus={false}
+					enterKeyHint="search"
+					onValueChange={setQuery}
+				/>
+
+				<div
+					className="md:hidden absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer hover:opacity-80 transition-opacity"
+					onClick={handleDeleteQuery}
+				>
+					<XCircleIcon className="h-5 w-5 text-muted-foreground" />
+				</div>
+			</div>
+
+			<CommandList
+				onTouchStart={handleTouchStart}
+				className="flex-1 min-h-0 overflow-auto [&_[cmdk-list-sizer]]:h-full"
+			>
 				{loading && <LoadingSkeleton />}
 				{!loading && !hasResults && query && <CommandEmpty>Nincs találat.</CommandEmpty>}
 				{!loading && (
@@ -100,9 +121,15 @@ export default function Search() {
 					</DialogContent>
 				</Dialog>
 			) : (
-				<Drawer open={open} repositionInputs={false} onOpenChange={setOpen} autoFocus>
+				<Drawer
+					open={open}
+					// direction="left"
+					repositionInputs={false}
+					onOpenChange={setOpen}
+					autoFocus
+				>
 					<DrawerTitle className="sr-only">Találatok</DrawerTitle>
-					<DrawerContent aria-describedby={undefined} className="min-h-[80vh] ps-3 pe-3">
+					<DrawerContent aria-describedby={undefined} className="min-h-[88vh] ps-3 pe-3">
 						{renderResults}
 					</DrawerContent>
 				</Drawer>
