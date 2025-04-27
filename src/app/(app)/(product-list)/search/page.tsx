@@ -19,7 +19,7 @@ const Page = async ({
 	const queryClient = new QueryClient();
 
 	const url = `${process.env.NEXT_PUBLIC_APP_URL_BACKEND}/search/products/list?${urlSearchParams}`;
-	const queryKey = ["search", urlSearchParams.toString()];
+	const queryKey = ["search", decodeURIComponent(urlSearchParams.toString())];
 
 	await queryClient.prefetchQuery({
 		queryKey: queryKey,
