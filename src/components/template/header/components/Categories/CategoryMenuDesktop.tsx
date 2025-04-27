@@ -64,7 +64,6 @@ export function CategoryMenuDesktop({ initialCategories }: { initialCategories: 
 			setIsOpen(true);
 		}
 	};
-
 	return (
 		<NavigationMenu
 			onValueChange={handleValueChange}
@@ -92,11 +91,10 @@ export function CategoryMenuDesktop({ initialCategories }: { initialCategories: 
 
 							{/* Alkategóriák - előre renderelt, de kliensoldali megjelenítés */}
 							{activeCategory !== null && activeSubcategories.length > 0 && (
-								<div className="lg:w-xl md:w-sm border-l p-2 max-h-[500px] overflow-y-auto">
+								<div className="lg:w-2xl md:w-sm border-l p-2 max-h-[500px] overflow-y-auto">
 									<SubCategoryColumns category={activeCategoryObj!} />
 								</div>
 							)}
-
 							{/* Képes promóció, ha van az aktív kategóriának képe */}
 							{activeCategory !== null && activeCategoryObj?.image && (
 								<div className="w-[250px] h-auto p-2">
@@ -136,22 +134,27 @@ const SubCategoryColumns = memo(({ category }: { category: Category }) => {
 					</a>
 
 					{/* Harmadik szintű kategóriák */}
-					{subcategory.children && subcategory.children.length > 0 && (
-						<ul className="[&>li]:hover:bg-muted [&>li]:transition-colors [&>li]:rounded-xs">
-							{subcategory.children
-								.slice(0, subcategory.child_limit || subcategory.children.length)
-								.map((thirdLevel) => (
-									<li key={thirdLevel.id}>
-										<a
-											href={`/kategoriak/${thirdLevel.url}`}
-											className="text-[14px] text-muted-foreground font-normal"
-										>
-											{thirdLevel.name}
-										</a>
-									</li>
-								))}
-						</ul>
-					)}
+					{subcategory.total &&
+						subcategory.total > 0 &&
+						subcategory.children &&
+						subcategory.children.length > 0 && (
+							<ul className="[&>li]:hover:bg-muted [&>li]:transition-colors [&>li]:rounded-xs">
+								{subcategory.children
+									.slice(0, subcategory.child_limit || subcategory.children.length)
+									.map((thirdLevel) => (
+										<li key={thirdLevel.id}>
+											<a
+												href={`/kategoriak/${thirdLevel.url}`}
+												className="text-[14px] text-muted-foreground font-normal p-1 rounded-sm
+												line-clamp-2
+												"
+											>
+												{thirdLevel.name}
+											</a>
+										</li>
+									))}
+							</ul>
+						)}
 				</li>
 			))}
 		</ul>
