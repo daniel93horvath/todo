@@ -4,7 +4,7 @@ import { fetchGet } from "@/lib/api/fetch";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 
 export function useProducts() {
-	const params = useParams();
+	const categoryUrl = useParams();
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
 
@@ -18,10 +18,12 @@ export function useProducts() {
 		path = decodeURIComponent(`/api/v3/search/products/list?${searchParams.toString()}`);
 		queryKey = ["search", decodeURIComponent(searchParams.toString())];
 	} else if (isWebshopPage) {
-		path = decodeURIComponent(`/api/v3/shop/${params.url}/products?${searchParams.toString()}`);
+		path = decodeURIComponent(`/api/v3/shop/products?${searchParams.toString()}`);
 		queryKey = ["shop", decodeURIComponent(searchParams.toString())];
 	} else {
-		path = decodeURIComponent(`/api/v3/categories/${params.url}/products?${searchParams.toString()}`);
+		path = decodeURIComponent(
+			`/api/v3/categories/${categoryUrl.url}/products?${searchParams.toString()}`
+		);
 		queryKey = ["products", decodeURIComponent(searchParams.toString())];
 	}
 

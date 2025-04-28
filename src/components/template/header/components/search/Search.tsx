@@ -141,7 +141,10 @@ export default function Search() {
 					autoFocus
 				>
 					<DrawerTitle className="sr-only">Találatok</DrawerTitle>
-					<DrawerContent aria-describedby={undefined} className="min-h-[88vh] ps-3 pe-3">
+					<DrawerContent
+						aria-describedby={undefined}
+						className="min-h-[88vh] ps-3 pe-3 drawer-content"
+					>
 						{renderResults}
 					</DrawerContent>
 				</Drawer>
