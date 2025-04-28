@@ -4,9 +4,10 @@ import ProductCard from "@/components/shared/ProductCard/ProductCard";
 import { useProducts } from "../hook"; // Importáld a hookot
 import Loading from "../loading";
 import OpPagination from "@/components/ui/custom/opPagination";
+import { ProductsWithCategories } from "../schema";
 
 export default function ProductList() {
-	const { products, isFetching, isError } = useProducts();
+	const { products, isFetching, isError } = useProducts<ProductsWithCategories>();
 	if (isFetching) {
 		return <Loading />;
 	}

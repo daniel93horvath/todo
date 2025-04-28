@@ -38,7 +38,7 @@ const Page = async ({
 			<h1>Keresés</h1> <br />
 			<HydrationBoundary state={dehydratedState}>
 				<FilteredLabelContainer />
-				<div className="sm:block md:grid md:grid-cols-[300px_1fr] gap-4">
+				<div className="flex gap-4">
 					<FilterSidebar />
 					<ProductList />
 				</div>

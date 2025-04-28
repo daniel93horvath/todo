@@ -41,13 +41,15 @@ const Page = async ({
 			<h1>{prefetchedData?.category?.name}</h1> <br />
 			<HydrationBoundary state={dehydratedState}>
 				<FilteredLabelContainer />
-				<div className="sm:block md:grid md:grid-cols-[300px_1fr] gap-4">
+				<SubCategoryBoxes subCategories={prefetchedData?.subCategoryBoxesFromRedis} />
+				<div className="flex gap-4">
 					<FilterSidebar />
-					<SubCategoryBoxes subCategories={prefetchedData?.subCategoryBoxesFromRedis} />
-					<ProductList />
-					<CategoryDescription
-						description={prefetchedData?.category?.description ?? undefined}
-					/>
+					<div className="w-full">
+						<ProductList />
+						<CategoryDescription
+							description={prefetchedData?.category?.description ?? undefined}
+						/>
+					</div>
 				</div>
 			</HydrationBoundary>
 		</main>

@@ -6,8 +6,8 @@ import FilterSidebar from "../../components/Filter/FilterSidebar";
 import { dehydrate, QueryClient } from "@tanstack/query-core";
 import { HydrationBoundary } from "@tanstack/react-query";
 import FilteredLabelContainer from "../../components/FilteredLabelContainer";
-import SubCategoryBoxes from "../../components/mobile/SubCategoryBoxes";
 import ProductList from "../../components/ClientProductList";
+import PartnerSection from "../PartnerSection";
 
 const Page = async ({
 	params,
@@ -35,15 +35,18 @@ const Page = async ({
 	// Adat kinyerése a cache-ből a prefetch után
 	const prefetchedData = queryClient.getQueryData<PartnerProductsWithCategories>(queryKey);
 	const dehydratedState = dehydrate(queryClient);
-
 	return (
 		<main>
-			<h1>{prefetchedData?.shop?.brand_nev}</h1> <br />
+			<h1>{prefetchedData?.partner.partner.brand_nev}</h1> <br />
+			<PartnerSection
+				partner={prefetchedData?.partner.partner}
+				reviews={prefetchedData?.partner.reviews || []}
+			/>
+			<br />
 			<HydrationBoundary state={dehydratedState}>
 				<FilteredLabelContainer />
-				<div className="sm:block md:grid md:grid-cols-[300px_1fr] gap-4">
+				<div className="flex gap-4">
 					<FilterSidebar />
-					<SubCategoryBoxes subCategories={prefetchedData?.subCategoryBoxesFromRedis} />
 					<ProductList />
 				</div>
 			</HydrationBoundary>

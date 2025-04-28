@@ -7,6 +7,7 @@ import { Product } from "@/app/product/schema";
 import { formatNumber } from "@/lib/helpers/number";
 import ProductLabels from "./ProductLabels";
 import ImageWithFallback from "@/components/ui/custom/image/ImageWithFallback";
+import Link from "next/link";
 
 function ProductCard({ product }: { product: Product }) {
 	// Szerver oldali véletlenszerű leárazás generálás
@@ -16,12 +17,14 @@ function ProductCard({ product }: { product: Product }) {
 	return (
 		<Card className="w-full py-0 sm:max-w-xs overflow-hidden border rounded-sm shadow-none relative">
 			<div className="flex flex-col absolute top-2 left-2 z-10 gap-2">
-				<Badge
-					variant="outline"
-					className="text-xs bg-accent sm:max-w-50 truncate block hover:opacity-40"
-				>
-					{product.partner.nev}
-				</Badge>
+				<Link href={`/webaruhaz/${product.partner.brand_nev_slug}`}>
+					<Badge
+						variant="outline"
+						className="text-xs bg-accent sm:max-w-50 truncate block hover:opacity-40"
+					>
+						{product.partner.nev}
+					</Badge>
+				</Link>
 			</div>
 			<CardContent className="p-4 mt-3 sm:mt-0 flex sm:flex-col justify-between gap-4">
 				<div className="relative min-w-32 sm:w-full h-40">

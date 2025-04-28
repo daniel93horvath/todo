@@ -18,8 +18,9 @@ import { formatNumber } from "@/lib/helpers/number";
 import { SlidersHorizontalIcon } from "lucide-react";
 import SearchFilter from "./SearchFilter";
 import { usePathname } from "next/navigation";
+import { ProductsWithCategories } from "../../schema";
 const FilterSidebar = () => {
-	const { products } = useProducts();
+	const { products } = useProducts<ProductsWithCategories>();
 	const pathname = usePathname();
 
 	const subCategories = products?.subCategoriesFromProducts || [];
@@ -27,7 +28,7 @@ const FilterSidebar = () => {
 	const stocks = products?.stocks || { full: 0, none: 0 };
 	return (
 		<>
-			<div className="hidden md:block space-y-5">
+			<div className="hidden md:block space-y-5 min-w-xs max-w-xs">
 				{subCategories.length > 0 && (
 					<div className="bg-card rounded-lg p-4 border">
 						<SubCategoryFilter subCategories={subCategories} />

@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { formatNumber } from "@/lib/helpers/number";
 import { FilterSort } from "./Filter/FilterSort";
+import { ProductsWithCategories } from "../schema";
 
 const FilteredLabelContainer = () => {
-	const { products } = useProducts();
+	const { products } = useProducts<ProductsWithCategories>();
 	const filters = products?.filters || [];
 	const total = products?.total;
 	const pathName = usePathname();
@@ -16,8 +17,9 @@ const FilteredLabelContainer = () => {
 		updateUrlWithoutReloadPage(`${pathName}`);
 	};
 	return (
-		<div className="grid md:grid-cols-[300px_1fr] gap-4">
-			<div className="mb-3 md:col-start-2 items-center justify-between">
+		<div className="flex gap-4">
+			<div className="min-w-xs max-w-xs">&nbsp;</div>
+			<div className="mb-3 w-full items-center justify-between">
 				<div className="flex gap-3 flex-wrap items-center">
 					{filters.map((filter) => (
 						<FilteredLabel key={filter.name} filter={filter} />

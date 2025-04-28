@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { ProductsWithCategories } from "./schema";
 import { fetchGet } from "@/lib/api/fetch";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 
-export function useProducts() {
+export function useProducts<T>() {
 	const params = useParams();
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
@@ -29,10 +28,10 @@ export function useProducts() {
 		data: products,
 		isFetching,
 		isError,
-	} = useQuery<ProductsWithCategories>({
+	} = useQuery<T>({
 		queryKey: queryKey,
 		queryFn: async () => {
-			const response = await fetchGet<ProductsWithCategories>(path);
+			const response = await fetchGet<T>(path);
 			if (!response.data) {
 				throw new Error("Sikertelen a termékek lekérdezése!");
 			}
