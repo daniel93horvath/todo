@@ -22,7 +22,6 @@ const LoginContent = () => {
 
 	const onSubmit = (values: UserLogin) => {
 		console.log(values);
-		alert(1);
 	};
 
 	return (
@@ -70,7 +69,7 @@ const LoginContent = () => {
 			<div className="relative h-32 overflow-hidden flex items-center">
 				<div className="absolute inset-0">
 					<Image
-						src="https://www.onlinepenztarca.hu/images/op-reg-foto.png?v=11"
+						src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/images/v3images/user/template/header/op-reg.jpg`}
 						alt="Regisztráció háttér"
 						className="rounded-md md:rounded-none"
 						fill

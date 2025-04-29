@@ -24,7 +24,7 @@ export function FilterSort() {
 	};
 	return (
 		<Select defaultValue={currentSort} onValueChange={handleSelect}>
-			<SelectTrigger className="w-fit !text-foreground !p-2 !min-h-2 !h-2 !border-0 shadow-none !bg-transparent">
+			<SelectTrigger className="w-fit !text-foreground justify-end p-3 !min-h-2 !h-2 !border-0 shadow-none !bg-transparent">
 				<ListFilterIcon className="!w-3 !h-3" />
 				<SelectValue placeholder="Sorrend" />
 			</SelectTrigger>

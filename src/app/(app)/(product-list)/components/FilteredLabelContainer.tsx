@@ -17,27 +17,26 @@ const FilteredLabelContainer = () => {
 		updateUrlWithoutReloadPage(`${pathName}`);
 	};
 	return (
-		<div className="flex gap-4">
-			<div className="min-w-xs max-w-xs">&nbsp;</div>
-			<div className="mb-3 w-full items-center justify-between">
-				<div className="flex gap-3 flex-wrap items-center">
-					{filters.map((filter) => (
-						<FilteredLabel key={filter.name} filter={filter} />
-					))}
-					{filters.length > 0 && (
-						<Button variant="outline" className="h-7" onClick={handleClick}>
-							Összes törlése
-						</Button>
-					)}
-				</div>
+		<div className="flex justify-between gap-4 my-4">
+			<div className="flex gap-3 flex-wrap items-center">
+				{filters.map((filter) => (
+					<FilteredLabel key={filter.name} filter={filter} />
+				))}
+				{filters.length > 0 && (
+					<Button variant="outline" className="h-7" onClick={handleClick}>
+						Összes törlése
+					</Button>
+				)}
+			</div>
+			<div>
 				{total !== undefined && (
-					<div className="flex justify-between mt-3">
-						<div className="text-sm min-w-40">
+					<div className="flex items-center justify-between text-sm">
+						<div className="flex">
+							<FilterSort />
+						</div>
+						<div>
 							Összesen &nbsp;
 							<span className="font-bold">{formatNumber(products?.total || 0)} db</span>
-						</div>
-						<div className="flex justify-end">
-							<FilterSort />
 						</div>
 					</div>
 				)}

@@ -1,5 +1,6 @@
 import { Product } from "@/app/product/schema";
 import { Partner } from "@/lib/Schema/Partner";
+import { PartnerReview } from "@/lib/Schema/PartnerReview";
 
 export type subCategoriesFromProducts = {
 	//Termékekhez köthető alkategóriák. PL 1 termék több kategóriában van, akkor hozni fogja.
@@ -68,15 +69,11 @@ export type ProductsWithCategories = {
 	filters: Filters[];
 	category: Category;
 };
-export type Reviews = {
-	id: number;
-	name: string;
-	date: string;
-};
+
 export type PartnerProductsWithCategories = {
 	prices: Prices;
 	products: Product[];
-	partner: { partner: Partner; reviews: Reviews[] };
+	partner: { partner: Partner; reviews: PartnerReview[] };
 	stocks: Stocks;
 	subCategoriesFromProducts: subCategoriesFromProducts[];
 	subCategoryBoxesFromRedis: subCategoryBoxesFromRedis[];

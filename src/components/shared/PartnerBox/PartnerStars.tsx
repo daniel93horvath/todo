@@ -1,20 +1,29 @@
+import { cn } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 import React from "react";
 
 /**
  * Csillagok komponens, amely 10-es skálán lévő értékelést jelenít meg 5 csillagos formában
  */
-const PartnerStars = ({ rating, maxStars = 5 }: { rating: number; maxStars?: number }) => {
+const PartnerStars = ({
+	rating,
+	maxStars = 5,
+	className,
+}: {
+	rating: number;
+	maxStars?: number;
+	className?: string;
+}) => {
 	// 10-es skálát átfordítjuk 0–5-re, majd 0,5-ös lépésekben kerekítjük
 	const adjustedRating = Math.min(Math.max(Math.round((rating / 2) * 2) / 2, 0), maxStars);
 
 	const fullStars = Math.floor(adjustedRating);
 	const hasHalfStar = adjustedRating % 1 === 0.5;
 	const emptyStars = maxStars - fullStars - (hasHalfStar ? 1 : 0);
-	const starIconClasses = "text-sidebar-accent w-3 h-3";
+	const starIconClasses = cn("text-sidebar-accent w-3 h-3", className);
 
 	return (
-		<div className="flex gap-1">
+		<div className="flex gap-0.5">
 			{Array.from({ length: fullStars }).map((_, i) => (
 				<StarIcon key={`full-${i}`} className={starIconClasses} fill="currentColor" />
 			))}

@@ -35,6 +35,8 @@ const Page = async ({
 	// Adat kinyerése a cache-ből a prefetch után
 	const prefetchedData = queryClient.getQueryData<PartnerProductsWithCategories>(queryKey);
 	const dehydratedState = dehydrate(queryClient);
+
+	console.log(prefetchedData);
 	return (
 		<main>
 			<h1>{prefetchedData?.partner.partner.brand_nev}</h1> <br />

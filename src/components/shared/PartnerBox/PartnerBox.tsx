@@ -18,10 +18,10 @@ const PartnerBox = ({ partner }: { partner: Partner }) => {
 			</CardHeader>
 			<CardContent className="flex justify-between gap-3">
 				<div>
-					<h5 className="m-0 p-0">{partner.brand_nev}</h5>
-					<p className="text-xs line-clamp-5 text-muted-foreground">{partner.leiras}</p>
+					<h6 className="m-0 p-0">{partner.brand_nev}</h6>
+					<p className="text-xs line-clamp-3 text-muted-foreground">{partner.leiras}</p>
 				</div>
-				<div className="font-extrabold text-sidebar-accent text-3xl text-center">
+				<div className="font-extrabold text-sidebar-accent text-2xl text-center">
 					<div>8.8</div>
 					<PartnerStars rating={partner.korrekt_webaruhaz_ertek} />
 				</div>

@@ -9,13 +9,23 @@ import ProductLabels from "./ProductLabels";
 import ImageWithFallback from "@/components/ui/custom/image/ImageWithFallback";
 import Link from "next/link";
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({
+	product,
+	isHorizontalOnMobile = true,
+}: {
+	product: Product;
+	isHorizontalOnMobile?: boolean;
+}) {
 	// Szerver oldali véletlenszerű leárazás generálás
 	// Ez minden rendereléskor újra lefut, de szerver oldali komponenseknél ez nem probléma
 	const hasDiscount = true;
 	const originalPrice = hasDiscount ? Math.round(product.price * 1.4) : null;
 	return (
-		<Card className="w-full py-0 sm:max-w-xs overflow-hidden border rounded-sm shadow-none relative">
+		<Card
+			className={`w-full py-0 ${
+				isHorizontalOnMobile ? "sm:max-w-xs" : "max-w-xs"
+			} overflow-hidden border rounded-sm shadow-none relative`}
+		>
 			<div className="flex flex-col absolute top-2 left-2 z-10 gap-2">
 				<Link href={`/webaruhaz/${product.partner.brand_nev_slug}`}>
 					<Badge
@@ -26,40 +36,46 @@ function ProductCard({ product }: { product: Product }) {
 					</Badge>
 				</Link>
 			</div>
-			<CardContent className="p-4 mt-3 sm:mt-0 flex sm:flex-col justify-between gap-4">
+			<CardContent
+				className={`p-4 ${
+					isHorizontalOnMobile ? "flex sm:flex-col" : "h-full"
+				} justify-between gap-4`}
+			>
 				<div className="relative min-w-32 sm:w-full h-40">
 					<ImageWithFallback
 						src={product.image}
 						alt={product.name}
 						fill
 						sizes="(max-width: 768px) 100vw, 50vw"
-						className="object-contain object-center mt-2 sm:mt-0 sm:object-top w-full h-full"
+						className="object-contain object-center sm:object-top w-full h-full"
 						priority={false}
 					/>
 				</div>
 
-				<div className="flex flex-col gap-2">
-					<CardTitle className="text-sm h-10 line-clamp-2 text-muted-foreground break-all overflow-wrap-anywhere">
-						{product.name}
-					</CardTitle>
-					<div className="flex flex-wrap gap-2 sm:gap-3">
-						<ProductLabels product={product} />
-					</div>
+				<div>
+					<div className="flex flex-col gap-2 mt-2 w-full">
+						<CardTitle className="text-sm h-10 line-clamp-2 text-muted-foreground break-all overflow-wrap-anywhere">
+							{product.name}
+						</CardTitle>
+						<div className="flex flex-wrap gap-2 sm:gap-3">
+							<ProductLabels product={product} />
+						</div>
 
-					<div className="flex flex-wrap items-center space-x-2">
-						<p className="text-lg font-extrabold text-secondary">
-							{formatNumber(product.price)} Ft
-						</p>
-						{hasDiscount && (
-							<p className="text-sm line-through text-muted-foreground">
-								{originalPrice !== null && `${formatNumber(originalPrice)} Ft`}
+						<div className="flex flex-wrap items-center space-x-2">
+							<p className="text-lg font-extrabold text-secondary">
+								{formatNumber(product.price)} Ft
 							</p>
-						)}
+							{hasDiscount && (
+								<p className="text-sm line-through text-muted-foreground">
+									{originalPrice !== null && `${formatNumber(originalPrice)} Ft`}
+								</p>
+							)}
+						</div>
+						<Button className="w-full">
+							<ShoppingCart />
+							Kosárba
+						</Button>
 					</div>
-					<Button className="w-full">
-						<ShoppingCart />
-						Kosárba
-					</Button>
 				</div>
 			</CardContent>
 		</Card>
