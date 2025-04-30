@@ -16,12 +16,13 @@ export function Reviews({ reviews }: { reviews: PartnerReview[] }) {
 		dragFree: true,
 	};
 	console.log(reviews);
+	console.log(reviews);
 	return (
 		<Carousel className="w-full" opts={options}>
 			<CarouselContent>
 				{reviews.map((review, index) => (
 					<CarouselItem key={index} className="max-w-xs">
-						<Card className="h-45 shadow-none py-3">
+						<Card className="h-50 shadow-none py-3">
 							<CardHeader>
 								<div className="flex w-full items-center justify-between">
 									<div>
@@ -46,9 +47,8 @@ export function Reviews({ reviews }: { reviews: PartnerReview[] }) {
 				))}
 			</CarouselContent>
 			<div className="flex justify-center gap-3 mt-7">
-				<CarouselPrevious className="relative left-auto hover:scale-105 transition-transform rounded-md" />
-
-				<CarouselNext className="relative left-1 hover:scale-105 transition-transform rounded-md" />
+				<CarouselPrevious className="relative left-auto hover:scale-105 transition-transform rounded-md w-20" />
+				<CarouselNext className="relative left-1 hover:scale-105 transition-transform rounded-md w-20" />
 			</div>
 		</Carousel>
 	);

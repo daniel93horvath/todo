@@ -6,7 +6,7 @@ import PartnerStars from "./PartnerStars";
 
 const PartnerBox = ({ partner }: { partner: Partner }) => {
 	return (
-		<Card className="shadow-none pt-0 gap-2 rounded-lg border">
+		<Card className="shadow-none pt-0 gap-2 rounded-lg border h-fit">
 			<CardHeader className="p-0 overflow-hidden rounded-t-lg">
 				<ImageWithFallback
 					alt={partner.brand_nev}
@@ -21,9 +21,12 @@ const PartnerBox = ({ partner }: { partner: Partner }) => {
 					<h6 className="m-0 p-0">{partner.brand_nev}</h6>
 					<p className="text-xs line-clamp-3 text-muted-foreground">{partner.leiras}</p>
 				</div>
-				<div className="font-extrabold text-sidebar-accent text-2xl text-center">
-					<div>8.8</div>
-					<PartnerStars rating={partner.korrekt_webaruhaz_ertek} />
+				<div className="text-center flex flex-col gap-1 h-fit">
+					<div className="font-extrabold text-sidebar-accent text-2xl text-center flex flex-col gap-1">
+						<div className="leading-6">8.8</div>
+						<PartnerStars rating={partner.korrekt_webaruhaz_ertek} />
+					</div>
+					<div className="text-xs">{partner.korrekt_ertekeles_count} db</div>
 				</div>
 			</CardContent>
 		</Card>
