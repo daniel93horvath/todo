@@ -36,23 +36,19 @@ function ProductCard({
 					</Badge>
 				</Link>
 			</div>
-			<CardContent
-				className={`p-4 ${
-					isHorizontalOnMobile ? "flex sm:flex-col" : "h-full"
-				} justify-between gap-4`}
-			>
-				<div className="relative min-w-32 sm:w-full h-40">
-					<ImageWithFallback
-						src={product.image}
-						alt={product.name}
-						fill
-						sizes="(max-width: 768px) 100vw, 50vw"
-						className="object-contain object-center sm:object-top w-full h-full"
-						priority={false}
-					/>
-				</div>
+			<CardContent className="p-4 sm:justify-between gap-4 h-full flex-col sm:flex">
+				<div className="flex gap-4 sm:block mb-3">
+					<div className="relative min-w-32 sm:w-full sm:h-40">
+						<ImageWithFallback
+							src={product.image}
+							alt={product.name}
+							fill
+							sizes="(max-width: 768px) 100vw, 50vw"
+							className="object-contain object-center sm:object-top w-full h-full"
+							priority={false}
+						/>
+					</div>
 
-				<div>
 					<div className="flex flex-col gap-2 mt-2 w-full">
 						<CardTitle className="text-sm h-10 line-clamp-2 text-muted-foreground break-all overflow-wrap-anywhere">
 							{product.name}
@@ -71,12 +67,12 @@ function ProductCard({
 								</p>
 							)}
 						</div>
-						<Button className="w-full">
-							<ShoppingCart />
-							Kosárba
-						</Button>
 					</div>
 				</div>
+				<Button className="w-full">
+					<ShoppingCart />
+					Kosárba
+				</Button>
 			</CardContent>
 		</Card>
 	);
