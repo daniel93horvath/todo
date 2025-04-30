@@ -28,7 +28,7 @@ const FilteredLabelContainer = () => {
 					</Button>
 				)}
 			</div>
-			<div className="min-w-80">
+			<div className="">
 				{total !== undefined && (
 					<div className="flex items-center justify-between text-sm">
 						<div className="flex">
