@@ -18,7 +18,7 @@ export function DropDownCategory({
 			{categories.map((category) => (
 				<li
 					key={category.id}
-					className="text-sm flex justify-between font-medium cursor-pointer p-2 hover:bg-accent"
+					className="text-lg md:text-sm flex justify-between font-medium cursor-pointer p-2 hover:bg-accent"
 					onMouseEnter={onCategoryHover ? () => onCategoryHover(category.id) : undefined}
 					onClick={() => onCategoryClick?.()}
 				>

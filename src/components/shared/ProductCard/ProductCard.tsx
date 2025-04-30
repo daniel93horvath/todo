@@ -28,6 +28,10 @@ function ProductCard({
 		? "relative w-32 sm:w-full h-auto sm:h-40 flex-shrink-0" // Fix szélesség mobilon
 		: "relative w-full h-40"; // Mindig teljes szélesség
 
+	const badgeWithClasses = isHorizontalOnMobile
+		? "max-w-35 truncate block" // Fix szélesség mobilon
+		: ""; // Mindig teljes szélesség
+
 	return (
 		<Card
 			className={`w-full overflow-hidden border rounded-sm shadow-none relative flex flex-col h-full py-4`}
@@ -38,7 +42,10 @@ function ProductCard({
 				className="absolute top-2 left-2 z-10"
 				aria-label={`Ugrás ${product.partner.nev} áruházához`}
 			>
-				<Badge variant="outline" className="text-xs bg-accent truncate hover:opacity-40">
+				<Badge
+					variant="outline"
+					className={`text-xs bg-accent  hover:opacity-40 ${badgeWithClasses}`}
+				>
 					{product.partner.nev}
 				</Badge>
 			</Link>
