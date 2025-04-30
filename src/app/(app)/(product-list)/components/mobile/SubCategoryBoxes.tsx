@@ -20,6 +20,7 @@ const SubCategoryBoxes = ({ subCategories = [] }: { subCategories?: Category[] }
 								height={150}
 								sizes="(max-width: 768px) 50vw, 33vw"
 								className="object-contain"
+								priority={false}
 							/>
 							<p className="text-sm w-full line-clamp-2 text-primary-foreground text-center font-bold mt-3">
 								{category.name}

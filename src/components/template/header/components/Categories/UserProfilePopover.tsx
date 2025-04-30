@@ -28,7 +28,6 @@ const UserProfilePopover = () => {
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent
-				//className="text-secondary w-sm p-0 space-y-2 border-0 shadow-xl backdrop-blur-xl bg-gradient-to-b from-white  to-primary/20 dark:from-gray-900/95 dark:to-primary/20"
 				className="w-sm p-0 space-y-2 border-0 shadow-xl text-primary-foreground"
 				sideOffset={10}
 			>

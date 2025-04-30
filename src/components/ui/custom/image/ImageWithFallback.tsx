@@ -15,7 +15,7 @@ export default function ImageWithFallback({ src, alt, ...rest }: FallbackImagePr
 
 	return (
 		<>
-			{!isLoaded && <div className="absolute inset-0 animate-pulse rounded-md bg-muted/50"></div>}
+			{/* {!isLoaded && <div className="absolute inset-0 animate-pulse rounded-md bg-muted/50"></div>} */}
 			<Image
 				{...rest}
 				src={imgSrc}
