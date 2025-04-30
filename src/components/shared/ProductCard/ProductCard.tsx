@@ -7,11 +7,9 @@ import { Product } from "@/app/product/schema";
 import { formatNumber } from "@/lib/helpers/number";
 import ProductLabels from "./ProductLabels";
 import ImageWithFallback from "@/components/ui/custom/image/ImageWithFallback";
-import React, { memo } from "react"; // Importáld a memo-t
+import React, { memo } from "react"; // Importáljuk a memo-t
 
-// ...existing code...
-
-// A komponenst változatlanul hagyjuk
+// Az eredeti komponens logikája változatlan marad, de átnevezzük
 function ProductCardComponent({
 	product,
 	isHorizontalOnMobile = true,
@@ -99,8 +97,11 @@ function ProductCardComponent({
 	);
 }
 
-// Exportáláskor alkalmazzuk a memo-t
+// A komponenst becsomagoljuk a memo HOC-val
 const ProductCard = memo(ProductCardComponent);
-ProductCard.displayName = "ProductCard"; // Opcionális: displayName beállítása a könnyebb debuggoláshoz
 
+// Opcionális: displayName beállítása a React DevTools számára
+ProductCard.displayName = "ProductCard";
+
+// A memoizált komponenst exportáljuk
 export default ProductCard;
