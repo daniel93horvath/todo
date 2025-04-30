@@ -1,3 +1,4 @@
+import * as React from "react";
 import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 import { Card, CardTitle, CardContent } from "@/components/ui/card";
@@ -7,12 +8,8 @@ import { Product } from "@/app/product/schema";
 import { formatNumber } from "@/lib/helpers/number";
 import ProductLabels from "./ProductLabels";
 import ImageWithFallback from "@/components/ui/custom/image/ImageWithFallback";
-import React, { memo } from "react"; // Importáld a memo-t
 
-// ...existing code...
-
-// A komponenst változatlanul hagyjuk
-function ProductCardComponent({
+function ProductCard({
 	product,
 	isHorizontalOnMobile = true,
 }: {
@@ -98,9 +95,5 @@ function ProductCardComponent({
 		</Card>
 	);
 }
-
-// Exportáláskor alkalmazzuk a memo-t
-const ProductCard = memo(ProductCardComponent);
-ProductCard.displayName = "ProductCard"; // Opcionális: displayName beállítása a könnyebb debuggoláshoz
 
 export default ProductCard;

@@ -1,4 +1,3 @@
-"use client";
 import { Category } from "@/components/template/header/components/search/Schema";
 import { Card } from "@/components/ui/card";
 import ImageWithFallback from "@/components/ui/custom/image/ImageWithFallback";
